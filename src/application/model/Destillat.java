@@ -18,4 +18,28 @@ public class Destillat {
         this.kommentar = kommentar;
         this.destilleringsdato = destilleringsdato;
     }
+
+    public double getMængdeL() {
+        return mængdeL;
+    }
+
+    public double getAlkoholprocent() {
+        return alkoholprocent;
+    }
+
+    public String getMedarbejder() {
+        return medarbejder;
+    }
+
+    public String getRygemateriale() {
+        return rygemateriale;
+    }
+
+    public String getKommentar() {
+        return kommentar;
+    }
+
+    public LocalDate getDestilleringsdato() {
+        return destilleringsdato;
+    }
 }

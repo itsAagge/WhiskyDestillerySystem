@@ -20,4 +20,36 @@ public class Fad {
         this.alderAfTidligereIndhold = alderAfTidligereIndhold;
         this.antalGangeBrugt = antalGangeBrugt;
     }
+
+    public static int getAntalFade() {
+        return antalFade;
+    }
+
+    public int getFadNr() {
+        return fadNr;
+    }
+
+    public String getFraLand() {
+        return fraLand;
+    }
+
+    public String getTidligereIndhold() {
+        return tidligereIndhold;
+    }
+
+    public int getStørrelseL() {
+        return størrelseL;
+    }
+
+    public String getTræType() {
+        return træType;
+    }
+
+    public double getAlderAfTidligereIndhold() {
+        return alderAfTidligereIndhold;
+    }
+
+    public int getAntalGangeBrugt() {
+        return antalGangeBrugt;
+    }
 }

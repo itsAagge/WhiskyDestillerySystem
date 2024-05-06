@@ -14,4 +14,20 @@ public class Korn {
         this.høstDato = høstDato;
         this.mængdeKg = mængdeKg;
     }
+
+    public String getMarkNavn() {
+        return markNavn;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public LocalDate getHøstDato() {
+        return høstDato;
+    }
+
+    public int getMængdeKg() {
+        return mængdeKg;
+    }
 }

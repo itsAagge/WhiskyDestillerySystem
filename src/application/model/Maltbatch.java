@@ -14,4 +14,20 @@ public class Maltbatch {
         this.gæringSlut = gæringSlut;
         this.gærType = gærType;
     }
+
+    public double getMængdeL() {
+        return mængdeL;
+    }
+
+    public LocalDate getGæringStart() {
+        return gæringStart;
+    }
+
+    public LocalDate getGæringSlut() {
+        return gæringSlut;
+    }
+
+    public String getGærType() {
+        return gærType;
+    }
 }
