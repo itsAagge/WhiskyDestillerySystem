@@ -15,8 +15,8 @@ public class Controller {
 
 
 
-    public static Destillat opretDestillat(double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato) {
-        Destillat destillat = new Destillat(mængdeL, alkoholprocent, medarbejder, rygemateriale, kommentar, destilleringsdato);
+    public static Destillat opretDestillat(double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato, Maltbatch maltbatch) {
+        Destillat destillat = new Destillat(mængdeL, alkoholprocent, medarbejder, rygemateriale, kommentar, destilleringsdato, maltbatch);
         Storage.tilføjDestillat(destillat);
         return destillat;
     }
@@ -34,8 +34,8 @@ public class Controller {
         return korn;
     }
 
-    public static Maltbatch opretMaltbatch(double mængdeL, LocalDate gæringStart, LocalDate gæringSlut, String gærType) {
-        Maltbatch maltbatch = new Maltbatch(mængdeL, gæringStart, gæringSlut, gærType);
+    public static Maltbatch opretMaltbatch(double mængdeL, LocalDate gæringStart, LocalDate gæringSlut, String gærType, Korn korn) {
+        Maltbatch maltbatch = new Maltbatch(mængdeL, gæringStart, gæringSlut, gærType, korn);
         Storage.tilføjMaltBatch(maltbatch);
         return maltbatch;
     }
