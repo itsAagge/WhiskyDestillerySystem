@@ -9,14 +9,16 @@ public class Destillat {
     private String rygemateriale;
     private String kommentar;
     private LocalDate destilleringsdato;
+    private Maltbatch maltbatch;
 
-    public Destillat(double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato) {
+    public Destillat(double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato, Maltbatch maltbatch) {
         this.mængdeL = mængdeL;
         this.alkoholprocent = alkoholprocent;
         this.medarbejder = medarbejder;
         this.rygemateriale = rygemateriale;
         this.kommentar = kommentar;
         this.destilleringsdato = destilleringsdato;
+        this.maltbatch = maltbatch;
     }
 
     public double getMængdeL() {
@@ -41,5 +43,9 @@ public class Destillat {
 
     public LocalDate getDestilleringsdato() {
         return destilleringsdato;
+    }
+
+    public Maltbatch getMaltbatch() {
+        return maltbatch;
     }
 }

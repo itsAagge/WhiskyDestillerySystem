@@ -1,9 +1,11 @@
 package gui;
 
+import javafx.application.Application;
+
 public class App {
     public static void main(String[] args) {
         initContent();
-        //Application.Start(INSERT_FRAME)
+        Application.launch(MainWindow.class);
     }
 
     private static void initContent() {
