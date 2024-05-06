@@ -18,7 +18,7 @@ public class Storage {
         return new ArrayList<>(destillater);
     }
 
-    public static ArrayList<Fad> getFads() {
+    public static ArrayList<Fad> getFade() {
         return new ArrayList<>(fade);
     }
 

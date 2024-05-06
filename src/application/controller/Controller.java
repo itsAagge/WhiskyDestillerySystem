@@ -7,13 +7,9 @@ import application.model.Maltbatch;
 import storage.Storage;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Controller {
-
-
-
-
-
 
     public static Destillat opretDestillat(double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato, Maltbatch maltbatch) {
         Destillat destillat = new Destillat(mængdeL, alkoholprocent, medarbejder, rygemateriale, kommentar, destilleringsdato, maltbatch);
@@ -38,6 +34,10 @@ public class Controller {
         Maltbatch maltbatch = new Maltbatch(mængdeL, gæringStart, gæringSlut, gærType, korn);
         Storage.tilføjMaltBatch(maltbatch);
         return maltbatch;
+    }
+
+    public static List<Fad> getAlleFade() {
+        return Storage.getFade();
     }
 
 }

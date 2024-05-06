@@ -55,7 +55,12 @@ public class Fad {
         return antalGangeBrugt;
     }
 
-    public boolean isErFyldt() {
+    public boolean erFyldt() {
         return erFyldt;
+    }
+
+    @Override
+    public String toString() {
+        return "Fad nr. " + this.fadNr + ". Ex-" + this.tidligereIndhold + " fad. " + this.størrelseL + " L";
     }
 }

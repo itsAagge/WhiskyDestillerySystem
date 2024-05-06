@@ -1,5 +1,6 @@
 package gui;
 
+import application.controller.Controller;
 import javafx.application.Application;
 
 public class App {
@@ -9,6 +10,10 @@ public class App {
     }
 
     private static void initContent() {
-
+        Controller.opretFad("Spanien", "Cherry", 30, "Eg", 9.5, 0);
+        Controller.opretFad("Spanien", "Cherry", 250, "Eg", 1.0, 0);
+        Controller.opretFad("Spanien", "Bourbon", 30, "Eg", 9.5, 1);
+        Controller.opretFad("Spanien", "Bourbon", 250, "Eg", 5, 0);
+        Controller.opretFad("Spanien", "Bourbon", 100, "Eg", 9.5, 1);
     }
 }
