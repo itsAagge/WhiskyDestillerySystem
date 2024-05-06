@@ -7,12 +7,14 @@ public class Maltbatch {
     private LocalDate gæringStart;
     private LocalDate gæringSlut;
     private String gærType;
+    private Korn korn;
 
-    public Maltbatch(double mængdeL, LocalDate gæringStart, LocalDate gæringSlut, String gærType) {
+    public Maltbatch(double mængdeL, LocalDate gæringStart, LocalDate gæringSlut, String gærType, Korn korn) {
         this.mængdeL = mængdeL;
         this.gæringStart = gæringStart;
         this.gæringSlut = gæringSlut;
         this.gærType = gærType;
+        this.korn = korn;
     }
 
     public double getMængdeL() {
@@ -29,5 +31,9 @@ public class Maltbatch {
 
     public String getGærType() {
         return gærType;
+    }
+
+    public Korn getKorn() {
+        return korn;
     }
 }
