@@ -9,6 +9,7 @@ public class Fad {
     private String træType;
     private double alderAfTidligereIndhold;
     private int antalGangeBrugt;
+    private boolean erFyldt;
 
     public Fad(String fraLand, String tidligereIndhold, int størrelseL, String træType, double alderAfTidligereIndhold, int antalGangeBrugt) {
         antalFade++;
@@ -19,6 +20,7 @@ public class Fad {
         this.træType = træType;
         this.alderAfTidligereIndhold = alderAfTidligereIndhold;
         this.antalGangeBrugt = antalGangeBrugt;
+        this.erFyldt = false;
     }
 
     public static int getAntalFade() {
@@ -51,5 +53,9 @@ public class Fad {
 
     public int getAntalGangeBrugt() {
         return antalGangeBrugt;
+    }
+
+    public boolean isErFyldt() {
+        return erFyldt;
     }
 }
