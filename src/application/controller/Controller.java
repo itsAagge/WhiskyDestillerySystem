@@ -17,8 +17,8 @@ public class Controller {
         return destillat;
     }
 
-    public static Fad opretFad(String fraLand, String tidligereIndhold, int størrelseL, String træType, double alderAfTidligereIndhold, int antalGangeBrugt) {
-        Fad fad = new Fad(fraLand, tidligereIndhold, størrelseL, træType, alderAfTidligereIndhold, antalGangeBrugt);
+    public static Fad opretFad(String fraLand, String tidligereIndhold, int størrelseL, String træType, double alderAfTidligereIndhold) {
+        Fad fad = new Fad(fraLand, tidligereIndhold, størrelseL, træType, alderAfTidligereIndhold);
         Storage.tilføjFad(fad);
         return fad;
 
@@ -38,6 +38,10 @@ public class Controller {
 
     public static List<Fad> getAlleFade() {
         return Storage.getFade();
+    }
+
+    public static void fjernFad(Fad fad) {
+        Storage.fjernFad(fad);
     }
 
 }
