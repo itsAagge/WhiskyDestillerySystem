@@ -3,6 +3,7 @@ package application.model;
 import java.time.LocalDate;
 
 public class Destillat {
+    private String spiritBatchNr;
     private double mængdeL;
     private double alkoholprocent;
     private String medarbejder;
@@ -11,7 +12,8 @@ public class Destillat {
     private LocalDate destilleringsdato;
     private Maltbatch maltbatch;
 
-    public Destillat(double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato, Maltbatch maltbatch) {
+    public Destillat(String spiritBatchNr, double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato, Maltbatch maltbatch) {
+        this.spiritBatchNr = spiritBatchNr;
         this.mængdeL = mængdeL;
         this.alkoholprocent = alkoholprocent;
         this.medarbejder = medarbejder;
@@ -47,5 +49,10 @@ public class Destillat {
 
     public Maltbatch getMaltbatch() {
         return maltbatch;
+    }
+
+    @Override
+    public String toString() {
+        return "Destillat " + this.spiritBatchNr;
     }
 }
