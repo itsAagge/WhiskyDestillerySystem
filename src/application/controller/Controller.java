@@ -38,7 +38,7 @@ public class Controller {
     public static Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, boolean flyttetFraFad, Fad førsteFad, Destillat[] destillater, double[] mængder) {
         Påfyldning påfyldning = new Påfyldning(påfyldningsDato, færdigDato, flyttetFraFad, førsteFad);
         if (!førsteFad.erFyldt()) {
-            påfyldning.tilføjDestillatMedMængde(destillater, mængder);
+            påfyldning.tilføjDestillatMedMængde(destillater, mængder, førsteFad);
         }
         førsteFad.addPåfyldning(påfyldning);
         førsteFad.setFyldt(true);

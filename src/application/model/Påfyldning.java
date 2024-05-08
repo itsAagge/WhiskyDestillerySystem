@@ -52,10 +52,15 @@ public class Påfyldning {
         }
     }
 
-    public void tilføjDestillatMedMængde(Destillat[] destillater, double[] mængde) {
-        //TODO - check om der er plads i fadet
-        for (int i = 0; i < destillater.length; i++) {
-            destillatMængder.put(destillater[i], mængde[i]);
+    public void tilføjDestillatMedMængde(Destillat[] destillater, double[] mængde, Fad førstefad) {
+        double mængdeIAlt = 0;
+        for (int i = 0; i < mængde.length; i++) {
+            mængdeIAlt += mængde[i];
+        }
+        if (mængdeIAlt <= førstefad.getStørrelseL()) {
+            for (int i = 0; i < destillater.length; i++) {
+                destillatMængder.put(destillater[i], mængde[i]);
+            }
         }
     }
 
