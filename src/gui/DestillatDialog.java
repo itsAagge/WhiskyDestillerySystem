@@ -3,6 +3,7 @@ package gui;
 import application.model.Destillat;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
@@ -11,9 +12,13 @@ import javafx.stage.StageStyle;
 
 public class DestillatDialog extends Stage {
     private Destillat destillat;
+    private TextField txfSpiritBatchNr = new TextField();
     private TextField txfMængde = new TextField();
     private TextField txfAlkoholProcent = new TextField();
     private TextField txfMedarbejder = new TextField();
+    private TextField txfRygemateriale = new TextField();
+    private TextField txfKommentar = new TextField();
+    private DatePicker datePicker = new DatePicker();
 
     public DestillatDialog(Destillat destillat) {
         this.initStyle(StageStyle.UTILITY);

@@ -99,6 +99,10 @@ public class Fad {
         this.leverandør = leverandør;
     }
 
+    public void setFyldt(boolean erFyldt) {
+        this.erFyldt = erFyldt;
+    }
+
     @Override
     public String toString() {
         return "Fad nr. " + this.fadNr + ". Ex-" + this.tidligereIndhold + " fad. " + this.størrelseL + " L";

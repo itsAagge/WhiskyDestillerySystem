@@ -1,6 +1,7 @@
 package application.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Påfyldning {
@@ -8,13 +9,14 @@ public class Påfyldning {
     private LocalDate færdigDato;
     private boolean flyttetFraFad;
     private HashMap<Destillat, Double> destillatMængder = new HashMap<>();
-    private Fad fad;
+    private ArrayList<Fad> fade;
 
-    public Påfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, boolean flyttetFraFad, Fad fad) {
+    public Påfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, boolean flyttetFraFad, Fad førsteFad) {
         this.påfyldningsDato = påfyldningsDato;
         this.færdigDato = færdigDato;
         this.flyttetFraFad = flyttetFraFad;
-        this.fad = fad;
+        this.fade.add(førsteFad);
+        førsteFad.setFyldt(true);
     }
 
     public void tilføjDestillatMedMængde(Destillat destillat, double mængde) {
@@ -31,8 +33,8 @@ public class Påfyldning {
         return destillat.getMængdeL();
     }
 
-    public double tjekFadPLads() {
-        return fad.getStørrelseL();
+    public double tjekFadPlads() {
+        return fade.getLast().getStørrelseL();
     }
 
 
