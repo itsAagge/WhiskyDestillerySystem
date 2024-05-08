@@ -5,8 +5,12 @@ import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import storage.Storage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Controller {
 
@@ -57,10 +61,27 @@ public class Controller {
         return Storage.getFade();
     }
 
+    public static List<Maltbatch> getAlleMaltbatche() { return Storage.getMaltbatche(); }
+
     public static List<Destillat> getAlleDestillater() { return Storage.getDestillater(); }
 
     public static void fjernFad(Fad fad) {
         Storage.fjernFad(fad);
     }
 
+    public static List<String> getMedarbejdere() {
+        List<String> medarbejdere = new ArrayList<>();
+        File file = new File("resources/medarbejdere.txt");
+        try {
+            Scanner scanner = new Scanner(file);
+
+            while (scanner.hasNextLine()) {
+                medarbejdere.add(scanner.nextLine());
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        return medarbejdere;
+    }
 }

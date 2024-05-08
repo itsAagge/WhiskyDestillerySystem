@@ -46,6 +46,10 @@ public class Destillat {
         return mængdeL;
     }
 
+    public String getSpiritBatchNr() {
+        return spiritBatchNr;
+    }
+
     public double getAlkoholprocent() {
         return alkoholprocent;
     }
@@ -69,6 +73,8 @@ public class Destillat {
     public Maltbatch getMaltbatch() {
         return maltbatch;
     }
+
+
 
     @Override
     public String toString() {

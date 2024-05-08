@@ -36,4 +36,9 @@ public class Maltbatch {
     public Korn getKorn() {
         return korn;
     }
+
+    @Override
+    public String toString() {
+        return this.gæringSlut.toString() + ". Korn: " + this.korn.getSort() + ". Gær: " + this.gærType;
+    }
 }

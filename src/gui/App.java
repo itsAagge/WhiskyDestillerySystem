@@ -26,10 +26,10 @@ public class App {
         Maltbatch maltbatch1 = Controller.opretMaltbatch(100, LocalDate.of(2019,12,15), LocalDate.of(2019,12,17), "Gær", hvede);
         Maltbatch maltbatch2 = Controller.opretMaltbatch(100, LocalDate.of(2019,12,15), LocalDate.of(2019,12,19), "Special gær", hvede);
 
-        Controller.opretDestillat("NM77P", 50, 70, "Snævar", null, null, LocalDate.of(2020,1,17), maltbatch1);
-        Controller.opretDestillat("NM78P",50, 70, "Snævar", null, "Kommentar2", LocalDate.of(2020,1,19), maltbatch1);
-        Controller.opretDestillat("NM79P",50, 70, "Snævar", "Tørv", null, LocalDate.of(2020,1,20), maltbatch2);
-        Controller.opretDestillat("NM80P",50, 70, "Snævar", null, null, LocalDate.of(2020,1,22), maltbatch2);
-        Controller.opretDestillat("NM81P",50, 70, "Lars", "Tørv", "Kommentar1", LocalDate.of(2020,1,25), maltbatch1);
+        Controller.opretDestillat("NM77P", 50, 70, "Snævar Njáll Albertsson", null, null, LocalDate.of(2020,1,17), maltbatch1);
+        Controller.opretDestillat("NM78P",50, 70, "Ingus Brikmanis", null, "Kommentar2", LocalDate.of(2020,1,19), maltbatch1);
+        Controller.opretDestillat("NM79P",50, 70, "Snævar Njáll Albertsson", "Tørv", null, LocalDate.of(2020,1,20), maltbatch2);
+        Controller.opretDestillat("NM80P",50, 70, "Snævar Njáll Albertsson", null, null, LocalDate.of(2020,1,22), maltbatch2);
+        Controller.opretDestillat("NM81P",50, 70, "Ingus Brikmanis", "Tørv", "Kommentar1", LocalDate.of(2020,1,25), maltbatch1);
     }
 }

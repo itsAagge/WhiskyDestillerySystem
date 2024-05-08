@@ -2,6 +2,7 @@ package gui;
 
 import application.controller.Controller;
 import application.model.Fad;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -76,7 +77,7 @@ public class FadDialog extends Stage {
 
         Button btnGem = new Button("Gem");
         pane.add(btnGem,1,6);
-        btnGem.setAlignment(Pos.BOTTOM_RIGHT);
+        pane.setHalignment(btnGem, HPos.RIGHT);
 
         btnGem.setOnAction(evnet -> gemAction());
     }
@@ -122,6 +123,7 @@ public class FadDialog extends Stage {
 
     private void hentFadData() {
         txfLand.setText(this.fad.getFraLand());
+        txfFirma.setText(this.fad.getLeverandør());
         txfStørrelse.setText(this.fad.getStørrelseL() + "");
         txfTræType.setText(this.fad.getTræType());
         String tidligereIndhold = this.fad.getTidligereIndhold();
