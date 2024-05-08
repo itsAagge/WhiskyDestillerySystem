@@ -1,5 +1,7 @@
 package application.model;
 
+import java.util.ArrayList;
+
 public class Fad {
     private static int antalFade = 0;
     private int fadNr;
@@ -12,6 +14,7 @@ public class Fad {
     private boolean erFyldt;
     private boolean erAktiv;
     private String leverandør;
+    private ArrayList<Påfyldning> påfyldninger;
 
     public Fad(String fraLand, String tidligereIndhold, int størrelseL, String træType, double alderAfTidligereIndhold, String leverandør) {
         antalFade++;
@@ -25,6 +28,24 @@ public class Fad {
         this.erFyldt = false;
         this.erAktiv = true;
         this.leverandør = leverandør;
+    }
+
+    public ArrayList<Påfyldning> getPåfyldninger() {
+        return new ArrayList<>(påfyldninger);
+    }
+
+    public void addPåfyldning(Påfyldning påfyldning) {
+        if (!påfyldninger.contains(påfyldning)) {
+            påfyldninger.add(påfyldning);
+            påfyldning.addFade(this);
+        }
+    }
+
+    public void removePåfyldning(Påfyldning påfyldning) {
+        if (påfyldninger.contains(påfyldning)) {
+            påfyldninger.remove(påfyldning);
+            påfyldning.removeFade(null);
+        }
     }
 
     public static int getAntalFade() {

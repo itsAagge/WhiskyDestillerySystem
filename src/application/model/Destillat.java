@@ -1,6 +1,7 @@
 package application.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Destillat {
     private String spiritBatchNr;
@@ -11,6 +12,7 @@ public class Destillat {
     private String kommentar;
     private LocalDate destilleringsdato;
     private Maltbatch maltbatch;
+    private ArrayList<Påfyldning> påfyldninger;
 
     public Destillat(String spiritBatchNr, double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato, Maltbatch maltbatch) {
         this.spiritBatchNr = spiritBatchNr;
@@ -21,6 +23,23 @@ public class Destillat {
         this.kommentar = kommentar;
         this.destilleringsdato = destilleringsdato;
         this.maltbatch = maltbatch;
+    }
+
+    public ArrayList<Påfyldning> getPåfyldningArrayList() {
+        return new ArrayList<>(påfyldninger);
+    }
+    public void addPåfyldning(Påfyldning påfyldning) {
+        if (!påfyldninger.contains(påfyldning)) {
+            påfyldninger.add(påfyldning);
+            påfyldning.addDestillat(this);
+        }
+    }
+
+    public void removePåfyldning(Påfyldning påfyldning) {
+        if (påfyldninger.contains(påfyldning)) {
+            påfyldninger.remove(påfyldning);
+            påfyldning.removeDestillat(this);
+        }
     }
 
     public double getMængdeL() {
@@ -55,4 +74,18 @@ public class Destillat {
     public String toString() {
         return "Destillat " + this.spiritBatchNr;
     }
+
+    public String beskrivelse() {
+        String s = "Denne destillat har Spirit batchnummer: " + this.spiritBatchNr + ". Denne er blevet destilleret den. " + this.destilleringsdato + " og den indeholder " + this.mængdeL + " liter, med en alkohol procent på " + this.alkoholprocent
+                + ". Denne destillering stammer fra en mark ved navn " + this.maltbatch.getKorn().getMarkNavn() + ". Denne korn sort er " + this.maltbatch.getKorn().getSort()
+                + " og som er høstet den. " + this.maltbatch.getKorn().getHøstDato() + ". Denne korn er blevet taget til et malteri, hvor det er blevet maltet ved hjælp af gærtypen " + maltbatch.getGærType() + ", og gæret fra: " + maltbatch.getGæringStart() + " til " + maltbatch.getGæringSlut();
+        if(rygemateriale != null) {
+            s += " Whiskey er blevet røget på " + rygemateriale;
+        }
+        if (kommentar != null) {
+            s += "\n" + kommentar;
+        }
+        return s;
+    }
+
 }
