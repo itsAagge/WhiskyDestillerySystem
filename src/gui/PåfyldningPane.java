@@ -1,5 +1,7 @@
 package gui;
 
+import application.controller.Controller;
+import application.model.Fad;
 import application.model.Påfyldning;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -8,6 +10,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+
+import java.util.ArrayList;
 
 
 public class PåfyldningPane extends GridPane {
@@ -29,6 +33,7 @@ public class PåfyldningPane extends GridPane {
         this.add(lblAllePåfyldninger, 0, 0);
         this.add(lvwPåfyldninger, 0, 1);
         //TODO - tilføj så alle påfyldninger vises
+        lvwPåfyldninger.getItems().setAll(getPåfyldninger());
 
         //Label og textarea til påfyldninges beskrivelse
         Label lblPåfyldningBeskrivelse = new Label("Beskrivelse af valgte påfyldning");
@@ -51,6 +56,16 @@ public class PåfyldningPane extends GridPane {
         hBoxButtons.getChildren().add(btnSletPåfyldning);
 
 
+    }
+
+    private ArrayList<Påfyldning> getPåfyldninger() {
+        ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
+        for (Fad fad : Controller.getAlleFade()) {
+            if(fad.erFyldt()) {
+
+            }
+        }
+        return påfyldninger;
     }
 
     private void sletPåfyldningAction() {
