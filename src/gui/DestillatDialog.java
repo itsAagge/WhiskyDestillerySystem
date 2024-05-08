@@ -1,29 +1,36 @@
 package gui;
 
+import application.controller.Controller;
 import application.model.Destillat;
+import application.model.Maltbatch;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.time.LocalDate;
 
 public class DestillatDialog extends Stage {
     private Destillat destillat;
     private TextField txfSpiritBatchNr = new TextField();
     private TextField txfMængde = new TextField();
     private TextField txfAlkoholProcent = new TextField();
-    private TextField txfMedarbejder = new TextField();
     private TextField txfRygemateriale = new TextField();
     private TextField txfKommentar = new TextField();
     private DatePicker datePicker = new DatePicker();
+    private ComboBox<String> comboBoxMedarbejdere = new ComboBox<>();
+    ListView<Maltbatch> lvwMaltbatche = new ListView<>();
 
     public DestillatDialog(Destillat destillat) {
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
+        //Todo: Find ud af hvorfor stagen ikke automatisk finder længden på alle elementer
+        this.setMinWidth(640);
         this.destillat = destillat;
         if (this.destillat == null) {
             this.setTitle("Opret destillat");
@@ -43,6 +50,89 @@ public class DestillatDialog extends Stage {
         pane.setVgap(10);
         pane.setGridLinesVisible(false);
 
+        Label lblSpiritBatchNr = new Label("Spirit Batch nr.:");
+        pane.add(lblSpiritBatchNr,0,0);
+        pane.add(txfSpiritBatchNr,1,0);
 
+        Label lblMængde = new Label("Størrelse:");
+        pane.add(lblMængde,0,1);
+        pane.add(txfMængde,1,1);
+        Label lblMængdeIndikator = new Label("L");
+        pane.add(lblMængdeIndikator,2,1);
+
+        Label lblAlkoholProcent = new Label("Alkoholprocent:");
+        pane.add(lblAlkoholProcent,0,2);
+        pane.add(txfAlkoholProcent,1,2);
+        Label lblAkoholProcentIndikator = new Label("%");
+        pane.add(lblAkoholProcentIndikator,2,2);
+
+        Label lblRygematerialer = new Label("Rygemateriale:");
+        pane.add(lblRygematerialer,0,3);
+        pane.add(txfRygemateriale,1,3);
+
+        Label lblKommentar = new Label("Kommentar:");
+        pane.add(lblKommentar,0,4);
+        pane.add(txfKommentar,1,4);
+
+        Label lblDato = new Label("Dato:");
+        pane.add(lblDato,0,5);
+        pane.add(datePicker,1,5);
+
+        Label lblMedarbejder = new Label("Medarbejder:");
+        pane.add(lblMedarbejder,0,6);
+        pane.add(comboBoxMedarbejdere,1,6);
+        comboBoxMedarbejdere.getItems().setAll(Controller.getMedarbejdere());
+
+        Label lblMaltbatche = new Label("Maltbatches");
+        pane.add(lblMaltbatche,3,0);
+        pane.add(lvwMaltbatche,3,1,1,6);
+        lvwMaltbatche.setPrefHeight(180);
+        lvwMaltbatche.getItems().setAll(Controller.getAlleMaltbatche());
+
+        if(this.destillat != null) {
+            hentDestillatData();
+        }
+
+        Button btnGem = new Button("Gem");
+        pane.add(btnGem,3,7);
+        pane.setHalignment(btnGem, HPos.RIGHT);
+    }
+
+    private void gemAction() {
+        //Todo: Færdiggør denne
+        String spiritBatchNr;
+        double mængde;
+        double alkoholprocent;
+        String rygemateriale;
+        String kommentar;
+        LocalDate dato = datePicker.getValue();
+        String medarbejder;
+
+        if(txfSpiritBatchNr.getText().isEmpty()) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive et Spirit Batch Nr.");
+        } else if(txfMængde.getText().isEmpty()) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en mængde");
+        } else if(txfAlkoholProcent.getText().isEmpty()) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en alkoholprocent");
+        } else if(comboBoxMedarbejdere.getSelectionModel().isEmpty()) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en medarbejder");
+        } else if(dato == null) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en dato");
+        }
+    }
+
+    private void hentDestillatData() {
+        txfSpiritBatchNr.setText(this.destillat.getSpiritBatchNr());
+        txfMængde.setText(this.destillat.getMængdeL() + "");
+        txfAlkoholProcent.setText(this.destillat.getAlkoholprocent() + "");
+        if(this.destillat.getRygemateriale() != null) {
+            txfRygemateriale.setText(this.destillat.getRygemateriale());
+        }
+        if(this.destillat.getKommentar() != null) {
+            txfKommentar.setText(this.destillat.getKommentar());
+        }
+        datePicker.setValue(this.destillat.getDestilleringsdato());
+        comboBoxMedarbejdere.getSelectionModel().select(this.destillat.getMedarbejder());
+        lvwMaltbatche.getSelectionModel().select(this.destillat.getMaltbatch());
     }
 }

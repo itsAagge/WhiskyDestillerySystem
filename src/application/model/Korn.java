@@ -30,4 +30,9 @@ public class Korn {
     public int getMængdeKg() {
         return mængdeKg;
     }
+
+    @Override
+    public String toString() {
+        return this.høstDato.toString() + ". Sort: " + this.sort + " fra " + this.markNavn;
+    }
 }

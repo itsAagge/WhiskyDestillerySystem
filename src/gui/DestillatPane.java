@@ -40,6 +40,7 @@ public class DestillatPane extends GridPane {
         btnOpretDestillat.setOnAction(event -> opretDestillatAction());
         btnRedigerDestillat.setOnAction(event -> redigerDestillatAction());
         btnSletDestillat.setOnAction(event -> sletDestillatAction());
+        setKnapperAktive(false);
     }
 
     private void sletDestillatAction() {
@@ -53,12 +54,25 @@ public class DestillatPane extends GridPane {
     }
 
     private void redigerDestillatAction() {
+        Destillat destillat = lvwDestillater.getSelectionModel().getSelectedItem();
+        DestillatDialog destillatDialog = new DestillatDialog(destillat);
+        destillatDialog.showAndWait();
+        lvwDestillater.getItems().setAll(Controller.getAlleDestillater());
+        setKnapperAktive(false);
     }
 
     private void opretDestillatAction() {
-
+        DestillatDialog destillatDialog = new DestillatDialog(null);
+        destillatDialog.showAndWait();
+        lvwDestillater.getItems().setAll(Controller.getAlleDestillater());
     }
 
     private void changeDestillat() {
+        setKnapperAktive(true);
+    }
+
+    private void setKnapperAktive(boolean bool) {
+        btnRedigerDestillat.setDisable(!bool);
+        btnSletDestillat.setDisable(!bool);
     }
 }
