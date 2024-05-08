@@ -14,7 +14,7 @@ public class Storage {
     private static ArrayList<Korn> kornList = new ArrayList<>();
     private static ArrayList<Maltbatch> maltbatches = new ArrayList<>();
 
-    public static ArrayList<Destillat> getDestillats() {
+    public static ArrayList<Destillat> getDestillater() {
         return new ArrayList<>(destillater);
     }
 
@@ -26,7 +26,7 @@ public class Storage {
         return new ArrayList<>(kornList);
     }
 
-    public static ArrayList<Maltbatch> getMaltbatches() {
+    public static ArrayList<Maltbatch> getMaltbatche() {
         return new ArrayList<>(maltbatches);
     }
 

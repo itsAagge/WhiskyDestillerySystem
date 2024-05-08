@@ -45,16 +45,12 @@ public class FadPane extends GridPane {
         HBox hBoxButtons = new HBox();
         hBoxButtons.setSpacing(20);
         this.add(hBoxButtons, 0, 4, 4, 1);
-        this.add(btnOpretFad, 0, 4);
         btnOpretFad.setOnAction(event -> this.opretFadAction());
         hBoxButtons.getChildren().add(btnOpretFad);
-        this.add(btnRedigerFad, 1, 4);
         btnRedigerFad.setOnAction(event -> this.redigerFadAction());
         hBoxButtons.getChildren().add(btnRedigerFad);
-        this.add(btnSletFad, 2, 4);
         btnSletFad.setOnAction(event -> this.sletFadAction());
         hBoxButtons.getChildren().add(btnSletFad);
-        this.add(btnDeaktiverFad, 3, 4);
         btnDeaktiverFad.setOnAction(event -> this.deaktiverFadAction());
         hBoxButtons.getChildren().add(btnDeaktiverFad);
         setKnapperAktive(false);
@@ -64,25 +60,25 @@ public class FadPane extends GridPane {
         this.add(txtAreaBeskrivelse, 3, 1, 2, 1);
         this.txtAreaBeskrivelse.setEditable(false);
         txtAreaBeskrivelse.setPrefWidth(250);
+        txtAreaBeskrivelse.setWrapText(true);
 
         Label lblNuværendePåfyldning = new Label("Nuværende påfyldning");
         this.add(lblNuværendePåfyldning, 3, 2);
         this.add(txtAreaNuværendePåfyldning, 3, 3, 2 ,1);
         this.txtAreaNuværendePåfyldning.setEditable(false);
         txtAreaNuværendePåfyldning.setPrefWidth(250);
+        txtAreaNuværendePåfyldning.setWrapText(true);
 
         Label lblTidligerePåfyldninger = new Label("Tidligere påfyldninger");
         this.add(lblTidligerePåfyldninger, 5, 0);
         this.add(lvwTidligerePåfyldninger, 5, 1, 1, 3);
         lvwTidligerePåfyldninger.setPrefWidth(250);
-
     }
 
     private void changeFad() {
         Fad fad = lvwFade.getSelectionModel().getSelectedItem();
 
-        //Todo: fix fad beskrivelse, så vi ikke bare kalder en toString
-        this.txtAreaBeskrivelse.setText(fad.toString());
+        this.txtAreaBeskrivelse.setText(fad.beskrivelse());
 
         //Todo: Når Påfyldningsklassen er færdig
         /*
@@ -121,7 +117,7 @@ public class FadPane extends GridPane {
     private void sletFadAction() {
         Fad fad = lvwFade.getSelectionModel().getSelectedItem();
         if(fad.erFyldt()) {
-            opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et fad med indhold.");
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et fad med indhold.");
         } /* else if() {
             //Todo: Efter implementering af Påfyldnignsklassen
             opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et fad, der har været indhold i tidligere. Disse fade skal deaktiveres");
@@ -130,14 +126,6 @@ public class FadPane extends GridPane {
         }
         lvwFade.getItems().setAll(Controller.getAlleFade());
         setKnapperAktive(false);
-    }
-
-    private Alert opretAlert(Alert.AlertType alertType, String title, String contentText) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setContentText(contentText);
-        alert.initModality(Modality.APPLICATION_MODAL);
-        return alert;
     }
 
     private void setKnapperAktive(boolean bool) {

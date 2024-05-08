@@ -11,8 +11,9 @@ public class Fad {
     private int antalGangeBrugt;
     private boolean erFyldt;
     private boolean erAktiv;
+    private String leverandør;
 
-    public Fad(String fraLand, String tidligereIndhold, int størrelseL, String træType, double alderAfTidligereIndhold) {
+    public Fad(String fraLand, String tidligereIndhold, int størrelseL, String træType, double alderAfTidligereIndhold, String leverandør) {
         antalFade++;
         this.fadNr = antalFade;
         this.fraLand = fraLand;
@@ -23,6 +24,7 @@ public class Fad {
         this.antalGangeBrugt = 0;
         this.erFyldt = false;
         this.erAktiv = true;
+        this.leverandør = leverandør;
     }
 
     public static int getAntalFade() {
@@ -65,6 +67,10 @@ public class Fad {
         return erAktiv;
     }
 
+    public String getLeverandør() {
+        return leverandør;
+    }
+
     public void setAktiv(boolean bool) {
         this.erAktiv = bool;
     }
@@ -89,8 +95,24 @@ public class Fad {
         this.alderAfTidligereIndhold = alderAfTidligereIndhold;
     }
 
+    public void setLeverandør(String leverandør) {
+        this.leverandør = leverandør;
+    }
+
     @Override
     public String toString() {
         return "Fad nr. " + this.fadNr + ". Ex-" + this.tidligereIndhold + " fad. " + this.størrelseL + " L";
+    }
+
+    public String beskrivelse() {
+        String s = "Fad nr. " + this.fadNr + " er fra " + this.leverandør + " i " + this.fraLand + " og har tidligere indeholdt " + this.tidligereIndhold
+                + ", som lå på fadet i " + this.alderAfTidligereIndhold + " år. Fadet er lavet af " + this.træType
+                + " og har en størrelse på " + this.størrelseL + " liter.";
+        if(!erAktiv) {
+            s += "\nFadet er inaktivt";
+        } else {
+            s += "\nFadet er aktivt";
+        }
+        return s;
     }
 }
