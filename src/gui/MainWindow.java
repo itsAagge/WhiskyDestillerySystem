@@ -42,14 +42,18 @@ public class MainWindow extends Application {
 
         Tab tabFade = new Tab("Fade");
         Tab tabDestillater = new Tab("Destillater");
+        Tab tabPåfyldninger = new Tab("Påfyldninger");
 
         FadPane fadPane = new FadPane();
         tabFade.setContent(fadPane);
         DestillatPane destillatPane = new DestillatPane();
         tabDestillater.setContent(destillatPane);
+        PåfyldningPane påfyldningPane = new PåfyldningPane();
+        tabPåfyldninger.setContent(påfyldningPane);
 
         tabPane.getTabs().add(tabFade);
         tabPane.getTabs().add(tabDestillater);
+        tabPane.getTabs().add(tabPåfyldninger);
 
         //tabFade.setOnSelectionChanged(event -> fadPane.updateControls());
         //tabDestillater.setOnSelectionChanged(event -> destillatPane.updateControls());
