@@ -35,6 +35,16 @@ public class Controller {
         return maltbatch;
     }
 
+    public static Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, boolean flyttetFraFad, Fad førsteFad, Destillat[] destillater, double[] mængder) {
+        Påfyldning påfyldning = new Påfyldning(påfyldningsDato, færdigDato, flyttetFraFad, førsteFad);
+        if (!førsteFad.erFyldt()) {
+            påfyldning.tilføjDestillatMedMængde(destillater, mængder);
+        }
+        førsteFad.addPåfyldning(påfyldning);
+        førsteFad.setFyldt(true);
+        return påfyldning;
+    }
+
     public static Alert opretAlert(Alert.AlertType alertType, String title, String contentText) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

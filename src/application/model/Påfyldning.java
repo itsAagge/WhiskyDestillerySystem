@@ -37,6 +37,7 @@ public class Påfyldning {
             destillat.removePåfyldning(this);
         }
     }
+
     public void addFade(Fad fad) {
         if (!fade.contains(fad)) {
             fade.add(fad);
@@ -51,13 +52,10 @@ public class Påfyldning {
         }
     }
 
-    public void tilføjDestillatMedMængde(Destillat destillat, double mængde) {
+    public void tilføjDestillatMedMængde(Destillat[] destillater, double[] mængde) {
         //TODO - check om der er plads i fadet
-        if(tjekDestillatMængde(destillat) >= mængde) {
-            destillatMængder.put(destillat, mængde);
-        }
-        else {
-            throw new IllegalArgumentException("Der er ikke nok destillat tilbage");
+        for (int i = 0; i < destillater.length; i++) {
+            destillatMængder.put(destillater[i], mængde[i]);
         }
     }
 
