@@ -2,19 +2,20 @@ package gui;
 
 import application.controller.Controller;
 import application.model.Destillat;
+import application.model.Påfyldning;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 
 import java.util.List;
 
 public class DestillatPane extends GridPane {
     private ListView<Destillat> lvwDestillater = new ListView<>();
+    private TextArea txaDestillatBeskrivelse = new TextArea();
+    private ListView<Påfyldning> lvwPåfyldningAfDestillat = new ListView<>();
     private Button btnOpretDestillat = new Button("Opret");
     private Button btnRedigerDestillat = new Button("Rediger");
     private Button btnSletDestillat = new Button("Slet");
@@ -32,6 +33,19 @@ public class DestillatPane extends GridPane {
         ChangeListener<Destillat> destillatChangeListener = (observableValue, oldValue, newValue) -> this.changeDestillat();
         lvwDestillater.getSelectionModel().selectedItemProperty().addListener(destillatChangeListener);
         lvwDestillater.setPrefWidth(250);
+
+        Label lblDestillatBeskrivelse = new Label("Destillates historie");
+        this.add(lblDestillatBeskrivelse, 1,0);
+        this.add(txaDestillatBeskrivelse, 1,1, 2,1);
+        txaDestillatBeskrivelse.setPrefWidth(250);
+        txaDestillatBeskrivelse.setWrapText(true);
+
+        Label lblPåfyldningAfDestillat = new Label("Påfyldning af destillat");
+        this.add(lblPåfyldningAfDestillat, 3,0);
+        this.add(lvwPåfyldningAfDestillat, 3, 1);
+        lvwPåfyldningAfDestillat.setPrefWidth(250);
+        //Todo add destillat påfyldninger
+        //lvwPåfyldningAfDestillat.getItems().setAll()
 
         HBox hBoxButtons = new HBox();
         hBoxButtons.setSpacing(20);
@@ -60,5 +74,11 @@ public class DestillatPane extends GridPane {
     }
 
     private void changeDestillat() {
+        Destillat destillat = lvwDestillater.getSelectionModel().getSelectedItem();
+
+        if (destillat != null) {
+            txaDestillatBeskrivelse.setText(destillat.beskrivelse());
+        }
+
     }
 }
