@@ -1,9 +1,6 @@
 package application.controller;
 
-import application.model.Destillat;
-import application.model.Fad;
-import application.model.Korn;
-import application.model.Maltbatch;
+import application.model.*;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import storage.Storage;

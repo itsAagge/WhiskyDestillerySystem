@@ -1,6 +1,7 @@
 package application.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Destillat {
     private String spiritBatchNr;
@@ -11,6 +12,7 @@ public class Destillat {
     private String kommentar;
     private LocalDate destilleringsdato;
     private Maltbatch maltbatch;
+    private ArrayList<Påfyldning> påfyldninger;
 
     public Destillat(String spiritBatchNr, double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato, Maltbatch maltbatch) {
         this.spiritBatchNr = spiritBatchNr;
@@ -21,6 +23,23 @@ public class Destillat {
         this.kommentar = kommentar;
         this.destilleringsdato = destilleringsdato;
         this.maltbatch = maltbatch;
+    }
+
+    public ArrayList<Påfyldning> getPåfyldningArrayList() {
+        return new ArrayList<>(påfyldninger);
+    }
+    public void addPåfyldning(Påfyldning påfyldning) {
+        if (!påfyldninger.contains(påfyldning)) {
+            påfyldninger.add(påfyldning);
+            påfyldning.addDestillat(this);
+        }
+    }
+
+    public void removePåfyldning(Påfyldning påfyldning) {
+        if (påfyldninger.contains(påfyldning)) {
+            påfyldninger.remove(påfyldning);
+            påfyldning.removeDestillat(this);
+        }
     }
 
     public double getMængdeL() {
