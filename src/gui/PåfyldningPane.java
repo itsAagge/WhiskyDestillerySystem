@@ -35,6 +35,7 @@ public class PåfyldningPane extends GridPane {
         //TODO - tilføj så alle påfyldninger vises
         lvwPåfyldninger.getItems().setAll(getPåfyldninger());
 
+
         //Label og textarea til påfyldninges beskrivelse
         Label lblPåfyldningBeskrivelse = new Label("Beskrivelse af valgte påfyldning");
         this.add(lblPåfyldningBeskrivelse, 1, 0);
@@ -62,7 +63,7 @@ public class PåfyldningPane extends GridPane {
         ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
         for (Fad fad : Controller.getAlleFade()) {
             if(fad.erFyldt()) {
-
+                påfyldninger.add(fad.getPåfyldninger().getLast());
             }
         }
         return påfyldninger;
