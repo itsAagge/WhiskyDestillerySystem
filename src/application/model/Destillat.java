@@ -74,7 +74,41 @@ public class Destillat {
         return maltbatch;
     }
 
+    public ArrayList<Påfyldning> getPåfyldninger() {
+        return påfyldninger;
+    }
 
+    public void setSpiritBatchNr(String spiritBatchNr) {
+        this.spiritBatchNr = spiritBatchNr;
+    }
+
+    public void setMængdeL(double mængdeL) {
+        this.mængdeL = mængdeL;
+    }
+
+    public void setAlkoholprocent(double alkoholprocent) {
+        this.alkoholprocent = alkoholprocent;
+    }
+
+    public void setMedarbejder(String medarbejder) {
+        this.medarbejder = medarbejder;
+    }
+
+    public void setRygemateriale(String rygemateriale) {
+        this.rygemateriale = rygemateriale;
+    }
+
+    public void setKommentar(String kommentar) {
+        this.kommentar = kommentar;
+    }
+
+    public void setDestilleringsdato(LocalDate destilleringsdato) {
+        this.destilleringsdato = destilleringsdato;
+    }
+
+    public void setMaltbatch(Maltbatch maltbatch) {
+        this.maltbatch = maltbatch;
+    }
 
     @Override
     public String toString() {

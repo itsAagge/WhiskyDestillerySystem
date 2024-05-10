@@ -107,6 +107,7 @@ public class FadDialog extends Stage {
             firma = txfFirma.getText().trim();
             størrelse = Integer.parseInt(txfStørrelse.getText());
             træType = txfTræType.getText().trim();
+            //Todo: Evt. lav dette om til en controllermetode, så der ikke er logik i gui
             if (this.fad != null) {
                 this.fad.setFraLand(land);
                 this.fad.setLeverandør(firma);

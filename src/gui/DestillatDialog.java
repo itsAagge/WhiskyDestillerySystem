@@ -96,17 +96,19 @@ public class DestillatDialog extends Stage {
         Button btnGem = new Button("Gem");
         pane.add(btnGem,3,7);
         pane.setHalignment(btnGem, HPos.RIGHT);
+
+        btnGem.setOnAction(event -> gemAction());
     }
 
     private void gemAction() {
-        //Todo: Færdiggør denne
-        String spiritBatchNr;
-        double mængde;
-        double alkoholprocent;
-        String rygemateriale;
-        String kommentar;
+        String spiritBatchNr = null;
+        double mængde = 0.0;
+        double alkoholprocent = 0.0;
+        String rygemateriale = null;
+        String kommentar = null;
         LocalDate dato = datePicker.getValue();
-        String medarbejder;
+        String medarbejder = null;
+        Maltbatch maltbatch = null;
 
         if(txfSpiritBatchNr.getText().isEmpty()) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive et Spirit Batch Nr.");
@@ -118,6 +120,34 @@ public class DestillatDialog extends Stage {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en medarbejder");
         } else if(dato == null) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en dato");
+        } else if(lvwMaltbatche.getSelectionModel().isEmpty()) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge et maltbatch");
+        } else {
+            if(!txfRygemateriale.getText().isEmpty()) {
+                rygemateriale = txfRygemateriale.getText().trim();
+            }
+            if(!txfKommentar.getText().isEmpty()) {
+                kommentar = txfKommentar.getText().trim();
+            }
+            spiritBatchNr = txfSpiritBatchNr.getText().trim();
+            mængde = Double.parseDouble(txfMængde.getText());
+            alkoholprocent = Double.parseDouble(txfAlkoholProcent.getText());
+            dato = datePicker.getValue();
+            medarbejder = comboBoxMedarbejdere.getSelectionModel().getSelectedItem().trim();
+            maltbatch = lvwMaltbatche.getSelectionModel().getSelectedItem();
+            if (destillat != null) {
+                //Todo: Evt. lav dette om til en controllermetode, så der ikke er logik i gui
+                this.destillat.setSpiritBatchNr(spiritBatchNr);
+                this.destillat.setMængdeL(mængde);
+                this.destillat.setAlkoholprocent(alkoholprocent);
+                this.destillat.setDestilleringsdato(dato);
+                this.destillat.setMedarbejder(medarbejder);
+                this.destillat.setRygemateriale(rygemateriale);
+                this.destillat.setKommentar(kommentar);
+                this.destillat.setMaltbatch(maltbatch);
+            } else {
+                Controller.opretDestillat(spiritBatchNr, mængde, alkoholprocent, medarbejder, rygemateriale, kommentar, dato, maltbatch);
+            }
         }
     }
 
