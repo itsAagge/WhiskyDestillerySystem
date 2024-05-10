@@ -148,6 +148,7 @@ public class DestillatDialog extends Stage {
             } else {
                 Controller.opretDestillat(spiritBatchNr, mængde, alkoholprocent, medarbejder, rygemateriale, kommentar, dato, maltbatch);
             }
+            this.close();
         }
     }
 
