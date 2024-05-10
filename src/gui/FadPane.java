@@ -8,7 +8,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Modality;
 
 public class FadPane extends GridPane {
     private ListView<Fad> lvwFade = new ListView<>();
@@ -78,17 +77,15 @@ public class FadPane extends GridPane {
     private void changeFad() {
         Fad fad = lvwFade.getSelectionModel().getSelectedItem();
 
-        this.txtAreaBeskrivelse.setText(fad.beskrivelse());
+        this.txtAreaBeskrivelse.setText(fad.getBeskrivelseMedEkstraInfo());
 
-        //Todo: Når Påfyldningsklassen er færdig
-        /*
         if (fad.erFyldt()) {
-            Påfyldning påfyldning = fad.getPåfyldninger.getLast();
-            this.txtAreaNuværendePåfyldning.setText(påfyldning.getBeskrivelse());
+            Påfyldning påfyldning = fad.getPåfyldninger().getLast();
+            //Todo: Opret beskrivelse af påfyldning
+            //this.txtAreaNuværendePåfyldning.setText(påfyldning.);
         } else {
             this.txtAreaNuværendePåfyldning.setText("Fadet er tomt.");
         }
-         */
 
         setKnapperAktive(true);
     }
@@ -118,10 +115,9 @@ public class FadPane extends GridPane {
         Fad fad = lvwFade.getSelectionModel().getSelectedItem();
         if(fad.erFyldt()) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et fad med indhold.");
-        } /* else if() {
-            //Todo: Efter implementering af Påfyldnignsklassen
-            opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et fad, der har været indhold i tidligere. Disse fade skal deaktiveres");
-        } */ else {
+        } else if(!fad.getPåfyldninger().isEmpty()) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et fad, der har været indhold i tidligere. Disse fade skal deaktiveres");
+        } else {
             Controller.fjernFad(fad);
         }
         lvwFade.getItems().setAll(Controller.getAlleFade());

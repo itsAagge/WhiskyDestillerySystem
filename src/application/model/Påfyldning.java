@@ -8,7 +8,7 @@ public class Påfyldning {
     private LocalDate påfyldningsDato;
     private LocalDate færdigDato;
     private boolean flyttetFraFad; //Skal vi bruge denne, når vi gemmer hele historikken af fade i en ArrayList?
-    private HashMap<Destillat, Double> destillatMængder = new HashMap<>();
+    private HashMap<Destillat, Double> destillatMængder;
     private ArrayList<Fad> fade;
     private ArrayList<Destillat> destillater; //Var hele ideen med at bruge et HashMap ikke, at vi slap for denne?
 
@@ -16,7 +16,10 @@ public class Påfyldning {
         this.påfyldningsDato = påfyldningsDato;
         this.færdigDato = færdigDato;
         this.flyttetFraFad = flyttetFraFad;
+        this.destillatMængder = new HashMap<>();
+        this.fade = new ArrayList<>();
         this.fade.add(førsteFad);
+        this.destillater = new ArrayList<>();
     }
 
     public ArrayList<Fad> getFade() {

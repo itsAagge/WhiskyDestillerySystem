@@ -28,6 +28,7 @@ public class Fad {
         this.erFyldt = false;
         this.erAktiv = true;
         this.leverandør = leverandør;
+        this.påfyldninger = new ArrayList<>();
     }
 
     public ArrayList<Påfyldning> getPåfyldninger() {
@@ -129,10 +130,14 @@ public class Fad {
         return "Fad nr. " + this.fadNr + ". Ex-" + this.tidligereIndhold + " fad. " + this.størrelseL + " L";
     }
 
-    public String beskrivelse() {
-        String s = "Fad nr. " + this.fadNr + " er fra " + this.leverandør + " i " + this.fraLand + " og har tidligere indeholdt " + this.tidligereIndhold
+    public String getBeskrivelse() {
+        return "Fad nr. " + this.fadNr + " er fra " + this.leverandør + " i " + this.fraLand + " og har tidligere indeholdt " + this.tidligereIndhold
                 + ", som lå på fadet i " + this.alderAfTidligereIndhold + " år. Fadet er lavet af " + this.træType
                 + " og har en størrelse på " + this.størrelseL + " liter.";
+    }
+
+    public String getBeskrivelseMedEkstraInfo() { //Til listviewet i systemet
+        String s = this.getBeskrivelse();
         if(!erAktiv) {
             s += "\nFadet er inaktivt";
         } else {

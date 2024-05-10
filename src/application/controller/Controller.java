@@ -69,6 +69,8 @@ public class Controller {
         Storage.fjernFad(fad);
     }
 
+    public static void fjernDestillat(Destillat destillat) { Storage.fjernDestilat(destillat); }
+
     public static List<String> getMedarbejdere() {
         List<String> medarbejdere = new ArrayList<>();
         File file = new File("resources/medarbejdere.txt");

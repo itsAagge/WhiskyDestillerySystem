@@ -23,11 +23,9 @@ public class Destillat {
         this.kommentar = kommentar;
         this.destilleringsdato = destilleringsdato;
         this.maltbatch = maltbatch;
+        this.påfyldninger = new ArrayList<>();
     }
 
-    public ArrayList<Påfyldning> getPåfyldningArrayList() {
-        return new ArrayList<>(påfyldninger);
-    }
     public void addPåfyldning(Påfyldning påfyldning) {
         if (!påfyldninger.contains(påfyldning)) {
             påfyldninger.add(påfyldning);
@@ -75,7 +73,7 @@ public class Destillat {
     }
 
     public ArrayList<Påfyldning> getPåfyldninger() {
-        return påfyldninger;
+        return new ArrayList<>(påfyldninger);
     }
 
     public void setSpiritBatchNr(String spiritBatchNr) {
@@ -115,12 +113,16 @@ public class Destillat {
         return "Destillat " + this.spiritBatchNr;
     }
 
-    public String beskrivelse() {
-        String s = "Denne destillat har Spirit batchnummer: " + this.spiritBatchNr + ". Denne er blevet destilleret den. " + this.destilleringsdato + " og den indeholder " + this.mængdeL + " liter, med en alkohol procent på " + this.alkoholprocent
+    public String getBeskrivelse() {
+        return "Denne destillat har Spirit batchnummer: " + this.spiritBatchNr + ". Denne er blevet destilleret den. " + this.destilleringsdato + " og den indeholder " + this.mængdeL + " liter, med en alkohol procent på " + this.alkoholprocent
                 + ". Denne destillering stammer fra en mark ved navn " + this.maltbatch.getKorn().getMarkNavn() + ". Denne korn sort er " + this.maltbatch.getKorn().getSort()
                 + " og som er høstet den. " + this.maltbatch.getKorn().getHøstDato() + ". Denne korn er blevet taget til et malteri, hvor det er blevet maltet ved hjælp af gærtypen " + maltbatch.getGærType() + ", og gæret fra: " + maltbatch.getGæringStart() + " til " + maltbatch.getGæringSlut();
+    }
+
+    public String getBeskrivelseMedEkstraInfo() { //Til listviewet i systemet
+        String s = this.getBeskrivelse();
         if(rygemateriale != null) {
-            s += " Whiskey er blevet røget på " + rygemateriale;
+            s += "\n \n Whiskey er blevet røget på " + rygemateriale;
         }
         if (kommentar != null) {
             s += "\n" + kommentar;

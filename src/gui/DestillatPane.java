@@ -8,7 +8,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 
 import java.util.List;
 
@@ -40,12 +39,10 @@ public class DestillatPane extends GridPane {
         txaDestillatBeskrivelse.setPrefWidth(250);
         txaDestillatBeskrivelse.setWrapText(true);
 
-        Label lblPåfyldningAfDestillat = new Label("Påfyldning af destillat");
+        Label lblPåfyldningAfDestillat = new Label("Påfyldninger af destillat");
         this.add(lblPåfyldningAfDestillat, 3,0);
         this.add(lvwPåfyldningAfDestillat, 3, 1);
         lvwPåfyldningAfDestillat.setPrefWidth(250);
-        //Todo add destillat påfyldninger
-        //lvwPåfyldningAfDestillat.getItems().setAll()
 
         HBox hBoxButtons = new HBox();
         hBoxButtons.setSpacing(20);
@@ -60,11 +57,11 @@ public class DestillatPane extends GridPane {
     private void sletDestillatAction() {
         Destillat destillat = lvwDestillater.getSelectionModel().getSelectedItem();
 
-        /*
-        if(!destillat.getPåfyldninger.isEmpty) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et destillat, der er brugt til påfyldninger");
+        if(!destillat.getPåfyldninger().isEmpty()) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et destillat, der er hældt på fade");
+        } else {
+            Controller.fjernDestillat(destillat);
         }
-         */
     }
 
     private void redigerDestillatAction() {
@@ -85,7 +82,10 @@ public class DestillatPane extends GridPane {
         Destillat destillat = lvwDestillater.getSelectionModel().getSelectedItem();
 
         if (destillat != null) {
-            txaDestillatBeskrivelse.setText(destillat.beskrivelse());
+            txaDestillatBeskrivelse.setText(destillat.getBeskrivelseMedEkstraInfo());
+            if(!destillat.getPåfyldninger().isEmpty()) {
+                lvwPåfyldningAfDestillat.getItems().setAll(destillat.getPåfyldninger());
+            }
         }
 
         setKnapperAktive(true);
