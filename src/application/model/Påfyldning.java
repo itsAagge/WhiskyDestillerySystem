@@ -7,21 +7,20 @@ import java.util.HashMap;
 public class Påfyldning {
     private LocalDate påfyldningsDato;
     private LocalDate færdigDato;
-    private boolean flyttetFraFad;
+    private boolean flyttetFraFad; //Skal vi bruge denne, når vi gemmer hele historikken af fade i en ArrayList?
     private HashMap<Destillat, Double> destillatMængder = new HashMap<>();
     private ArrayList<Fad> fade;
-    private ArrayList<Destillat> destillater;
+    private ArrayList<Destillat> destillater; //Var hele ideen med at bruge et HashMap ikke, at vi slap for denne?
 
     public Påfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, boolean flyttetFraFad, Fad førsteFad) {
         this.påfyldningsDato = påfyldningsDato;
         this.færdigDato = færdigDato;
         this.flyttetFraFad = flyttetFraFad;
         this.fade.add(førsteFad);
-        førsteFad.setFyldt(true);
     }
 
     public ArrayList<Fad> getFade() {
-        return new ArrayList<>(fade);
+        return new ArrayList<>(fade); //Måske skal vi også have en getter, som bare henter det fad, som påfyldningen er i?
     }
 
     public void addDestillat(Destillat destillat) {
@@ -38,14 +37,14 @@ public class Påfyldning {
         }
     }
 
-    public void addFade(Fad fad) {
+    public void addFad(Fad fad) {
         if (!fade.contains(fad)) {
             fade.add(fad);
             fad.addPåfyldning(this);
         }
     }
 
-    public void removeFade(Fad fad) {
+    public void removeFad(Fad fad) {
         if (fade.contains(fad)) {
             fade.remove(fad);
             fad.removePåfyldning(this);
@@ -65,11 +64,11 @@ public class Påfyldning {
     }
 
     public double tjekDestillatMængde(Destillat destillat) {
-        return destillat.getMængdeL();
+        return destillat.getMængdeL(); //Hvorfor har vi en metode til dette i påfyldningsklassen? Man kan da bare kalde den på destillatklassen.
     }
 
     public double tjekFadPlads() {
-        return fade.getLast().getStørrelseL();
+        return fade.getLast().getStørrelseL(); //Hvis ideen er at tjekke, om der er plads i fadet inden påfyldningen bliver oprettet, vil fadet endnu ikke være i denne ArrayListe.
     }
 
 
