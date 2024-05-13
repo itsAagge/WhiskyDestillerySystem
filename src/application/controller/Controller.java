@@ -39,7 +39,7 @@ public class Controller {
         return maltbatch;
     }
 
-    private static Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad, Destillat[] destillater, double[] mængder) {
+    private static Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad, ArrayList<Destillat> destillater, ArrayList<Double> mængder) {
         Påfyldning påfyldning = new Påfyldning(påfyldningsDato, færdigDato, førsteFad);
         påfyldning.tilføjDestillatMedMængde(destillater, mængder);
         førsteFad.addPåfyldning(påfyldning);
@@ -47,15 +47,15 @@ public class Controller {
         return påfyldning;
     }
 
-    public static List<Påfyldning> opretPåfyldninger(ArrayList<Fad> fade, LocalDate påfyldningsDato, LocalDate færdigDato, Destillat[] destillater, double[] mængder) {
+    public static List<Påfyldning> opretPåfyldninger(List<Fad> fade, LocalDate påfyldningsDato, LocalDate færdigDato, ArrayList<Destillat> destillater, ArrayList<Double> mængder) {
         ArrayList<Påfyldning> oprettedePåfyldninger = new ArrayList<>();
 
         //Beregner den totale mængde af destillater og tjekker, om der er nok tilbage af destillaterne til at oprette disse påfyldninger
         double mængdeIAlt = 0;
         boolean derErNokDestillatTilbage = true;
-        for (int i = 0; i < destillater.length; i++) {
-            mængdeIAlt += mængder[i];
-            if (destillater[i].mængdeTilbage() < mængder[i]) {  //Tjekker om der er nok destillat tilbage til påfyldningerne
+        for (int i = 0; i < destillater.size(); i++) {
+            mængdeIAlt += mængder.get(i);
+            if (destillater.get(i).mængdeTilbage() < mængder.get(i)) {  //Tjekker om der er nok destillat tilbage til påfyldningerne
                 derErNokDestillatTilbage = false;
             }
         }
@@ -78,9 +78,9 @@ public class Controller {
         else {
             for (Fad fad : fade) {
                 double størrelsesforhold = fad.getStørrelseL() / fadPladsTotalt; //Beregner fadets procentvise størrelse af alle fadene
-                double[] mængderIDetteFad = new double[mængder.length];
-                for (int i = 0; i < mængderIDetteFad.length; i++) {
-                    mængderIDetteFad[i] = mængder[i] * størrelsesforhold;
+                ArrayList<Double> mængderIDetteFad = new ArrayList<>();
+                for (int i = 0; i < mængder.size(); i++) {
+                    mængderIDetteFad.add(mængder.get(i) * størrelsesforhold);
                 }
                 Påfyldning påfyldning = opretPåfyldning(påfyldningsDato, færdigDato, fad, destillater, mængderIDetteFad);
                 oprettedePåfyldninger.add(påfyldning);

@@ -15,13 +15,13 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class påfyldningsDialog extends Stage {
 
     Påfyldning påfyldning;
-    //ListView<Destillat> lvwDestillat = new ListView<>();
     ComboBox<Destillat> cBoxDestillater = new ComboBox<>();
     ListView<Fad> lvwFad = new ListView<>();
     DatePicker dpPåfyldningsdato = new DatePicker();
@@ -95,16 +95,21 @@ public class påfyldningsDialog extends Stage {
 
     }
 
-    double[] mængder;
-    Destillat[] destillats;
+    ArrayList<Double> mængder = new ArrayList<>();
+    ArrayList<Destillat> destillats = new ArrayList<>();
 
     private void tilføjDestillat() {
         double mængde = Double.parseDouble(txfMængde.getText().trim());
         Destillat destillat = cBoxDestillater.getSelectionModel().getSelectedItem();
 
         if (destillat != null && mængde > 0) {
-            Arrays.fill(destillats, destillat);
-            Arrays.fill(mængder, mængde);
+            destillats.add(destillat);
+            mængder.add(mængde);
+            cBoxDestillater.getSelectionModel().clearSelection(destillats.indexOf(destillat));
+            if (destillat.mængdeTilbage() == 0) {
+                cBoxDestillater.getItems().remove(destillat);
+            }
+
         }
 
     }
@@ -114,8 +119,9 @@ public class påfyldningsDialog extends Stage {
         LocalDate påfyldningsdato = dpPåfyldningsdato.getValue();
         LocalDate færdigDato = dpFærdigDato.getValue();
 
-        if (!fade.isEmpty() && påfyldningsdato != null && destillats.length > 0 && mængder.length > 0 && destillats.length == mængder.length) {
-
+        if (!fade.isEmpty() && påfyldningsdato != null && !destillats.isEmpty() && !mængder.isEmpty() && destillats.size() == mængder.size()) {
+           Controller.opretPåfyldninger(fade, påfyldningsdato, færdigDato, destillats, mængder);
+           this.close();
         }
 
 
