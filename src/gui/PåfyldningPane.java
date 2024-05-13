@@ -68,6 +68,7 @@ public class PåfyldningPane extends GridPane {
         }
     }
 
+    //Todo: Denne metode skal i Controlleren
     private ArrayList<Påfyldning> getPåfyldninger() {
         ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
         for (Fad fad : Controller.getAlleFade()) {

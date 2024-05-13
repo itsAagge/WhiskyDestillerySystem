@@ -83,7 +83,7 @@ public class DestillatPane extends GridPane {
         Destillat destillat = lvwDestillater.getSelectionModel().getSelectedItem();
 
         if (destillat != null) {
-            txaDestillatBeskrivelse.setText(destillat.getBeskrivelseMedEkstraInfo());
+            txaDestillatBeskrivelse.setText(destillat.getBeskrivelseTilListView());
             if(!destillat.getPåfyldninger().isEmpty()) {
                 lvwPåfyldningAfDestillat.getItems().setAll(destillat.getPåfyldninger());
             }

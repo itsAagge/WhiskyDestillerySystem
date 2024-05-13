@@ -77,12 +77,11 @@ public class FadPane extends GridPane {
     private void changeFad() {
         Fad fad = lvwFade.getSelectionModel().getSelectedItem();
 
-        this.txtAreaBeskrivelse.setText(fad.getBeskrivelseMedEkstraInfo());
+        this.txtAreaBeskrivelse.setText(fad.getBeskrivelseTilListView());
 
         if (fad.erFyldt()) {
             Påfyldning påfyldning = fad.getPåfyldninger().getLast();
-            //Todo: Opret beskrivelse af påfyldning
-            //this.txtAreaNuværendePåfyldning.setText(påfyldning.);
+            this.txtAreaNuværendePåfyldning.setText(påfyldning.getBeskrivelseKort());
         } else {
             this.txtAreaNuværendePåfyldning.setText("Fadet er tomt.");
         }

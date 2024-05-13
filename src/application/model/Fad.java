@@ -131,12 +131,12 @@ public class Fad {
     }
 
     public String getBeskrivelse() {
-        return "Fad nr. " + this.fadNr + " er fra " + this.leverandør + " i " + this.fraLand + " og har tidligere indeholdt " + this.tidligereIndhold
+        return "Dette fad er fra " + this.leverandør + " i " + this.fraLand + " og har tidligere indeholdt " + this.tidligereIndhold
                 + ", som lå på fadet i " + this.alderAfTidligereIndhold + " år. Fadet er lavet af " + this.træType
                 + " og har en størrelse på " + this.størrelseL + " liter.";
     }
 
-    public String getBeskrivelseMedEkstraInfo() { //Til listviewet i systemet
+    public String getBeskrivelseTilListView() { //Til listviewet i systemet
         String s = this.getBeskrivelse();
         if(!erAktiv) {
             s += "\n\nFadet er inaktivt.";
