@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Påfyldning {
+    private static int antalPåfyldninger = 0;
+    private int påfyldningsNr;
     private LocalDate påfyldningsDato;
     private LocalDate færdigDato;
     private HashMap<Destillat, Double> destillatMængder;
@@ -12,6 +14,8 @@ public class Påfyldning {
     //TODO: Tilføj ArrayList med LocalDates til Use Case om flytning af påfyldning mellem fade
 
     public Påfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad) {
+        antalPåfyldninger++;
+        this.påfyldningsNr = antalPåfyldninger;
         this.påfyldningsDato = påfyldningsDato;
         this.færdigDato = færdigDato;
         this.destillatMængder = new HashMap<>();
@@ -89,7 +93,7 @@ public class Påfyldning {
     public String toString() {
         String s = "";
         int size = 0;
-        s += "Påfyldning. Destillat: ";
+        s += "Påfyldning " + this.påfyldningsNr + ". Fad nr. " + this.fade.getLast().getFadNr() + ". Destillat: ";
         for (Destillat destillat : destillatMængder.keySet()) {
             s += destillat.getSpiritBatchNr();
             size++;

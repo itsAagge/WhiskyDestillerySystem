@@ -31,7 +31,7 @@ public class DestillatPane extends GridPane {
         lvwDestillater.getItems().setAll(Controller.getAlleDestillater());
         ChangeListener<Destillat> destillatChangeListener = (observableValue, oldValue, newValue) -> this.changeDestillat();
         lvwDestillater.getSelectionModel().selectedItemProperty().addListener(destillatChangeListener);
-        lvwDestillater.setPrefWidth(250);
+        lvwDestillater.setPrefWidth(200);
 
         Label lblDestillatBeskrivelse = new Label("Destillates historie");
         this.add(lblDestillatBeskrivelse, 1,0);
