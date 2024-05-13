@@ -124,6 +124,7 @@ public class Controller {
         alert.setTitle(title);
         alert.setContentText(contentText);
         alert.initModality(Modality.APPLICATION_MODAL);
+        alert.show();
         return alert;
     }
 
