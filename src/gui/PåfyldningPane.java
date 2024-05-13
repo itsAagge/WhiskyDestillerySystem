@@ -1,8 +1,10 @@
 package gui;
 
 import application.controller.Controller;
+import application.model.Destillat;
 import application.model.Fad;
 import application.model.Påfyldning;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -40,7 +42,11 @@ public class PåfyldningPane extends GridPane {
         Label lblPåfyldningBeskrivelse = new Label("Beskrivelse af valgte påfyldning");
         this.add(lblPåfyldningBeskrivelse, 1, 0);
         this.add(txtPåfyldningsBeskrivelse, 1,1);
+        txtPåfyldningsBeskrivelse.setWrapText(true);
         //TODO - gør sådan at den valgte påfyldnings beskrivelse vises
+        ChangeListener<Påfyldning> påfyldningChangeListener = (observableValue, oldValue, newValue) -> this.changePåfyldning();
+        lvwPåfyldninger.getSelectionModel().selectedItemProperty().addListener(påfyldningChangeListener);
+
 
         //Hbox af knapper
         HBox hBoxButtons = new HBox();
@@ -55,8 +61,14 @@ public class PåfyldningPane extends GridPane {
         //Knap til sletning af påfyldning
         btnSletPåfyldning.setOnAction(event -> this.sletPåfyldningAction());
         hBoxButtons.getChildren().add(btnSletPåfyldning);
+    }
 
+    private void changePåfyldning() {
+        Påfyldning påfyldning = lvwPåfyldninger.getSelectionModel().getSelectedItem();
 
+        if (påfyldning != null) {
+            txtPåfyldningsBeskrivelse.setText(påfyldning.getBeskrivelse());
+        }
     }
 
     private ArrayList<Påfyldning> getPåfyldninger() {

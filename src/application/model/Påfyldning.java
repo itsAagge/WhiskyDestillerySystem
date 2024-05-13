@@ -1,5 +1,7 @@
 package application.model;
 
+import com.sun.source.tree.IfTree;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +11,7 @@ public class Påfyldning {
     private LocalDate færdigDato;
     private boolean flyttetFraFad; //Skal vi bruge denne, når vi gemmer hele historikken af fade i en ArrayList?
     private HashMap<Destillat, Double> destillatMængder;
+    //TODO er det meningen at vi ikke bruger fadArrayList som parameter i constructor
     private ArrayList<Fad> fade;
     private ArrayList<Destillat> destillater; //Var hele ideen med at bruge et HashMap ikke, at vi slap for denne?
 
@@ -74,5 +77,42 @@ public class Påfyldning {
         return fade.getLast().getStørrelseL(); //Hvis ideen er at tjekke, om der er plads i fadet inden påfyldningen bliver oprettet, vil fadet endnu ikke være i denne ArrayListe.
     }
 
+    public String getBeskrivelse() {
+        String s = "";
+        int size = 0;
+        s += "Påfyldningen er blevet påfyldt den. " + this.påfyldningsDato + ".";
+        if (færdigDato != null) {
+            s += " Denne påfyldning er sat til at være færdig den. " + this.færdigDato + ".";
+        }
+        s += " Påfyldningen indeholder " + destillatMængder.toString() + ", og er fyldt i fad med fadnr: ";
+        for (Fad fad : fade) {
+            s += fad.getFadNr();
+            size++;
+            if (size < fade.size()) {
+                s += ", ";
+            }
+        }
 
+
+        if (flyttetFraFad) {
+            s += " Denne påfyldningen stammer fra et andet fad og ikke direkte fra et distillat";
+        }
+        return s;
+    }
+
+    @Override
+    public String toString() {
+        String s = "";
+        int size = 0;
+        s += "påfyldning" + " {destillat: ";
+        for (Destillat destillat : destillatMængder.keySet()) {
+            s += destillat.getSpiritBatchNr();
+            size++;
+            if (size < destillatMængder.size()) {
+                s += ", ";
+            }
+        }
+        s += "}.";
+        return s;
+    }
 }
