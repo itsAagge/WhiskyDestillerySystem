@@ -112,7 +112,7 @@ public class Destillat {
     }
 
     public String getBeskrivelse() {
-        String s = "Denne destillat har Spirit batchnummer: " + this.spiritBatchNr + ". Denne er blevet destilleret den. " + this.destilleringsdato + " og den indeholder " + this.mængdeL + " liter, med en alkohol procent på " + this.alkoholprocent
+        String s = "Dette destillat er blevet destilleret den. " + this.destilleringsdato + " og den indeholder " + this.mængdeL + " liter, med en alkohol procent på " + this.alkoholprocent
                 + ". Denne destillering stammer fra en mark ved navn " + this.maltbatch.getKorn().getMarkNavn() + ". Denne korn sort er " + this.maltbatch.getKorn().getSort()
                 + " og som er høstet den. " + this.maltbatch.getKorn().getHøstDato() + ". Denne korn er blevet taget til et malteri, hvor det er blevet maltet ved hjælp af gærtypen " + maltbatch.getGærType() + ", og gæret fra: " + maltbatch.getGæringStart() + " til " + maltbatch.getGæringSlut() + ".";
         if(rygemateriale != null) {
@@ -121,7 +121,7 @@ public class Destillat {
         return s;
     }
 
-    public String getBeskrivelseMedEkstraInfo() { //Til listviewet i systemet
+    public String getBeskrivelseTilListView() { //Til listviewet i systemet
         String s = this.getBeskrivelse();
         if (kommentar != null) {
             s += "\n" + kommentar;

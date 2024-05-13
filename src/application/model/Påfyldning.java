@@ -8,8 +8,8 @@ public class Påfyldning {
     private LocalDate påfyldningsDato;
     private LocalDate færdigDato;
     private HashMap<Destillat, Double> destillatMængder;
-    //TODO er det meningen at vi ikke bruger fadArrayList som parameter i constructor
     private ArrayList<Fad> fade;
+    //TODO: Tilføj ArrayList med LocalDates til Use Case om flytning af påfyldning mellem fade
 
     public Påfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad) {
         this.påfyldningsDato = påfyldningsDato;
@@ -50,18 +50,37 @@ public class Påfyldning {
 
     public String getBeskrivelse() {
         String s = "";
-        int size = 0;
-        s += "Påfyldningen er blevet påfyldt den. " + this.påfyldningsDato + ".";
-        if (færdigDato != null) {
-            s += " Denne påfyldning er sat til at være færdig den. " + this.færdigDato + ".";
+        if(this.destillatMængder.size() > 1) {
+            s = "Denne påfyldning består af " + this.destillatMængder.size() + " destillater." +
+                "\nDisse er:";
+        } else {
+            s = "Denne påfyldning består af 1 destillat:";
         }
-        s += " Påfyldningen indeholder " + destillatMængder.toString() + ", og er fyldt i fad med fadnr: ";
+        for (Destillat destillat : destillatMængder.keySet()) {
+            s += "\n- Destillat " + destillat.getSpiritBatchNr();
+            s += "\n" + destillat.getBeskrivelse();
+        }
+        if(this.fade.size() > 1) {
+            s += "\nPåfyldningen har ligget på " + this.fade.size() + " fade.";
+        } else {
+            s += "\nPåfyldningen har ligget på 1 fad:";
+        }
         for (Fad fad : fade) {
-            s += fad.getFadNr();
-            size++;
-            if (size < fade.size()) {
-                s += ", ";
-            }
+            s += "\n- Fad nr. " + fad.getFadNr();
+            s += "\n" + fad.getBeskrivelse();
+        }
+        s += "\nDenne påfyldning blev hældt på fad d. " + this.påfyldningsDato;
+        return s;
+    }
+
+    public String getBeskrivelseKort() {
+        String s = "Denne påfyldning har følgende indhold:";
+        for (Destillat destillat : destillatMængder.keySet()) {
+            s += "\n- Destillat: " + destillat.getSpiritBatchNr() + ". Mængde: " + destillatMængder.get(destillat) + " liter";
+        }
+        s += "\nPåfyldningen har ligget på følgende fad(e):";
+        for (Fad fad : fade) {
+            s += "\n- Fad nr. " + fad.getFadNr();
         }
         return s;
     }
@@ -70,7 +89,7 @@ public class Påfyldning {
     public String toString() {
         String s = "";
         int size = 0;
-        s += "påfyldning" + " {destillat: ";
+        s += "Påfyldning. Destillat: ";
         for (Destillat destillat : destillatMængder.keySet()) {
             s += destillat.getSpiritBatchNr();
             size++;
@@ -78,7 +97,6 @@ public class Påfyldning {
                 s += ", ";
             }
         }
-        s += "}.";
         return s;
     }
 }
