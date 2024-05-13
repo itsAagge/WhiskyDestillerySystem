@@ -6,6 +6,8 @@ import com.sun.security.auth.NTNumericCredential;
 import javafx.application.Application;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
@@ -26,11 +28,11 @@ public class App {
         Maltbatch maltbatch1 = Controller.opretMaltbatch(100, LocalDate.of(2019, 12, 15), LocalDate.of(2019, 12, 17), "Gær", hvede);
         Maltbatch maltbatch2 = Controller.opretMaltbatch(100, LocalDate.of(2019, 12, 15), LocalDate.of(2019, 12, 19), "Special gær", hvede);
 
-        Destillat destillat1 = Controller.opretDestillat("NM77P", 50, 70, "Snævar Njáll Albertsson", null, null, LocalDate.of(2020, 1, 17), maltbatch1);
-        Destillat destillat2 = Controller.opretDestillat("NM78P", 50, 70, "Ingus Brikmanis", null, "Kommentar2", LocalDate.of(2020, 1, 19), maltbatch1);
-        Destillat destillat3 = Controller.opretDestillat("NM79P", 50, 70, "Snævar Njáll Albertsson", "Tørv", null, LocalDate.of(2020, 1, 20), maltbatch2);
-        Destillat destillat4 = Controller.opretDestillat("NM80P", 50, 70, "Snævar Njáll Albertsson", null, null, LocalDate.of(2020, 1, 22), maltbatch2);
-        Destillat destillat5 = Controller.opretDestillat("NM81P", 50, 70, "Ingus Brikmanis", "Tørv", "Kommentar1", LocalDate.of(2020, 1, 25), maltbatch1);
+        Destillat destillat1 = Controller.opretDestillat("NM77P", 500, 70, "Snævar Njáll Albertsson", null, null, LocalDate.of(2020, 1, 17), maltbatch1);
+        Destillat destillat2 = Controller.opretDestillat("NM78P", 500, 70, "Ingus Brikmanis", null, "Kommentar2", LocalDate.of(2020, 1, 19), maltbatch1);
+        Destillat destillat3 = Controller.opretDestillat("NM79P", 500, 70, "Snævar Njáll Albertsson", "Tørv", null, LocalDate.of(2020, 1, 20), maltbatch2);
+        Destillat destillat4 = Controller.opretDestillat("NM80P", 500, 70, "Snævar Njáll Albertsson", null, null, LocalDate.of(2020, 1, 22), maltbatch2);
+        Destillat destillat5 = Controller.opretDestillat("NM81P", 500, 70, "Ingus Brikmanis", "Tørv", "Kommentar1", LocalDate.of(2020, 1, 25), maltbatch1);
 
         Destillat[] destillatArray1 = {destillat1, destillat2};
         double[] mængdeArray1 = {10, 15};
@@ -38,9 +40,8 @@ public class App {
         double[] mængdeArray2 = {100, 150};
         Destillat[] destillatArray3 = {destillat5};
         double[] mængdeArray3 = {20};
-        Påfyldning påfyldning1 = Controller.opretPåfyldning(LocalDate.of(2019, 10, 25), LocalDate.of(2022, 10, 27), fad1, destillatArray1, mængdeArray1);
-        //TODO Skal vise hvilket fad der er blevet flyttet fra
-        Påfyldning påfyldning2 = Controller.opretPåfyldning(LocalDate.of(2021, 7, 17), LocalDate.of(2024, 7, 17), fad2, destillatArray2, mængdeArray2);
-        Påfyldning påfyldning3 = Controller.opretPåfyldning(LocalDate.of(2022, 7, 17), null, fad3, destillatArray3, mængdeArray3);
+        Controller.opretPåfyldninger(new ArrayList<>(List.of(fad1)), LocalDate.of(2019, 10, 25), LocalDate.of(2022, 10, 27), destillatArray1, mængdeArray1);
+        Controller.opretPåfyldninger(new ArrayList<>(List.of(fad2)), LocalDate.of(2021, 7, 17), LocalDate.of(2024, 7, 17), destillatArray2, mængdeArray2);
+        Controller.opretPåfyldninger(new ArrayList<>(List.of(fad3)), LocalDate.of(2022, 7, 17), null, destillatArray3, mængdeArray3);
     }
     }

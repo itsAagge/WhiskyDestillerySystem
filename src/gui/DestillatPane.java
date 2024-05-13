@@ -38,6 +38,7 @@ public class DestillatPane extends GridPane {
         this.add(txaDestillatBeskrivelse, 1,1, 2,1);
         txaDestillatBeskrivelse.setPrefWidth(250);
         txaDestillatBeskrivelse.setWrapText(true);
+        txaDestillatBeskrivelse.setEditable(false);
 
         Label lblPåfyldningAfDestillat = new Label("Påfyldninger af destillat");
         this.add(lblPåfyldningAfDestillat, 3,0);

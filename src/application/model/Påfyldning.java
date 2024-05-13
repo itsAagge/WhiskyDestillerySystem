@@ -19,6 +19,10 @@ public class Påfyldning {
         this.fade.add(førsteFad);
     }
 
+    public HashMap<Destillat, Double> getDestillatMængder() {
+        return new HashMap<>(destillatMængder);
+    }
+
     public ArrayList<Fad> getFade() {
         return new ArrayList<>(fade);
     }

@@ -139,9 +139,9 @@ public class Fad {
     public String getBeskrivelseMedEkstraInfo() { //Til listviewet i systemet
         String s = this.getBeskrivelse();
         if(!erAktiv) {
-            s += "\nFadet er inaktivt";
+            s += "\n\nFadet er inaktivt.";
         } else {
-            s += "\nFadet er aktivt";
+            s += "\n\nFadet er aktivt.";
         }
         return s;
     }

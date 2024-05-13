@@ -39,21 +39,55 @@ public class Controller {
         return maltbatch;
     }
 
-    public static Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad, Destillat[] destillater, double[] mængder) {
-        Påfyldning påfyldning = null;
-        double mængdeIAlt = 0;
-        for (int i = 0; i < mængder.length; i++) {
-            mængdeIAlt += mængder[i];
-        }
-        if (mængdeIAlt <= førsteFad.getStørrelseL() && !førsteFad.erFyldt()) {
-            påfyldning = new Påfyldning(påfyldningsDato, færdigDato, førsteFad);
-            påfyldning.tilføjDestillatMedMængde(destillater, mængder);
-            førsteFad.addPåfyldning(påfyldning);
-            førsteFad.setFyldt(true);
-        } else {
-            throw new IllegalArgumentException("Der er ikke plads i fadet til denne påfyldning");
-        }
+    private static Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad, Destillat[] destillater, double[] mængder) {
+        Påfyldning påfyldning = new Påfyldning(påfyldningsDato, færdigDato, førsteFad);
+        påfyldning.tilføjDestillatMedMængde(destillater, mængder);
+        førsteFad.addPåfyldning(påfyldning);
+        førsteFad.setFyldt(true);
         return påfyldning;
+    }
+
+    public static List<Påfyldning> opretPåfyldninger(ArrayList<Fad> fade, LocalDate påfyldningsDato, LocalDate færdigDato, Destillat[] destillater, double[] mængder) {
+        ArrayList<Påfyldning> oprettedePåfyldninger = new ArrayList<>();
+
+        //Beregner den totale mængde af destillater og tjekker, om der er nok tilbage af destillaterne til at oprette disse påfyldninger
+        double mængdeIAlt = 0;
+        boolean derErNokDestillatTilbage = true;
+        for (int i = 0; i < destillater.length; i++) {
+            mængdeIAlt += mængder[i];
+            if (destillater[i].mængdeTilbage() < mængder[i]) {  //Tjekker om der er nok destillat tilbage til påfyldningerne
+                derErNokDestillatTilbage = false;
+            }
+        }
+
+        //Beregner den totale fadplads og tjekker, om alle fadene er tomme og aktive
+        boolean alleFadeErAktive = true;
+        boolean alleFadeErTomme = true;
+        double fadPladsTotalt = 0.0;
+        for (Fad fad : fade) {
+            if(!fad.erAktiv()) alleFadeErAktive = false;
+            if(fad.erFyldt()) alleFadeErTomme = false;
+            fadPladsTotalt += fad.getStørrelseL();
+        }
+
+        //Kaster fejlmeldinger, hvis noget er galt, og opretter påfyldningerne, hvis intet er galt
+        if(mængdeIAlt > fadPladsTotalt) throw new IllegalArgumentException("Der er ikke nok plads i fadene til denne mængde destillater");
+        else if(!derErNokDestillatTilbage) throw new IllegalArgumentException("Der er ikke nok destillat tilbage");
+        else if(!alleFadeErAktive) throw new IllegalArgumentException("Et eller flere valgte fade er deaktiveret, og kan derfor ikke bruges");
+        else if(!alleFadeErTomme) throw new IllegalArgumentException("Et eller flere fade er allerede fyldte");
+        else {
+            for (Fad fad : fade) {
+                double størrelsesforhold = fad.getStørrelseL() / fadPladsTotalt; //Beregner fadets procentvise størrelse af alle fadene
+                double[] mængderIDetteFad = new double[mængder.length];
+                for (int i = 0; i < mængderIDetteFad.length; i++) {
+                    mængderIDetteFad[i] = mængder[i] * størrelsesforhold;
+                }
+                Påfyldning påfyldning = opretPåfyldning(påfyldningsDato, færdigDato, fad, destillater, mængderIDetteFad);
+                oprettedePåfyldninger.add(påfyldning);
+            }
+        }
+
+        return oprettedePåfyldninger;
     }
 
     public static Alert opretAlert(Alert.AlertType alertType, String title, String contentText) {
@@ -68,15 +102,21 @@ public class Controller {
         return Storage.getFade();
     }
 
-    public static List<Maltbatch> getAlleMaltbatche() { return Storage.getMaltbatche(); }
+    public static List<Maltbatch> getAlleMaltbatche() {
+        return Storage.getMaltbatche();
+    }
 
-    public static List<Destillat> getAlleDestillater() { return Storage.getDestillater(); }
+    public static List<Destillat> getAlleDestillater() {
+        return Storage.getDestillater();
+    }
 
     public static void fjernFad(Fad fad) {
         Storage.fjernFad(fad);
     }
 
-    public static void fjernDestillat(Destillat destillat) { Storage.fjernDestilat(destillat); }
+    public static void fjernDestillat(Destillat destillat) {
+        Storage.fjernDestilat(destillat);
+    }
 
     public static List<String> getMedarbejdere() {
         List<String> medarbejdere = new ArrayList<>();
