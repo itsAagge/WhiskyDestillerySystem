@@ -102,23 +102,23 @@ public class DestillatDialog extends Stage {
 
     private void gemAction() {
         String spiritBatchNr = null;
-        double mængde = 0.0;
+        double mængdeL = 0.0;
         double alkoholprocent = 0.0;
         String rygemateriale = null;
         String kommentar = null;
-        LocalDate dato = datePicker.getValue();
+        LocalDate destilleringsdato = datePicker.getValue();
         String medarbejder = null;
         Maltbatch maltbatch = null;
 
         if(txfSpiritBatchNr.getText().isEmpty()) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive et Spirit Batch Nr.");
-        } else if(txfMængde.getText().isEmpty()) {
+        } else if(txfMængde.getText().isEmpty() || txfMængde.getText().equals("0")) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en mængde");
-        } else if(txfAlkoholProcent.getText().isEmpty()) {
+        } else if(txfAlkoholProcent.getText().isEmpty()|| txfAlkoholProcent.getText().equals("0")|| txfAlkoholProcent.getText().equals("0.0")) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en alkoholprocent");
         } else if(comboBoxMedarbejdere.getSelectionModel().isEmpty()) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en medarbejder");
-        } else if(dato == null) {
+        } else if(destilleringsdato == null) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en dato");
         } else if(lvwMaltbatche.getSelectionModel().isEmpty()) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge et maltbatch");
@@ -130,23 +130,15 @@ public class DestillatDialog extends Stage {
                 kommentar = txfKommentar.getText().trim();
             }
             spiritBatchNr = txfSpiritBatchNr.getText().trim();
-            mængde = Double.parseDouble(txfMængde.getText());
+            mængdeL = Double.parseDouble(txfMængde.getText());
             alkoholprocent = Double.parseDouble(txfAlkoholProcent.getText());
-            dato = datePicker.getValue();
+            destilleringsdato = datePicker.getValue();
             medarbejder = comboBoxMedarbejdere.getSelectionModel().getSelectedItem().trim();
             maltbatch = lvwMaltbatche.getSelectionModel().getSelectedItem();
             if (destillat != null) {
-                //Todo: Evt. lav dette om til en controllermetode, så der ikke er logik i gui
-                this.destillat.setSpiritBatchNr(spiritBatchNr);
-                this.destillat.setMængdeL(mængde);
-                this.destillat.setAlkoholprocent(alkoholprocent);
-                this.destillat.setDestilleringsdato(dato);
-                this.destillat.setMedarbejder(medarbejder);
-                this.destillat.setRygemateriale(rygemateriale);
-                this.destillat.setKommentar(kommentar);
-                this.destillat.setMaltbatch(maltbatch);
+                Controller.opdaterDestillat(destillat, spiritBatchNr, mængdeL, alkoholprocent, medarbejder, rygemateriale, kommentar, destilleringsdato, maltbatch);
             } else {
-                Controller.opretDestillat(spiritBatchNr, mængde, alkoholprocent, medarbejder, rygemateriale, kommentar, dato, maltbatch);
+                Controller.opretDestillat(spiritBatchNr, mængdeL, alkoholprocent, medarbejder, rygemateriale, kommentar, destilleringsdato, maltbatch);
             }
             this.close();
         }

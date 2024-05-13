@@ -20,11 +20,40 @@ public class Controller {
         return destillat;
     }
 
+    //Todo: Finde ud af, om opret og opdater burde være 1 eller 2 metoder
+    public static Destillat opdaterDestillat(Destillat destillat, String spiritBatchNr, double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato, Maltbatch maltbatch) {
+        if(destillat == null || spiritBatchNr == null || mængdeL == 0.0 || alkoholprocent == 0.0 || medarbejder == null || destilleringsdato == null || maltbatch == null) throw new IllegalArgumentException("Information mangler eller er null. Kun String rygemateriale og String kommentar må være null.");
+        else {
+            destillat.setSpiritBatchNr(spiritBatchNr);
+            destillat.setMængdeL(mængdeL);
+            destillat.setAlkoholprocent(alkoholprocent);
+            destillat.setDestilleringsdato(destilleringsdato);
+            destillat.setMedarbejder(medarbejder);
+            destillat.setRygemateriale(rygemateriale);
+            destillat.setKommentar(kommentar);
+            destillat.setMaltbatch(maltbatch);
+            return destillat;
+        }
+    }
+
     public static Fad opretFad(String fraLand, String tidligereIndhold, int størrelseL, String træType, double alderAfTidligereIndhold, String leverandør) {
         Fad fad = new Fad(fraLand, tidligereIndhold, størrelseL, træType, alderAfTidligereIndhold, leverandør);
         Storage.tilføjFad(fad);
         return fad;
+    }
 
+    //Todo: Finde ud af, om opret og opdater burde være 1 eller 2 metoder
+    public static Fad opdaterFad(Fad fad, String fraLand, String tidligereIndhold, int størrelseL, String træType, double alderAfTidligereIndhold, String leverandør) {
+        if(fad == null || fraLand == null || størrelseL == 0 || træType == null || leverandør == null) throw new IllegalArgumentException("Information mangler eller er null. Kun String tidligereIndhold og double alderAfTidligereIndhold må være null/0.0");
+        else {
+            fad.setFraLand(fraLand);
+            fad.setLeverandør(leverandør);
+            fad.setStørrelseL(størrelseL);
+            fad.setTræType(træType);
+            fad.setTidligereIndhold(tidligereIndhold);
+            fad.setAlderAfTidligereIndhold(alderAfTidligereIndhold);
+            return fad;
+        }
     }
 
     public static Korn opretKorn(String markNavn, String sort, LocalDate høstDato, int mængdeKg) {
@@ -151,7 +180,4 @@ public class Controller {
         }
         return medarbejdere;
     }
-
-    //TODO oprette flere påfyldninger til flere fad samtidig
-
 }
