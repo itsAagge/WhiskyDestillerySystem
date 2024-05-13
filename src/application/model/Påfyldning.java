@@ -41,10 +41,10 @@ public class Påfyldning {
         }
     }
 
-    public void tilføjDestillatMedMængde(Destillat[] destillater, double[] mængde) {
-        for (int i = 0; i < destillater.length; i++) {
-            destillatMængder.put(destillater[i], mængde[i]);
-            destillater[i].addPåfyldning(this);
+    public void tilføjDestillatMedMængde(ArrayList<Destillat> destillater, ArrayList<Double> mængde) {
+        for (int i = 0; i < destillater.size(); i++) {
+            destillatMængder.put(destillater.get(i), mængde.get(i));
+            destillater.get(i).addPåfyldning(this);
         }
     }
 
