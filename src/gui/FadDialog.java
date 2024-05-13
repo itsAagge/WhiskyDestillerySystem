@@ -83,18 +83,18 @@ public class FadDialog extends Stage {
     }
 
     private void gemAction() {
-        String land = null;
-        String firma = null;
+        String fraLand = null;
+        String leverandør = null;
         String tidligereIndhold = null;
         double tidligereIndholdAlder = 0.0;
-        int størrelse = 0;
+        int størrelseL = 0;
         String træType = null;
 
         if(txfLand.getText().isEmpty()) {
             opretFejl("Du mangler at angive et land");
         } else if(txfFirma.getText().isEmpty()) {
-            opretFejl("Du mangler at angive et firma");
-        } else if(txfStørrelse.getText().isEmpty()) {
+            opretFejl("Du mangler at angive et leverandør");
+        } else if(txfStørrelse.getText().isEmpty() || txfStørrelse.getText().equals("0")) {
             opretFejl("Du mangler at angive antal liter, der er plads til i fadet");
         } else if (txfTræType.getText().isEmpty()) {
             opretFejl("Du mangler at angive en type af træ");
@@ -103,20 +103,14 @@ public class FadDialog extends Stage {
                 tidligereIndhold = txfTidligereIndhold.getText().trim();
                 tidligereIndholdAlder = Double.parseDouble(txfTidligereIndholdAlder.getText());
             }
-            land = txfLand.getText().trim();
-            firma = txfFirma.getText().trim();
-            størrelse = Integer.parseInt(txfStørrelse.getText());
+            fraLand = txfLand.getText().trim();
+            leverandør = txfFirma.getText().trim();
+            størrelseL = Integer.parseInt(txfStørrelse.getText());
             træType = txfTræType.getText().trim();
-            //Todo: Evt. lav dette om til en controllermetode, så der ikke er logik i gui
             if (this.fad != null) {
-                this.fad.setFraLand(land);
-                this.fad.setLeverandør(firma);
-                this.fad.setStørrelseL(størrelse);
-                this.fad.setTræType(træType);
-                this.fad.setTidligereIndhold(tidligereIndhold);
-                this.fad.setAlderAfTidligereIndhold(tidligereIndholdAlder);
+                Controller.opdaterFad(fad, fraLand, tidligereIndhold, størrelseL, træType, tidligereIndholdAlder, leverandør);
             } else {
-                Controller.opretFad(land, tidligereIndhold, størrelse, træType, tidligereIndholdAlder, firma);
+                Controller.opretFad(fraLand, tidligereIndhold, størrelseL, træType, tidligereIndholdAlder, leverandør);
             }
             this.close();
         }
