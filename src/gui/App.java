@@ -28,9 +28,9 @@ public class App {
 
         Destillat destillat1 = Controller.opretDestillat("NM77P", 50, 70, "Snævar Njáll Albertsson", null, null, LocalDate.of(2020, 1, 17), maltbatch1);
         Destillat destillat2 = Controller.opretDestillat("NM78P", 50, 70, "Ingus Brikmanis", null, "Kommentar2", LocalDate.of(2020, 1, 19), maltbatch1);
-        Destillat destillat3 = Controller.opretDestillat("NM79P", 50, 70, "Snævar Njáll Albertsson", "Tørv", null, LocalDate.of(2020, 1, 20), maltbatch2);
-        Destillat destillat4 = Controller.opretDestillat("NM80P", 50, 70, "Snævar Njáll Albertsson", null, null, LocalDate.of(2020, 1, 22), maltbatch2);
-        Destillat destillat5 = Controller.opretDestillat("NM81P", 50, 70, "Ingus Brikmanis", "Tørv", "Kommentar1", LocalDate.of(2020, 1, 25), maltbatch1);
+        Destillat destillat3 = Controller.opretDestillat("NM79P", 50, 70, "Snævar Njáll Albertsson", "Tørv", null, LocalDate.of(2024, 5, 20), maltbatch2);
+        Destillat destillat4 = Controller.opretDestillat("NM80P", 50, 70, "Snævar Njáll Albertsson", null, null, LocalDate.of(2024, 5, 19), maltbatch2);
+        Destillat destillat5 = Controller.opretDestillat("NM81P", 50, 70, "Ingus Brikmanis", "Tørv", "Kommentar1", LocalDate.of(2024, 5, 18), maltbatch1);
 
         Destillat[] destillatArray1 = {destillat1, destillat2};
         double[] mængdeArray1 = {10, 15};
