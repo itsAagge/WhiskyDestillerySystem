@@ -102,12 +102,30 @@ public class Controller {
         return Storage.getFade();
     }
 
-    public static List<Maltbatch> getAlleMaltbatche() {
-        return Storage.getMaltbatche();
+    public static ArrayList<Fad> getLedigeFad() {
+        ArrayList<Fad> ledigeFade = new ArrayList<>();
+        for (Fad fad : Storage.getFade()) {
+            if (!fad.erFyldt() && fad.erAktiv()) {
+                ledigeFade.add(fad);
+            }
+        }
+        return ledigeFade;
     }
+
+    public static List<Maltbatch> getAlleMaltbatche() { return Storage.getMaltbatche(); }
 
     public static List<Destillat> getAlleDestillater() {
         return Storage.getDestillater();
+    }
+
+    public static List<Destillat> getUgensDestillater() {
+        ArrayList<Destillat> ugensDestillater = new ArrayList<>();
+        for (Destillat destillat : Storage.getDestillater()) {
+            if (destillat.getDestilleringsdato().isAfter(LocalDate.now().minusWeeks(1))) {
+                ugensDestillater.add(destillat);
+            }
+        }
+        return ugensDestillater;
     }
 
     public static void fjernFad(Fad fad) {
@@ -133,4 +151,7 @@ public class Controller {
         }
         return medarbejdere;
     }
+
+    //TODO oprette flere påfyldninger til flere fad samtidig
+
 }

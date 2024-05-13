@@ -137,4 +137,8 @@ public class Destillat {
         return mængdeTilbage;
     }
 
+    //TODO udregn mængde tilbage af destillat efter påfyldning
+
+    //TODO lave en metode der henter ugens destillater
+
 }
