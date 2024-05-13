@@ -29,14 +29,12 @@ public class Destillat {
     public void addPåfyldning(Påfyldning påfyldning) {
         if (!påfyldninger.contains(påfyldning)) {
             påfyldninger.add(påfyldning);
-            påfyldning.addDestillat(this);
         }
     }
 
     public void removePåfyldning(Påfyldning påfyldning) {
         if (påfyldninger.contains(påfyldning)) {
             påfyldninger.remove(påfyldning);
-            påfyldning.removeDestillat(this);
         }
     }
 

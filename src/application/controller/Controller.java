@@ -39,13 +39,20 @@ public class Controller {
         return maltbatch;
     }
 
-    public static Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, boolean flyttetFraFad, Fad førsteFad, Destillat[] destillater, double[] mængder) {
-        Påfyldning påfyldning = new Påfyldning(påfyldningsDato, færdigDato, flyttetFraFad, førsteFad);
-        if (!førsteFad.erFyldt()) {
-            påfyldning.tilføjDestillatMedMængde(destillater, mængder, førsteFad);
+    public static Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad, Destillat[] destillater, double[] mængder) {
+        Påfyldning påfyldning = null;
+        double mængdeIAlt = 0;
+        for (int i = 0; i < mængder.length; i++) {
+            mængdeIAlt += mængder[i];
         }
-        førsteFad.addPåfyldning(påfyldning);
-        førsteFad.setFyldt(true);
+        if (mængdeIAlt <= førsteFad.getStørrelseL() && !førsteFad.erFyldt()) {
+            påfyldning = new Påfyldning(påfyldningsDato, færdigDato, førsteFad);
+            påfyldning.tilføjDestillatMedMængde(destillater, mængder);
+            førsteFad.addPåfyldning(påfyldning);
+            førsteFad.setFyldt(true);
+        } else {
+            throw new IllegalArgumentException("Der er ikke plads i fadet til denne påfyldning");
+        }
         return påfyldning;
     }
 

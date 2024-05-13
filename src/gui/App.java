@@ -38,9 +38,9 @@ public class App {
         double[] mængdeArray2 = {100, 150};
         Destillat[] destillatArray3 = {destillat5};
         double[] mængdeArray3 = {20};
-        Påfyldning påfyldning1 = Controller.opretPåfyldning(LocalDate.of(2019, 10, 25), LocalDate.of(2022, 10, 27), false, fad1, destillatArray1, mængdeArray1);
+        Påfyldning påfyldning1 = Controller.opretPåfyldning(LocalDate.of(2019, 10, 25), LocalDate.of(2022, 10, 27), fad1, destillatArray1, mængdeArray1);
         //TODO Skal vise hvilket fad der er blevet flyttet fra
-        Påfyldning påfyldning2 = Controller.opretPåfyldning(LocalDate.of(2021, 7, 17), LocalDate.of(2024, 7, 17), true, fad2, destillatArray2, mængdeArray2);
-        Påfyldning påfyldning3 = Controller.opretPåfyldning(LocalDate.of(2022, 7, 17), null, false, fad3, destillatArray3, mængdeArray3);
+        Påfyldning påfyldning2 = Controller.opretPåfyldning(LocalDate.of(2021, 7, 17), LocalDate.of(2024, 7, 17), fad2, destillatArray2, mængdeArray2);
+        Påfyldning påfyldning3 = Controller.opretPåfyldning(LocalDate.of(2022, 7, 17), null, fad3, destillatArray3, mængdeArray3);
     }
     }
