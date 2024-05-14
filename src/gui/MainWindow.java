@@ -54,8 +54,5 @@ public class MainWindow extends Application {
         tabPane.getTabs().add(tabFade);
         tabPane.getTabs().add(tabDestillater);
         tabPane.getTabs().add(tabPåfyldninger);
-
-        //tabFade.setOnSelectionChanged(event -> fadPane.updateControls());
-        //tabDestillater.setOnSelectionChanged(event -> destillatPane.updateControls());
     }
 }
