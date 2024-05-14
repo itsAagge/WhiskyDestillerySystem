@@ -1,6 +1,8 @@
 package application.controller;
 
 import application.model.*;
+import application.model.output.FileOutput;
+import application.model.output.OutputType;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import storage.Storage;
@@ -118,6 +120,12 @@ public class Controller {
         return oprettedePåfyldninger;
     }
 
+    public static Udgivelse opretUdgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder, ArrayList<Påfyldning> påfyldninger) {
+        Udgivelse udgivelse = new Udgivelse(unitStørrelse, prisPerUnit, erFad, udgivelsesDato, alkoholProcent, vandMængdeL, medarbejder, påfyldninger);
+        Storage.tilføjUdgivelse(udgivelse);
+        return udgivelse;
+    }
+
     public static Alert opretAlert(Alert.AlertType alertType, String title, String contentText) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -179,5 +187,17 @@ public class Controller {
             System.out.println(e.getMessage());
         }
         return medarbejdere;
+    }
+
+    public static void udtrækBeskrivelse(Udgivelse udgivelse) {
+        String fileLocation = "resources/udgivelser";
+        String filename = "Udgivelse:_" + udgivelse.getUdgivelsesNr() + "_Dato:_" + udgivelse.getUdgivelsesDato() + "_Alkoholprocent:_" + udgivelse.getAlkoholProcent();
+        if (udgivelse.erFad()) {
+            filename += "_Fad";
+        } else {
+            filename += "_Flasker(" + udgivelse.getAntalFlasker() + ")";
+        }
+        OutputType outputter = new FileOutput(fileLocation);
+        outputter.output(filename, udgivelse.getBeskrivelse());
     }
 }

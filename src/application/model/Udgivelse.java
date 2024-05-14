@@ -6,8 +6,9 @@ import java.util.ArrayList;
 public class Udgivelse {
     private static int antalUdgivelser = 0;
     private int udgivelsesNr;
+    private double unitStørrelse;
     private int antalFlasker;
-    private double prisPerFlaske;
+    private double prisPerUnit;
     private boolean erFad;
     private LocalDate udgivelsesDato;
     private double alkoholProcent;
@@ -15,17 +16,40 @@ public class Udgivelse {
     private String medarbejder;
     private ArrayList<Påfyldning> påfyldninger;
 
-    public Udgivelse(int antalFlasker, double prisPerFlaske, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder) {
+    public Udgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder, ArrayList<Påfyldning> påfyldninger) {
         antalUdgivelser++;
         this.udgivelsesNr = antalUdgivelser;
-        this.antalFlasker = antalFlasker;
-        this.prisPerFlaske = prisPerFlaske;
         this.erFad = erFad;
         this.udgivelsesDato = udgivelsesDato;
         this.alkoholProcent = alkoholProcent;
         this.vandMængdeL = vandMængdeL;
         this.medarbejder = medarbejder;
-        this.påfyldninger = new ArrayList<>();
+        this.påfyldninger = påfyldninger;
+        this.prisPerUnit = prisPerUnit;
+        this.unitStørrelse = unitStørrelse;
+        if (!this.erFad) {
+            this.antalFlasker = beregnAntalFlasker();
+        }
+    }
+
+    public int getUdgivelsesNr() {
+        return udgivelsesNr;
+    }
+
+    public boolean erFad() {
+        return erFad;
+    }
+
+    public LocalDate getUdgivelsesDato() {
+        return udgivelsesDato;
+    }
+
+    public double getAlkoholProcent() {
+        return alkoholProcent;
+    }
+
+    public int getAntalFlasker() {
+        return antalFlasker;
     }
 
     @Override
@@ -57,12 +81,17 @@ public class Udgivelse {
         return mængdeTotal;
     }
 
+    private int beregnAntalFlasker() {
+        double totalMængdePåfyldning = getTotalMængdePåfyldning();
+        return (int) ((totalMængdePåfyldning + vandMængdeL) / unitStørrelse);
+    }
+
     public String getBeskrivelse() {
         String s = "Udgivelse nr. " + this.udgivelsesNr + ", udgivet d. " + this.udgivelsesDato;
         if(erFad) {
             s += "\nUdgivelsen er fad nr. " + this.påfyldninger.getFirst().getFade().getLast().getFadNr();
         } else {
-            s += "\nUdgivelsen består af " + this.antalFlasker + " flasker, som hver koster " + this.prisPerFlaske;
+            s += "\nUdgivelsen består af " + this.antalFlasker + " flasker, som hver koster " + this.prisPerUnit;
         }
         s += "\nAlkoholprocenten i denne udgivelse er " + this.alkoholProcent;
         s += "Udgivelsen er ";
