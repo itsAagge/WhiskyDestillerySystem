@@ -43,6 +43,7 @@ public class MainWindow extends Application {
         Tab tabFade = new Tab("Fade");
         Tab tabDestillater = new Tab("Destillater");
         Tab tabPåfyldninger = new Tab("Påfyldninger");
+        Tab tabUdgivelser = new Tab("Udgivelser");
 
         FadPane fadPane = new FadPane();
         tabFade.setContent(fadPane);
@@ -50,9 +51,12 @@ public class MainWindow extends Application {
         tabDestillater.setContent(destillatPane);
         PåfyldningPane påfyldningPane = new PåfyldningPane();
         tabPåfyldninger.setContent(påfyldningPane);
+        UdgivelsePane udgivelsePane = new UdgivelsePane();
+        tabUdgivelser.setContent(udgivelsePane);
 
         tabPane.getTabs().add(tabFade);
         tabPane.getTabs().add(tabDestillater);
         tabPane.getTabs().add(tabPåfyldninger);
+        tabPane.getTabs().add(tabUdgivelser);
     }
 }
