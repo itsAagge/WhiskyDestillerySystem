@@ -1,9 +1,6 @@
 package storage;
 
-import application.model.Destillat;
-import application.model.Fad;
-import application.model.Korn;
-import application.model.Maltbatch;
+import application.model.*;
 
 import java.util.ArrayList;
 
@@ -13,7 +10,10 @@ public class Storage {
     private static ArrayList<Fad> fade = new ArrayList<>();
     private static ArrayList<Korn> kornList = new ArrayList<>();
     private static ArrayList<Maltbatch> maltbatches = new ArrayList<>();
+    private static ArrayList<Udgivelse> udgivelser = new ArrayList<>();
 
+
+    //Getters til listerne
     public static ArrayList<Destillat> getDestillater() {
         return new ArrayList<>(destillater);
     }
@@ -29,7 +29,12 @@ public class Storage {
     public static ArrayList<Maltbatch> getMaltbatche() {
         return new ArrayList<>(maltbatches);
     }
+    private static ArrayList<Udgivelse> getUdgivelser() {
+        return new ArrayList<>(udgivelser);
+    }
 
+
+    //Tilføj til listerne
     public static void tilføjDestillat(Destillat destillat) {
         if (!destillater.contains(destillat)) {
             destillater.add(destillat);
@@ -54,8 +59,14 @@ public class Storage {
         }
     }
 
+    public static void tilføjUdgivelse (Udgivelse udgivelse) {
+        if(!udgivelser.contains(udgivelse)) {
+            udgivelser.add(udgivelse);
+        }
+    }
 
 
+    //Fjern ting (som kan være relevante)
     public static void fjernDestilat(Destillat destillat) {
         if (destillater.contains(destillat)) {
             destillater.remove(destillat);
