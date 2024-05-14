@@ -2,6 +2,7 @@ package application.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Udgivelse {
     private static int antalUdgivelser = 0;
@@ -14,9 +15,9 @@ public class Udgivelse {
     private double alkoholProcent;
     private double vandMængdeL;
     private String medarbejder;
-    private ArrayList<Påfyldning> påfyldninger;
+    private List<Påfyldning> påfyldninger;
 
-    public Udgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder, ArrayList<Påfyldning> påfyldninger) {
+    public Udgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder, List<Påfyldning> påfyldninger) {
         antalUdgivelser++;
         this.udgivelsesNr = antalUdgivelser;
         this.erFad = erFad;

@@ -120,7 +120,7 @@ public class Controller {
         return oprettedePåfyldninger;
     }
 
-    public static Udgivelse opretUdgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder, ArrayList<Påfyldning> påfyldninger) {
+    public static Udgivelse opretUdgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder, List<Påfyldning> påfyldninger) {
         Udgivelse udgivelse = new Udgivelse(unitStørrelse, prisPerUnit, erFad, udgivelsesDato, alkoholProcent, vandMængdeL, medarbejder, påfyldninger);
         Storage.tilføjUdgivelse(udgivelse);
         return udgivelse;

@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UdgivelseDialog extends Stage {
     ComboBox<String> cbFadEllerFlasker = new ComboBox<>();
@@ -48,6 +50,7 @@ public class UdgivelseDialog extends Stage {
         pane.add(lvwPåfyldning, 0,1,1,8);
         lvwPåfyldning.setPrefWidth(250);
         lvwPåfyldning.getItems().setAll(Controller.getPåfyldninger());
+        lvwPåfyldning.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         Label lblUdgivelsesType = new Label("Udgivelses type");
         pane.add(lblUdgivelsesType, 1,0);
@@ -91,7 +94,7 @@ public class UdgivelseDialog extends Stage {
     }
 
     private void opretAction() {
-        Påfyldning påfyldning = lvwPåfyldning.getSelectionModel().getSelectedItem();
+        List<Påfyldning> påfyldninger = lvwPåfyldning.getSelectionModel().getSelectedItems();
         LocalDate udgivelsesDato = dpUdgivelsesDato.getValue();
         double unitStørrelse = Double.parseDouble(txfFlaskeStørrelse.getText().trim());
         double vandMængde = Double.parseDouble(txfVandMængde.getText().trim());
@@ -115,15 +118,15 @@ public class UdgivelseDialog extends Stage {
                 Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Pris pr unit skal være over 0");
             } else {
                 if (udgivelsesType.equals("Fad")) {
-                    Controller.opretUdgivelse();
+                    Controller.opretUdgivelse(unitStørrelse, prisPrUnit, true, udgivelsesDato, alkoholProcent, 0.0, medarbejder, påfyldninger);
                 } else {
-                    Controller.opretUdgivelse();
+                    Controller.opretUdgivelse(unitStørrelse, prisPrUnit, false, udgivelsesDato, alkoholProcent, vandMængde, medarbejder, påfyldninger);
                 }
+                this.close();
             }
         } catch (NumberFormatException e) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Mangel på indtastning");
         }
-
 
 
 
@@ -144,6 +147,9 @@ public class UdgivelseDialog extends Stage {
         }
 
     }
+
+    //TODO Antal af valgte påfyldninger skal ændres ift om det er flaske eller fad
+    //TODO påfyldning skal fjernes efter den er udgivet og sættet til udgivet
 
 
 
