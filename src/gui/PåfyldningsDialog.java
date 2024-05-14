@@ -99,7 +99,6 @@ public class PåfyldningsDialog extends Stage {
         pane.add(lblFadMængdeValgt, 0, 6);
         pane.add(lblDestillatMængdeValgt, 2, 6);
         pane.setHalignment(lblDestillatMængdeValgt, HPos.RIGHT);
-
     }
 
     ArrayList<Double> mængder = new ArrayList<>();
@@ -128,7 +127,6 @@ public class PåfyldningsDialog extends Stage {
         } catch (NumberFormatException e) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "mængde er ikke registreret");
         }
-
     }
 
     private void opretAction() {
@@ -152,7 +150,6 @@ public class PåfyldningsDialog extends Stage {
             Controller.opretPåfyldninger(fade, påfyldningsdato, færdigDato, destillats, mængder);
             this.close();
         }
-
     }
 
     private void changeFad() {
@@ -162,5 +159,4 @@ public class PåfyldningsDialog extends Stage {
         }
         lblFadMængdeValgt.setText("Fad mængde valgt:  " + totalFadMængdeValgt + " L");
     }
-
 }

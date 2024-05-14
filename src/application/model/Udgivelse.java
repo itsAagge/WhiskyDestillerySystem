@@ -58,7 +58,8 @@ public class Udgivelse {
         int size = 0;
         String s = "Udgivelse " + this.udgivelsesNr;
         if(erFad) {
-            s += " Fad nr." + this.påfyldninger.getFirst().getFade().getLast().getFadNr() + " " + this.påfyldninger.getFirst().getFade().getLast().getStørrelseL() + "L";
+            Fad fad = this.påfyldninger.getFirst().getFade().getLast();
+            s += " Fad nr. " + fad.getFadNr() + " " + fad.getStørrelseL() + "L";
         } else {
             s += " Påfyldning: ";
             for (Påfyldning påfyldning : påfyldninger) {
@@ -68,6 +69,7 @@ public class Udgivelse {
                     s += ", ";
                 }
             }
+            s += ". Flasker: " + this.getAntalFlasker();
         }
         return s;
     }
@@ -92,18 +94,18 @@ public class Udgivelse {
         if(erFad) {
             s += "\nUdgivelsen er fad nr. " + this.påfyldninger.getFirst().getFade().getLast().getFadNr();
         } else {
-            s += "\nUdgivelsen består af " + this.antalFlasker + " flasker, som hver koster " + this.prisPerUnit;
+            s += "\nUdgivelsen består af " + this.antalFlasker + " flasker, som hver koster " + this.prisPerUnit + " kr.";
         }
         s += "\nAlkoholprocenten i denne udgivelse er " + this.alkoholProcent;
-        s += "Udgivelsen er ";
+        s += " Udgivelsen er ";
         if(this.vandMængdeL == 0) {
             s += "cask strength, og der er " + this.getTotalMængdePåfyldning() + " liter i udgivelsen.";
         } else {
-            s += "single malt, og der er brugt " + this.vandMængdeL + " liter vand til at blande de " + this.getTotalMængdePåfyldning() + " liter whisky op med";
+            s += "single malt, og der er brugt " + this.vandMængdeL + " liter vand til at blande de " + this.getTotalMængdePåfyldning() + " liter whisky op med.";
         }
-        s += "\nUdgivelsen består af følgende påfyldninger af whisky:\n";
+        s += "\nUdgivelsen består af følgende påfyldninger af whisky:\n\n";
         for (Påfyldning påfyldning : påfyldninger) {
-            s += påfyldning.getBeskrivelse() + "\n";
+            s += påfyldning.getBeskrivelse() + "\n\n";
         }
         return s;
     }

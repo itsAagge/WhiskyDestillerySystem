@@ -11,7 +11,7 @@ public class Påfyldning {
     private LocalDate færdigDato;
     private HashMap<Destillat, Double> destillatMængder;
     private ArrayList<Fad> fade;
-    //TODO: Tilføj ArrayList med LocalDates til Use Case om flytning af påfyldning mellem fade
+    private boolean erUdgivet;
 
     public Påfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad) {
         antalPåfyldninger++;
@@ -21,6 +21,7 @@ public class Påfyldning {
         this.destillatMængder = new HashMap<>();
         this.fade = new ArrayList<>();
         this.fade.add(førsteFad);
+        this.erUdgivet = false;
     }
 
     public HashMap<Destillat, Double> getDestillatMængder() {
@@ -33,6 +34,14 @@ public class Påfyldning {
 
     public int getPåfyldningsNr() {
         return påfyldningsNr;
+    }
+
+    public boolean erUdgivet() {
+        return erUdgivet;
+    }
+
+    public void setErUdgivet(boolean erUdgivet) {
+        this.erUdgivet = erUdgivet;
     }
 
     public void addFad(Fad fad) {

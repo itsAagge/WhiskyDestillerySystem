@@ -202,14 +202,25 @@ public class Controller {
         return påfyldninger;
     }
 
+    public static ArrayList<Påfyldning> getAlleIkkeUdgivedePåfyldninger() {
+        ArrayList<Påfyldning> allePåfyldninger = getPåfyldninger();
+        ArrayList<Påfyldning> ikkeUdgivedePåfyldninger = new ArrayList<>();
+        for (Påfyldning påfyldning : allePåfyldninger) {
+            if (!påfyldning.erUdgivet()) {
+                ikkeUdgivedePåfyldninger.add(påfyldning);
+            }
+        }
+        return ikkeUdgivedePåfyldninger;
+    }
+
 
     public static void udtrækBeskrivelse(Udgivelse udgivelse) {
         String fileLocation = "resources/udgivelser";
-        String filename = "Udgivelse:_" + udgivelse.getUdgivelsesNr() + "_Dato:_" + udgivelse.getUdgivelsesDato() + "_Alkoholprocent:_" + udgivelse.getAlkoholProcent();
+        String filename = "Udgivelse-" + udgivelse.getUdgivelsesNr() + "_Dato-" + udgivelse.getUdgivelsesDato() + "_Alkoholprocent-" + udgivelse.getAlkoholProcent();
         if (udgivelse.erFad()) {
             filename += "_Fad";
         } else {
-            filename += "_Flasker(" + udgivelse.getAntalFlasker() + ")";
+            filename += "_Flasker-" + udgivelse.getAntalFlasker();
         }
         OutputType outputter = new FileOutput(fileLocation);
         outputter.output(filename, udgivelse.getBeskrivelse());
