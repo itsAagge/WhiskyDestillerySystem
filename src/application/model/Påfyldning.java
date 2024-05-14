@@ -60,11 +60,12 @@ public class Påfyldning {
 
     public String getBeskrivelse() {
         String s;
+            s = "Sall Whisky påfyldning nr. " + this.påfyldningsNr;
         if(this.destillatMængder.size() > 1) {
-            s = "Denne påfyldning består af " + this.destillatMængder.size() + " destillater." +
+            s += "\nDenne påfyldning består af " + this.destillatMængder.size() + " destillater." +
                 "\nDisse er:";
         } else {
-            s = "Denne påfyldning består af 1 destillat:";
+            s += "\nDenne påfyldning består af 1 destillat:";
         }
         for (Destillat destillat : destillatMængder.keySet()) {
             s += "\n- Destillat " + destillat.getSpiritBatchNr();
