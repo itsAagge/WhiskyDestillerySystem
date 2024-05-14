@@ -31,6 +31,10 @@ public class Påfyldning {
         return new ArrayList<>(fade);
     }
 
+    public int getPåfyldningsNr() {
+        return påfyldningsNr;
+    }
+
     public void addFad(Fad fad) {
         if (!fade.contains(fad)) {
             fade.getLast().setFyldt(false);
