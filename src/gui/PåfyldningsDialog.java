@@ -20,7 +20,6 @@ import java.util.List;
 
 public class PåfyldningsDialog extends Stage {
 
-    Påfyldning påfyldning;
     ComboBox<Destillat> cBoxDestillater = new ComboBox<>();
     ListView<Fad> lvwFad = new ListView<>();
     ListView<String> lvwTilføjetDestillater = new ListView<>();
@@ -32,17 +31,12 @@ public class PåfyldningsDialog extends Stage {
     double totalDestillatMængdeValgt = 0.0;
     Label lblDestillatMængdeValgt = new Label("Destillat mængde valgt:  0.0 L");
 
-    public PåfyldningsDialog(Påfyldning påfyldning) {
+    public PåfyldningsDialog() {
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
         this.setMinWidth(640);
-        this.påfyldning = påfyldning;
-        if (this.påfyldning == null) {
-            this.setTitle("Opret påfyldning");
-        } else {
-            this.setTitle("Rediger påfyldning");
-        }
+        this.setTitle("Opret påfyldning");
 
         GridPane pane = new GridPane();
         Scene scene = new Scene(pane);
@@ -113,8 +107,8 @@ public class PåfyldningsDialog extends Stage {
 
     private void tilføjDestillat() {
         try {
-        double mængde = Double.parseDouble(txfMængde.getText().trim());
-        Destillat destillat = cBoxDestillater.getSelectionModel().getSelectedItem();
+            double mængde = Double.parseDouble(txfMængde.getText().trim());
+            Destillat destillat = cBoxDestillater.getSelectionModel().getSelectedItem();
             if (destillat == null) {
                 Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Intet destillat valgt til at fylde på fad");
             } else if (mængde <= 0) {
@@ -144,23 +138,17 @@ public class PåfyldningsDialog extends Stage {
 
         if (fade.isEmpty()) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Intet fad er blevet valgt");
-        }
-        else if (påfyldningsdato == null) {
+        } else if (påfyldningsdato == null) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen påfyldningsdato registreret");
-        }
-        else if (destillats.isEmpty()) {
+        } else if (destillats.isEmpty()) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen destillater påfyldt");
-        }
-        else if (mængder.isEmpty()) {
+        } else if (mængder.isEmpty()) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Mængden af de forskellige destillater skal registreres");
-        }
-        else if (destillats.size() != mængder.size()) {
+        } else if (destillats.size() != mængder.size()) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "De registreret destillater og mængder stemmer ikke overens");
-        }
-        else if (totalFadMængdeValgt < totalDestillatMængdeValgt) {
+        } else if (totalFadMængdeValgt < totalDestillatMængdeValgt) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der er ikke nok plads i fadene til denne mængde destillater");
-        }
-        else {
+        } else {
             Controller.opretPåfyldninger(fade, påfyldningsdato, færdigDato, destillats, mængder);
             this.close();
         }

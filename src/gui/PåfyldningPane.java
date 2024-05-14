@@ -57,6 +57,9 @@ public class PåfyldningPane extends GridPane {
         //Knap til flytning af påfyldning
         btnFlytPåfyldning.setOnAction(event -> this.flytPåfyldningAction());
         hBoxButtons.getChildren().add(btnFlytPåfyldning);
+
+        setKnapperAktive(false);
+
     }
 
     private void changePåfyldning() {
@@ -65,6 +68,7 @@ public class PåfyldningPane extends GridPane {
         if (påfyldning != null) {
             txaPåfyldningsBeskrivelse.setText(påfyldning.getBeskrivelse());
         }
+        setKnapperAktive(true);
     }
 
     //Todo: Denne metode skal i Controlleren
@@ -79,12 +83,22 @@ public class PåfyldningPane extends GridPane {
     }
 
     private void flytPåfyldningAction() {
-        //TODO
+        Påfyldning påfyldning = lvwPåfyldninger.getSelectionModel().getSelectedItem();
+        FlytPåfyldningDialog flytPåfyldningDialog = new FlytPåfyldningDialog(påfyldning);
+        flytPåfyldningDialog.showAndWait();
+        txaPåfyldningsBeskrivelse.clear();
+        lvwPåfyldninger.getItems().setAll(getPåfyldninger());
+        setKnapperAktive(false);
     }
 
     private void opretPåfyldningAction() {
-        PåfyldningsDialog påfyldningsDialog = new PåfyldningsDialog(null);
+        PåfyldningsDialog påfyldningsDialog = new PåfyldningsDialog();
         påfyldningsDialog.showAndWait();
         lvwPåfyldninger.getItems().setAll(getPåfyldninger());
     }
+
+    private void setKnapperAktive(boolean bool) {
+        btnFlytPåfyldning.setDisable(!bool);
+    }
+
 }

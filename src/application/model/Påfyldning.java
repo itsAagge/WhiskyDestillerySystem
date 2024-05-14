@@ -33,7 +33,9 @@ public class Påfyldning {
 
     public void addFad(Fad fad) {
         if (!fade.contains(fad)) {
+            fade.getLast().setFyldt(false);
             fade.add(fad);
+            fad.setFyldt(true);
             fad.addPåfyldning(this);
         }
     }
