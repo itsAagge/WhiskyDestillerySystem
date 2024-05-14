@@ -156,6 +156,9 @@ public class Controller {
         }
         return ugensDestillater;
     }
+    public static List<Udgivelse> getUdgivelser() {
+        return Storage.getUdgivelser();
+    }
 
     public static void fjernFad(Fad fad) {
         Storage.fjernFad(fad);
@@ -180,4 +183,15 @@ public class Controller {
         }
         return medarbejdere;
     }
+
+    public static ArrayList<Påfyldning> getPåfyldninger() {
+        ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
+        for (Fad fad : Controller.getAlleFade()) {
+            if(fad.erFyldt()) {
+                påfyldninger.add(fad.getPåfyldninger().getLast());
+            }
+        }
+        return påfyldninger;
+    }
+
 }

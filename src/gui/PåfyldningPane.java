@@ -33,7 +33,7 @@ public class PåfyldningPane extends GridPane {
         this.add(lblAllePåfyldninger, 0, 0);
         this.add(lvwPåfyldninger, 0, 1);
         //TODO - tilføj så alle påfyldninger vises
-        lvwPåfyldninger.getItems().setAll(getPåfyldninger());
+        lvwPåfyldninger.getItems().setAll(Controller.getPåfyldninger());
 
 
         //Label og textarea til påfyldninges beskrivelse
@@ -72,29 +72,20 @@ public class PåfyldningPane extends GridPane {
     }
 
     //Todo: Denne metode skal i Controlleren
-    private ArrayList<Påfyldning> getPåfyldninger() {
-        ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
-        for (Fad fad : Controller.getAlleFade()) {
-            if(fad.erFyldt()) {
-                påfyldninger.add(fad.getPåfyldninger().getLast());
-            }
-        }
-        return påfyldninger;
-    }
 
     private void flytPåfyldningAction() {
         Påfyldning påfyldning = lvwPåfyldninger.getSelectionModel().getSelectedItem();
         FlytPåfyldningDialog flytPåfyldningDialog = new FlytPåfyldningDialog(påfyldning);
         flytPåfyldningDialog.showAndWait();
         txaPåfyldningsBeskrivelse.clear();
-        lvwPåfyldninger.getItems().setAll(getPåfyldninger());
+        lvwPåfyldninger.getItems().setAll(Controller.getPåfyldninger());
         setKnapperAktive(false);
     }
 
     private void opretPåfyldningAction() {
         PåfyldningsDialog påfyldningsDialog = new PåfyldningsDialog();
         påfyldningsDialog.showAndWait();
-        lvwPåfyldninger.getItems().setAll(getPåfyldninger());
+        lvwPåfyldninger.getItems().setAll(Controller.getPåfyldninger());
     }
 
     private void setKnapperAktive(boolean bool) {

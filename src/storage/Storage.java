@@ -29,7 +29,7 @@ public class Storage {
     public static ArrayList<Maltbatch> getMaltbatche() {
         return new ArrayList<>(maltbatches);
     }
-    private static ArrayList<Udgivelse> getUdgivelser() {
+    public static ArrayList<Udgivelse> getUdgivelser() {
         return new ArrayList<>(udgivelser);
     }
 
