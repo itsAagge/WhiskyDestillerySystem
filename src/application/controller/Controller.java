@@ -72,7 +72,6 @@ public class Controller {
         Påfyldning påfyldning = new Påfyldning(påfyldningsDato, færdigDato, førsteFad);
         påfyldning.tilføjDestillatMedMængde(destillater, mængder);
         førsteFad.addPåfyldning(påfyldning);
-        førsteFad.setFyldt(true);
         return påfyldning;
     }
 

@@ -39,6 +39,7 @@ public class Fad {
         if (!påfyldninger.contains(påfyldning)) {
             påfyldninger.add(påfyldning);
             påfyldning.addFad(this);
+            this.setFyldt(true);
         }
     }
 
@@ -46,6 +47,7 @@ public class Fad {
         if (påfyldninger.contains(påfyldning)) {
             påfyldninger.remove(påfyldning);
             påfyldning.removeFad(null);
+            this.setFyldt(false);
         }
     }
 

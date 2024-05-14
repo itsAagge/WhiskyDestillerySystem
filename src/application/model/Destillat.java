@@ -108,7 +108,7 @@ public class Destillat {
 
     @Override
     public String toString() {
-        return "Destillat " + this.spiritBatchNr;
+        return "Destillat " + this.spiritBatchNr + ". Tilbage: " + this.mængdeTilbage() + "L";
     }
 
     public String getBeskrivelse() {

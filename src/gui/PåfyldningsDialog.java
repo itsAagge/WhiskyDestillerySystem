@@ -4,6 +4,7 @@ import application.controller.Controller;
 import application.model.Destillat;
 import application.model.Fad;
 import application.model.Påfyldning;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class påfyldningsDialog extends Stage {
+public class PåfyldningsDialog extends Stage {
 
     Påfyldning påfyldning;
     ComboBox<Destillat> cBoxDestillater = new ComboBox<>();
@@ -26,8 +27,12 @@ public class påfyldningsDialog extends Stage {
     DatePicker dpPåfyldningsdato = new DatePicker();
     DatePicker dpFærdigDato = new DatePicker();
     TextField txfMængde = new TextField();
+    int totalFadMængdeValgt = 0;
+    Label lblFadMængdeValgt = new Label("Fad mængde valgt:  0 L");
+    double totalDestillatMængdeValgt = 0.0;
+    Label lblDestillatMængdeValgt = new Label("Destillat mængde valgt:  0.0 L");
 
-    public påfyldningsDialog(Påfyldning påfyldning) {
+    public PåfyldningsDialog(Påfyldning påfyldning) {
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
@@ -58,6 +63,8 @@ public class påfyldningsDialog extends Stage {
         lvwFad.setPrefHeight(200);
         lvwFad.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         lvwFad.getItems().setAll(Controller.getLedigeFad());
+        ChangeListener<Fad> changeListenerFad = (observableValue, fad, t1) -> this.changeFad();
+        lvwFad.getSelectionModel().selectedItemProperty().addListener(changeListenerFad);
 
         Label lblUgensDestillater = new Label("Ugens destillater");
         pane.add(lblUgensDestillater, 2, 0);
@@ -95,6 +102,10 @@ public class påfyldningsDialog extends Stage {
         lvwTilføjetDestillater.setPrefHeight(150);
         lvwTilføjetDestillater.setPrefWidth(250);
 
+        pane.add(lblFadMængdeValgt, 0, 6);
+        pane.add(lblDestillatMængdeValgt, 2, 6);
+        pane.setHalignment(lblDestillatMængdeValgt, HPos.RIGHT);
+
     }
 
     ArrayList<Double> mængder = new ArrayList<>();
@@ -107,17 +118,18 @@ public class påfyldningsDialog extends Stage {
             if (destillat == null) {
                 Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Intet destillat valgt til at fylde på fad");
             } else if (mængde <= 0) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "mængde skal være over 0");
+                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Mængde skal være over 0");
+            } else if (destillat.mængdeTilbage() < mængde) {
+                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der er ikke nok destillat tilbage");
             } else {
+                totalDestillatMængdeValgt += mængde;
+                lblDestillatMængdeValgt.setText("Destillat mængde valgt:  " + totalDestillatMængdeValgt + " L");
                 destillats.add(destillat);
                 mængder.add(mængde);
                 cBoxDestillater.getSelectionModel().clearSelection(destillats.indexOf(destillat));
+                cBoxDestillater.getItems().remove(destillat);
                 String s = "Destillat " + destillat.getSpiritBatchNr() + ", " + txfMængde.getText().trim() + " L";
                 lvwTilføjetDestillater.getItems().add(s);
-                if (destillat.mængdeTilbage() == 0) {
-                    cBoxDestillater.getItems().remove(destillat);
-                }
-
             }
         } catch (NumberFormatException e) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "mængde er ikke registreret");
@@ -145,11 +157,22 @@ public class påfyldningsDialog extends Stage {
         else if (destillats.size() != mængder.size()) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "De registreret destillater og mængder stemmer ikke overens");
         }
+        else if (totalFadMængdeValgt < totalDestillatMængdeValgt) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der er ikke nok plads i fadene til denne mængde destillater");
+        }
         else {
             Controller.opretPåfyldninger(fade, påfyldningsdato, færdigDato, destillats, mængder);
             this.close();
         }
 
+    }
+
+    private void changeFad() {
+        List<Fad> fade = lvwFad.getSelectionModel().getSelectedItems();
+        for (Fad fad : fade) {
+            totalFadMængdeValgt += fad.getStørrelseL();
+        }
+        lblFadMængdeValgt.setText("Fad mængde valgt:  " + totalFadMængdeValgt + " L");
     }
 
 }

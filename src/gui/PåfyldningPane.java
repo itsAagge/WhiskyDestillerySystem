@@ -1,7 +1,6 @@
 package gui;
 
 import application.controller.Controller;
-import application.model.Destillat;
 import application.model.Fad;
 import application.model.Påfyldning;
 import javafx.beans.value.ChangeListener;
@@ -84,7 +83,7 @@ public class PåfyldningPane extends GridPane {
     }
 
     private void opretPåfyldningAction() {
-        påfyldningsDialog påfyldningsDialog = new påfyldningsDialog(null);
+        PåfyldningsDialog påfyldningsDialog = new PåfyldningsDialog(null);
         påfyldningsDialog.showAndWait();
         lvwPåfyldninger.getItems().setAll(getPåfyldninger());
     }

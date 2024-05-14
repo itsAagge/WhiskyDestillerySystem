@@ -53,7 +53,7 @@ public class Påfyldning {
     }
 
     public String getBeskrivelse() {
-        String s = "";
+        String s;
         if(this.destillatMængder.size() > 1) {
             s = "Denne påfyldning består af " + this.destillatMængder.size() + " destillater." +
                 "\nDisse er:";
