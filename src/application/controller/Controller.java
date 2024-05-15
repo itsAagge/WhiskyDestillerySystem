@@ -1,8 +1,8 @@
 package application.controller;
 
 import application.model.*;
-import application.model.output.FileOutput;
-import application.model.output.OutputType;
+import application.model.output.FileLogger;
+import application.model.output.Logger;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import storage.Storage;
@@ -229,15 +229,20 @@ public class Controller {
     }
 
 
-    public static void udtrækBeskrivelse(Udgivelse udgivelse) {
-        String fileLocation = "resources/udgivelser";
-        String filename = "Udgivelse-" + udgivelse.getUdgivelsesNr() + "_Dato-" + udgivelse.getUdgivelsesDato() + "_Alkoholprocent-" + udgivelse.getAlkoholProcent();
-        if (udgivelse.erFad()) {
-            filename += "_Fad";
-        } else {
-            filename += "_Flasker-" + udgivelse.getAntalFlasker();
+    public static void udtrækBeskrivelse(String outputType, Logable object) {
+        final String locationFolder = "resources/beskrivelser/";
+        String beskrivelse = object.getBeskrivelse();
+        Logger logger;
+
+        switch (outputType) {
+            case "Fil" -> {
+                String fileName = object.getFileName();
+                String fileLocation = locationFolder + fileName;
+                logger = new FileLogger(fileLocation);
+            }
+            default -> throw new IllegalArgumentException("Denne type logger findes ikke.");
         }
-        OutputType outputter = new FileOutput(fileLocation);
-        outputter.output(filename, udgivelse.getBeskrivelse());
+
+        logger.log(beskrivelse);
     }
 }

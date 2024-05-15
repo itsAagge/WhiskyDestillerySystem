@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Påfyldning {
+public class Påfyldning implements Logable {
     private static int antalPåfyldninger = 0;
     private int påfyldningsNr;
     private LocalDate påfyldningsDato;
@@ -94,6 +94,12 @@ public class Påfyldning {
         return s;
     }
 
+    @Override
+    public String getFileName() {
+        return "Påfyldning-" + this.påfyldningsNr + "_Påfyldningsdato-" + this.påfyldningsDato;
+    }
+
+    @Override
     public String getBeskrivelse() {
         String s;
             s = "Sall Whisky påfyldning nr. " + this.påfyldningsNr;

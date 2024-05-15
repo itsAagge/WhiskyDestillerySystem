@@ -2,7 +2,7 @@ package application.model;
 
 import java.util.ArrayList;
 
-public class Fad {
+public class Fad implements Logable {
     private static int antalFade = 0;
     private int fadNr;
     private String fraLand;
@@ -142,6 +142,12 @@ public class Fad {
         return "Fad nr. " + this.fadNr + ". Ex-" + this.tidligereIndhold + " fad. " + this.størrelseL + " L";
     }
 
+    @Override
+    public String getFileName() {
+        return "Fad-" + this.fadNr + "_Størrelse-" + this.størrelseL + "L_Fra-" + this.leverandør + "_i_" + this.fraLand;
+    }
+
+    @Override
     public String getBeskrivelse() {
         return "Dette fad er fra " + this.leverandør + " i " + this.fraLand + " og har tidligere indeholdt " + this.tidligereIndhold
                 + ", som lå på fadet i " + this.alderAfTidligereIndhold + " år. Fadet er lavet af " + this.træType

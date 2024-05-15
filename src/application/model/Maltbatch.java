@@ -2,7 +2,9 @@ package application.model;
 
 import java.time.LocalDate;
 
-public class Maltbatch {
+public class Maltbatch implements Logable {
+    private static int antalMaltbatches = 0;
+    private int maltbatchNr;
     private double mængdeL;
     private LocalDate gæringStart;
     private LocalDate gæringSlut;
@@ -12,6 +14,8 @@ public class Maltbatch {
 
     //Constructor
     public Maltbatch(double mængdeL, LocalDate gæringStart, LocalDate gæringSlut, String gærType, Korn korn) {
+        antalMaltbatches++;
+        this.maltbatchNr = antalMaltbatches;
         this.mængdeL = mængdeL;
         this.gæringStart = gæringStart;
         this.gæringSlut = gæringSlut;
@@ -48,6 +52,12 @@ public class Maltbatch {
         return this.gæringSlut.toString() + ". Korn: " + this.korn.getSort() + ". Gær: " + this.gærType;
     }
 
+    @Override
+    public String getFileName() {
+        return "Maltbatch-" + this.maltbatchNr + "_Dato-" + this.gæringStart + "_Mængde-" + this.mængdeL + "L";
+    }
+
+    @Override
     public String getBeskrivelse() {
         String s = "Denne maltbatch har " + mængdeL + "L og er lavet på kornet: " + korn.getSort() + ". Den startede med at gære den: " + gæringStart + " og sluttede med at gære den: " + gæringSlut + " og gærTypen er: " + gærType;
         return s;

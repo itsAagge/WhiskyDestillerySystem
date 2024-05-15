@@ -67,7 +67,7 @@ public class UdgivelsePane extends GridPane {
 
     private void printAction() {
         Udgivelse udgivelse = lvwUdgivelser.getSelectionModel().getSelectedItem();
-        Controller.udtrækBeskrivelse(udgivelse);
+        Controller.udtrækBeskrivelse("Fil", udgivelse);
     }
 
     private void udgivFad() {

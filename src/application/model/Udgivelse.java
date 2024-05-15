@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Udgivelse {
+public class Udgivelse implements Logable {
     private static int antalUdgivelser = 0;
     private int udgivelsesNr;
     private double unitStørrelse;
@@ -48,14 +48,6 @@ public class Udgivelse {
         return udgivelsesDato;
     }
 
-    public double getAlkoholProcent() {
-        return alkoholProcent;
-    }
-
-    public int getAntalFlasker() {
-        return antalFlasker;
-    }
-
     public HashMap<Påfyldning, Double> getPåfyldningsMængder() {
         return new HashMap<>(påfyldningsMængder);
     }
@@ -89,11 +81,12 @@ public class Udgivelse {
                     s += ", ";
                 }
             }
-            s += ". Flasker: " + this.getAntalFlasker();
+            s += ". Flasker: " + this.antalFlasker;
         }
         return s;
     }
 
+    @Override
     public String getBeskrivelse() {
         String s = "Udgivelse nr. " + this.udgivelsesNr + ", udgivet d. " + this.udgivelsesDato;
         if(erFad) {
@@ -138,5 +131,17 @@ public class Udgivelse {
     private int beregnAntalFlasker() {
         double totalMængdePåfyldning = getTotalMængdePåfyldning();
         return (int) ((totalMængdePåfyldning + vandMængdeL) / unitStørrelse);
+    }
+
+    //Returnerer et standardiseret filnavn for udgivelser
+    @Override
+    public String getFileName() {
+        String fileName = "Udgivelse-" + this.udgivelsesNr + "_Udgivelsesedato-" + this.udgivelsesDato;
+        if (this.erFad()) {
+            fileName += "_Fad";
+        } else {
+            fileName += "_Flasker-" + this.antalFlasker;
+        }
+        return fileName;
     }
 }

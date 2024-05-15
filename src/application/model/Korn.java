@@ -2,7 +2,7 @@ package application.model;
 
 import java.time.LocalDate;
 
-public class Korn {
+public class Korn implements Logable {
     private String markNavn;
     private String sort;
     private LocalDate høstDato;
@@ -40,6 +40,12 @@ public class Korn {
         return this.høstDato.toString() + ". Sort: " + this.sort + " fra " + this.markNavn;
     }
 
+    @Override
+    public String getFileName() {
+        return "Korn-" + this.sort + "_Høstdato-" + this.høstDato + "_Mængde-" + this.mængdeKg;
+    }
+
+    @Override
     public String getBeskrivelse() {
         String s = "Dette korn er høstet den: " + høstDato + " fra marken: " + markNavn + " og har sorten: " + sort + " og den samlede mængde i kg er: " + mængdeKg;
         return s;

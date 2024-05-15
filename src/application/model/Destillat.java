@@ -3,7 +3,7 @@ package application.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Destillat {
+public class Destillat implements Logable {
     private String spiritBatchNr;
     private double mængdeL;
     private double alkoholprocent;
@@ -119,6 +119,12 @@ public class Destillat {
         return "Destillat " + this.spiritBatchNr + ". Tilbage: " + this.mængdeTilbage() + "L";
     }
 
+    @Override
+    public String getFileName() {
+        return "Destillat-" + this.spiritBatchNr + "_Destilleringsdato-" + this.destilleringsdato + "_Mængde-" + this.mængdeL + "L";
+    }
+
+    @Override
     public String getBeskrivelse() {
         String s = "Dette destillat er blevet destilleret den. " + this.destilleringsdato + " og den indeholder " + this.mængdeL + " liter, med en alkohol procent på " + this.alkoholprocent
                 + ". Denne destillering stammer fra en mark ved navn " + this.maltbatch.getKorn().getMarkNavn() + ". Denne korn sort er " + this.maltbatch.getKorn().getSort()

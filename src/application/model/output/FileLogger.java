@@ -6,16 +6,16 @@ import javafx.scene.control.Alert;
 import java.io.File;
 import java.io.PrintWriter;
 
-public class FileOutput implements OutputType {
+public class FileLogger implements Logger {
     private final String fileLocation;
 
-    public FileOutput(String fileLocation) {
+    public FileLogger(String fileLocation) {
         this.fileLocation = fileLocation;
     }
 
     @Override
-    public void output(String filename, String message) {
-        File file = new File(fileLocation + "/" + filename + ".txt");
+    public void log(String message) {
+        File file = new File(fileLocation + ".txt");
         try {
             file.createNewFile();
             PrintWriter printWriter = new PrintWriter(file);
