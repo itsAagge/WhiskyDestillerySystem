@@ -15,15 +15,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class UdgivelseDialog extends Stage {
-    ComboBox<String> cbFadEllerFlasker = new ComboBox<>();
-    DatePicker dpUdgivelsesDato = new DatePicker();
-    TextField txfAlkoholProcent = new TextField();
-    TextField txfPrisPerUnit = new TextField();
-    TextField txfVandMængde = new TextField();
-    TextField txfUnitStørrelse = new TextField();
-    ComboBox<String> cbMedarbejdere = new ComboBox<>();
-    ListView<Påfyldning> lvwPåfyldning = new ListView<>();
-    Label lblPrisPerUnit = new Label("Pris per flaske");
+    private ComboBox<String> cbFadEllerFlasker = new ComboBox<>();
+    private DatePicker dpUdgivelsesDato = new DatePicker();
+    private TextField txfAlkoholProcent = new TextField();
+    private TextField txfPrisPerUnit = new TextField();
+    private TextField txfVandMængde = new TextField();
+    private TextField txfUnitStørrelse = new TextField();
+    private ComboBox<String> cbMedarbejdere = new ComboBox<>();
+    private ListView<Påfyldning> lvwPåfyldning = new ListView<>();
+    private Label lblPrisPerUnit = new Label("Pris per flaske");
 
     public UdgivelseDialog() {
         this.initStyle(StageStyle.UTILITY);

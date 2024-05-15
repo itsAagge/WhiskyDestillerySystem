@@ -9,9 +9,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 public class UdgivelsePane extends GridPane {
-    ListView<Udgivelse> lvwUdgivelser = new ListView<>();
-    TextArea txaBeskrivelse = new TextArea();
-    Button btnPrint = new Button("Print");
+    private ListView<Udgivelse> lvwUdgivelser = new ListView<>();
+    private TextArea txaBeskrivelse = new TextArea();
+    private Button btnPrint = new Button("Print");
 
     public UdgivelsePane() {
         this.setPadding(new Insets(20));

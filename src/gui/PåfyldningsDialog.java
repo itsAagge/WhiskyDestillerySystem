@@ -20,16 +20,16 @@ import java.util.List;
 
 public class PåfyldningsDialog extends Stage {
 
-    ComboBox<Destillat> cBoxDestillater = new ComboBox<>();
-    ListView<Fad> lvwFad = new ListView<>();
-    ListView<String> lvwTilføjetDestillater = new ListView<>();
-    DatePicker dpPåfyldningsdato = new DatePicker();
-    DatePicker dpFærdigDato = new DatePicker();
-    TextField txfMængde = new TextField();
-    int totalFadMængdeValgt = 0;
-    Label lblFadMængdeValgt = new Label("Fad mængde valgt:  0 L");
-    double totalDestillatMængdeValgt = 0.0;
-    Label lblDestillatMængdeValgt = new Label("Destillat mængde valgt:  0.0 L");
+    private ComboBox<Destillat> cBoxDestillater = new ComboBox<>();
+    private ListView<Fad> lvwFad = new ListView<>();
+    private ListView<String> lvwTilføjetDestillater = new ListView<>();
+    private DatePicker dpPåfyldningsdato = new DatePicker();
+    private DatePicker dpFærdigDato = new DatePicker();
+    private TextField txfMængde = new TextField();
+    private int totalFadMængdeValgt = 0;
+    private Label lblFadMængdeValgt = new Label("Fad mængde valgt:  0 L");
+    private double totalDestillatMængdeValgt = 0.0;
+    private Label lblDestillatMængdeValgt = new Label("Destillat mængde valgt:  0.0 L");
 
     public PåfyldningsDialog() {
         this.initStyle(StageStyle.UTILITY);

@@ -6,9 +6,9 @@ public class Korn {
     private String markNavn;
     private String sort;
     private LocalDate høstDato;
-    private int mængdeKg;
+    private double mængdeKg;
 
-    public Korn(String markNavn, String sort, LocalDate høstDato, int mængdeKg) {
+    public Korn(String markNavn, String sort, LocalDate høstDato, double mængdeKg) {
         this.markNavn = markNavn;
         this.sort = sort;
         this.høstDato = høstDato;
@@ -27,7 +27,7 @@ public class Korn {
         return høstDato;
     }
 
-    public int getMængdeKg() {
+    public double getMængdeKg() {
         return mængdeKg;
     }
 
