@@ -92,4 +92,6 @@ public class PåfyldningPane extends GridPane {
         btnFlytPåfyldning.setDisable(!bool);
     }
 
+    //TODO sætte påfyldning, som udgivet
+
 }

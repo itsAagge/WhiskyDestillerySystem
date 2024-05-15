@@ -58,7 +58,7 @@ public class Controller {
         }
     }
 
-    public static Korn opretKorn(String markNavn, String sort, LocalDate høstDato, int mængdeKg) {
+    public static Korn opretKorn(String markNavn, String sort, LocalDate høstDato, double mængdeKg) {
         Korn korn = new Korn(markNavn, sort, høstDato, mængdeKg);
         Storage.tilføjKorn(korn);
         return korn;
@@ -166,6 +166,10 @@ public class Controller {
     }
     public static List<Udgivelse> getUdgivelser() {
         return Storage.getUdgivelser();
+    }
+
+    public static List<Korn> getKorn() {
+        return Storage.getKornList();
     }
 
     public static void fjernFad(Fad fad) {
