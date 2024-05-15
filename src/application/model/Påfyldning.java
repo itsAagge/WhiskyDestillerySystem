@@ -12,6 +12,7 @@ public class Påfyldning {
     private HashMap<Destillat, Double> destillatMængder;
     private ArrayList<Fad> fade;
     private boolean erUdgivet;
+    private Udgivelse udgivelse;
 
 
     //Constructor
@@ -44,11 +45,19 @@ public class Påfyldning {
         return erUdgivet;
     }
 
+    public Udgivelse getUdgivelse() {
+        return udgivelse;
+    }
+
     //Setters
     public void setErUdgivet(boolean erUdgivet) {
         this.erUdgivet = erUdgivet;
     }
 
+    public void setUdgivelse(Udgivelse udgivelse) {
+        this.udgivelse = udgivelse;
+        setErUdgivet(true);
+    }
 
     //Tilføjer et fad til fade listen, hvilket gør det til det nye fad påfyldningen
     //ligger på og fylder det fad og gør det gamle tomt.
@@ -119,6 +128,9 @@ public class Påfyldning {
             s += "\n" + fad.getBeskrivelse();
         }
         s += "\nDenne påfyldning blev hældt på fad d. " + this.påfyldningsDato;
+        if(erUdgivet) {
+            s += "\nDenne påfyldning er udgivet den: " + udgivelse.getUdgivelsesDato() + " i udgivelse: " + udgivelse.getUdgivelsesNr();
+        }
         return s;
     }
 

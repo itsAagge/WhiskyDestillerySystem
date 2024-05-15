@@ -2,6 +2,7 @@ package gui;
 
 import application.controller.Controller;
 import application.model.Påfyldning;
+import application.model.Udgivelse;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
@@ -91,41 +92,47 @@ public class UdgivelseDialog extends Stage {
     }
 
     private void opretAction() {
-        List<Påfyldning> påfyldninger = lvwPåfyldning.getSelectionModel().getSelectedItems();
-        LocalDate udgivelsesDato = dpUdgivelsesDato.getValue();
-        double unitStørrelse = 0.0;
-        double vandMængde = 0.0;
-        double alkoholProcent = Double.parseDouble(txfAlkoholProcent.getText().trim());
-        double prisPrUnit = Double.parseDouble(txfPrisPerUnit.getText().trim());
-        String medarbejder = cbMedarbejdere.getSelectionModel().getSelectedItem();
-        String udgivelsesType = cbFadEllerFlasker.getSelectionModel().getSelectedItem();
+        try {
+            List<Påfyldning> påfyldninger = lvwPåfyldning.getSelectionModel().getSelectedItems();
+            LocalDate udgivelsesDato = dpUdgivelsesDato.getValue();
+            double unitStørrelse = 0.0;
+            double vandMængde = 0.0;
+            double alkoholProcent = Double.parseDouble(txfAlkoholProcent.getText().trim());
+            double prisPrUnit = Double.parseDouble(txfPrisPerUnit.getText().trim());
+            String medarbejder = cbMedarbejdere.getSelectionModel().getSelectedItem();
+            String udgivelsesType = cbFadEllerFlasker.getSelectionModel().getSelectedItem();
+            Udgivelse udgivelse = null;
 
-        if (udgivelsesType == null) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen udgivelsestype valgt");
-        } else if (udgivelsesDato == null) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen dato valgt");
-        } else if (alkoholProcent <= 0) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Alkohol procent skal være over 0");
-        } else if (prisPrUnit <= 0) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Pris pr unit skal være over 0");
-        } else {
-            if (udgivelsesType.equals("Fad")) {
-                Controller.opretUdgivelse(unitStørrelse, prisPrUnit, true, udgivelsesDato, alkoholProcent, vandMængde, medarbejder, påfyldninger);
+            if (udgivelsesType == null) {
+                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen udgivelsestype valgt");
+            } else if (udgivelsesDato == null) {
+                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen dato valgt");
+            } else if (alkoholProcent <= 0) {
+                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Alkohol procent skal være over 0");
+            } else if (prisPrUnit <= 0) {
+                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Pris pr unit skal være over 0");
             } else {
-                if (Double.parseDouble(txfVandMængde.getText()) < 0) {
-                    Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Vandmængde skal være over 0");
-                } else if (Double.parseDouble(txfUnitStørrelse.getText()) <= 0) {
-                    Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Størrelse på unit skal være over 0");
+                if (udgivelsesType.equals("Fad")) {
+                    Controller.opretUdgivelse(unitStørrelse, prisPrUnit, true, udgivelsesDato, alkoholProcent, vandMængde, medarbejder, påfyldninger);
                 } else {
-                    unitStørrelse = Double.parseDouble(txfUnitStørrelse.getText().trim());
-                    vandMængde = Double.parseDouble(txfVandMængde.getText().trim());
-                    Controller.opretUdgivelse(unitStørrelse, prisPrUnit, false, udgivelsesDato, alkoholProcent, vandMængde, medarbejder, påfyldninger);
+                    if (Double.parseDouble(txfVandMængde.getText()) < 0) {
+                        Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Vandmængde skal være over 0");
+                    } else if (Double.parseDouble(txfUnitStørrelse.getText()) <= 0) {
+                        Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Størrelse på unit skal være over 0");
+                    } else {
+                        unitStørrelse = Double.parseDouble(txfUnitStørrelse.getText().trim());
+                        vandMængde = Double.parseDouble(txfVandMængde.getText().trim());
+                        udgivelse = Controller.opretUdgivelse(unitStørrelse, prisPrUnit, false, udgivelsesDato, alkoholProcent, vandMængde, medarbejder, påfyldninger);
+                    }
                 }
+                for (Påfyldning påfyldning : påfyldninger) {
+                    påfyldning.setErUdgivet(true);
+                    påfyldning.setUdgivelse(udgivelse);
+                }
+                this.close();
             }
-            for (Påfyldning påfyldning : påfyldninger) {
-                påfyldning.setErUdgivet(true);
-            }
-            this.close();
+        } catch (NumberFormatException e) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Indtastnings fejl");
         }
     }
 
