@@ -30,7 +30,6 @@ public class PåfyldningPane extends GridPane {
         Label lblAllePåfyldninger = new Label("Alle påfyldninger");
         this.add(lblAllePåfyldninger, 0, 0);
         this.add(lvwPåfyldninger, 0, 1);
-        //TODO - tilføj så alle påfyldninger vises
         lvwPåfyldninger.getItems().setAll(Controller.getPåfyldninger());
 
 
@@ -40,7 +39,6 @@ public class PåfyldningPane extends GridPane {
         this.add(txaPåfyldningsBeskrivelse, 1,1);
         txaPåfyldningsBeskrivelse.setEditable(false);
         txaPåfyldningsBeskrivelse.setWrapText(true);
-        //TODO - gør sådan at den valgte påfyldnings beskrivelse vises
         ChangeListener<Påfyldning> påfyldningChangeListener = (observableValue, oldValue, newValue) -> this.changePåfyldning();
         lvwPåfyldninger.getSelectionModel().selectedItemProperty().addListener(påfyldningChangeListener);
 
@@ -66,10 +64,13 @@ public class PåfyldningPane extends GridPane {
         if (påfyldning != null) {
             txaPåfyldningsBeskrivelse.setText(påfyldning.getBeskrivelse());
         }
-        setKnapperAktive(true);
+        if (påfyldning.erUdgivet()) {
+            setKnapperAktive(false);
+        }
+        else {
+            setKnapperAktive(true);
+        }
     }
-
-    //Todo: Denne metode skal i Controlleren
 
     private void flytPåfyldningAction() {
         Påfyldning påfyldning = lvwPåfyldninger.getSelectionModel().getSelectedItem();

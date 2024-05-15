@@ -103,7 +103,9 @@ public class UdgivelseDialog extends Stage {
             String udgivelsesType = cbFadEllerFlasker.getSelectionModel().getSelectedItem();
             Udgivelse udgivelse = null;
 
-            if (udgivelsesType == null) {
+            if (påfyldninger.isEmpty()) {
+                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen påfyldninger valgt");
+            } else if (udgivelsesType == null) {
                 Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen udgivelsestype valgt");
             } else if (udgivelsesDato == null) {
                 Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen dato valgt");
@@ -113,7 +115,7 @@ public class UdgivelseDialog extends Stage {
                 Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Pris pr unit skal være over 0");
             } else {
                 if (udgivelsesType.equals("Fad")) {
-                    Controller.opretUdgivelse(unitStørrelse, prisPrUnit, true, udgivelsesDato, alkoholProcent, vandMængde, medarbejder, påfyldninger);
+                    udgivelse = Controller.opretUdgivelse(unitStørrelse, prisPrUnit, true, udgivelsesDato, alkoholProcent, vandMængde, medarbejder, påfyldninger);
                 } else {
                     if (Double.parseDouble(txfVandMængde.getText()) < 0) {
                         Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Vandmængde skal være over 0");
