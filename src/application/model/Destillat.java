@@ -149,8 +149,5 @@ public class Destillat {
     }
 
 
-    //TODO udregn mængde tilbage af destillat efter påfyldning
-
-    //TODO lave en metode der henter ugens destillater
 
 }

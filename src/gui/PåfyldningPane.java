@@ -1,7 +1,6 @@
 package gui;
 
 import application.controller.Controller;
-import application.model.Fad;
 import application.model.Påfyldning;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
@@ -12,7 +11,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
-import java.util.ArrayList;
 
 
 public class PåfyldningPane extends GridPane {
@@ -91,7 +89,5 @@ public class PåfyldningPane extends GridPane {
     private void setKnapperAktive(boolean bool) {
         btnFlytPåfyldning.setDisable(!bool);
     }
-
-    //TODO sætte påfyldning, som udgivet
 
 }
