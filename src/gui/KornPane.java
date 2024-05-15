@@ -38,10 +38,12 @@ public class KornPane extends GridPane {
         Label lblKornBeskrivelse = new Label("Korn beskrivelse");
         this.add(lblKornBeskrivelse, 1,0);
         this.add(txaKornBeskrivelse, 1,1);
+        txaKornBeskrivelse.setWrapText(true);
 
         Label lblMaltbatchBeskrivelse = new Label("Maltbatch beskrivelse");
         this.add(lblMaltbatchBeskrivelse, 1,2);
         this.add(txaMaltbatchBeskrivelse, 1,3);
+        txaMaltbatchBeskrivelse.setWrapText(true);
 
         Label lblAlleMaltbatch = new Label("Alle Maltbatches");
         this.add(lblAlleMaltbatch, 2,0);
@@ -65,12 +67,16 @@ public class KornPane extends GridPane {
         Maltbatch maltbatch = lvwMaltbatch.getSelectionModel().getSelectedItem();
 
         if (maltbatch != null) {
-
+            txaMaltbatchBeskrivelse.setText(maltbatch.getBeskrivelse());
         }
 
     }
 
     private void changeKorn() {
+        Korn korn = lvwKorn.getSelectionModel().getSelectedItem();
+        if (korn != null) {
+            txaKornBeskrivelse.setText(korn.getBeskrivelse());
+        }
     }
 
     private void registrerMaltbatchAction() {
