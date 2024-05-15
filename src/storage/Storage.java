@@ -66,7 +66,7 @@ public class Storage {
     }
 
 
-    //Fjern ting (som kan være relevante)
+    //Fjern fra listerne (hvis relevant)
     public static void fjernDestilat(Destillat destillat) {
         if (destillater.contains(destillat)) {
             destillater.remove(destillat);

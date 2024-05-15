@@ -8,6 +8,7 @@ public class Korn {
     private LocalDate høstDato;
     private int mængdeKg;
 
+    //Constructor
     public Korn(String markNavn, String sort, LocalDate høstDato, int mængdeKg) {
         this.markNavn = markNavn;
         this.sort = sort;
@@ -15,6 +16,7 @@ public class Korn {
         this.mængdeKg = mængdeKg;
     }
 
+    //Getters
     public String getMarkNavn() {
         return markNavn;
     }
@@ -31,6 +33,8 @@ public class Korn {
         return mængdeKg;
     }
 
+
+    //To string og beskrivelses metoder
     @Override
     public String toString() {
         return this.høstDato.toString() + ". Sort: " + this.sort + " fra " + this.markNavn;

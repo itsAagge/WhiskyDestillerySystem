@@ -9,6 +9,8 @@ public class Maltbatch {
     private String gærType;
     private Korn korn;
 
+
+    //Constructor
     public Maltbatch(double mængdeL, LocalDate gæringStart, LocalDate gæringSlut, String gærType, Korn korn) {
         this.mængdeL = mængdeL;
         this.gæringStart = gæringStart;
@@ -17,6 +19,8 @@ public class Maltbatch {
         this.korn = korn;
     }
 
+
+    //Getters
     public double getMængdeL() {
         return mængdeL;
     }
@@ -37,6 +41,8 @@ public class Maltbatch {
         return korn;
     }
 
+
+    //To string og beskriveles metoder
     @Override
     public String toString() {
         return this.gæringSlut.toString() + ". Korn: " + this.korn.getSort() + ". Gær: " + this.gærType;

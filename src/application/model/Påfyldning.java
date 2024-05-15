@@ -13,6 +13,8 @@ public class Påfyldning {
     private ArrayList<Fad> fade;
     private boolean erUdgivet;
 
+
+    //Constructor
     public Påfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad) {
         antalPåfyldninger++;
         this.påfyldningsNr = antalPåfyldninger;
@@ -24,6 +26,8 @@ public class Påfyldning {
         this.erUdgivet = false;
     }
 
+
+    //Getters
     public HashMap<Destillat, Double> getDestillatMængder() {
         return new HashMap<>(destillatMængder);
     }
@@ -40,10 +44,14 @@ public class Påfyldning {
         return erUdgivet;
     }
 
+    //Setters
     public void setErUdgivet(boolean erUdgivet) {
         this.erUdgivet = erUdgivet;
     }
 
+
+    //Tilføjer et fad til fade listen, hvilket gør det til det nye fad påfyldningen
+    //ligger på og fylder det fad og gør det gamle tomt.
     public void addFad(Fad fad) {
         if (!fade.contains(fad)) {
             fade.getLast().setFyldt(false);
@@ -53,6 +61,8 @@ public class Påfyldning {
         }
     }
 
+
+    //Fjerner et fad fra påfyldningen
     public void removeFad(Fad fad) {
         if (fade.contains(fad)) {
             fade.remove(fad);
@@ -60,11 +70,30 @@ public class Påfyldning {
         }
     }
 
+
+    //Tilføjer et destillat med en bestemt mængde til påfyldningen
     public void tilføjDestillatMedMængde(ArrayList<Destillat> destillater, ArrayList<Double> mængde) {
         for (int i = 0; i < destillater.size(); i++) {
             destillatMængder.put(destillater.get(i), mængde.get(i));
             destillater.get(i).addPåfyldning(this);
         }
+    }
+
+
+    //Beskrivelses metoder og to string metode
+    @Override
+    public String toString() {
+        String s = "";
+        int size = 0;
+        s += "Påfyldning " + this.påfyldningsNr + ". Fad nr. " + this.fade.getLast().getFadNr() + ". Destillat: ";
+        for (Destillat destillat : destillatMængder.keySet()) {
+            s += destillat.getSpiritBatchNr();
+            size++;
+            if (size < destillatMængder.size()) {
+                s += ", ";
+            }
+        }
+        return s;
     }
 
     public String getBeskrivelse() {
@@ -105,18 +134,5 @@ public class Påfyldning {
         return s;
     }
 
-    @Override
-    public String toString() {
-        String s = "";
-        int size = 0;
-        s += "Påfyldning " + this.påfyldningsNr + ". Fad nr. " + this.fade.getLast().getFadNr() + ". Destillat: ";
-        for (Destillat destillat : destillatMængder.keySet()) {
-            s += destillat.getSpiritBatchNr();
-            size++;
-            if (size < destillatMængder.size()) {
-                s += ", ";
-            }
-        }
-        return s;
-    }
+
 }

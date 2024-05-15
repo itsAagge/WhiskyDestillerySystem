@@ -17,6 +17,8 @@ public class Udgivelse {
     private String medarbejder;
     private List<Påfyldning> påfyldninger;
 
+
+    //Constructor
     public Udgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder, List<Påfyldning> påfyldninger) {
         antalUdgivelser++;
         this.udgivelsesNr = antalUdgivelser;
@@ -33,6 +35,8 @@ public class Udgivelse {
         }
     }
 
+
+    //Getters
     public int getUdgivelsesNr() {
         return udgivelsesNr;
     }
@@ -53,6 +57,8 @@ public class Udgivelse {
         return antalFlasker;
     }
 
+
+    //To string og beskrivelses metoder
     @Override
     public String toString() {
         int size = 0;
@@ -74,21 +80,6 @@ public class Udgivelse {
         return s;
     }
 
-    public double getTotalMængdePåfyldning() {
-        double mængdeTotal = 0;
-        for (Påfyldning påfyldning : påfyldninger) {
-            for (double mængde : påfyldning.getDestillatMængder().values()) {
-                mængdeTotal += mængde;
-            }
-        }
-        return mængdeTotal;
-    }
-
-    private int beregnAntalFlasker() {
-        double totalMængdePåfyldning = getTotalMængdePåfyldning();
-        return (int) ((totalMængdePåfyldning + vandMængdeL) / unitStørrelse);
-    }
-
     public String getBeskrivelse() {
         String s = "Udgivelse nr. " + this.udgivelsesNr + ", udgivet d. " + this.udgivelsesDato;
         if(erFad) {
@@ -108,5 +99,25 @@ public class Udgivelse {
             s += påfyldning.getBeskrivelse() + "\n\n";
         }
         return s;
+    }
+
+
+    //Finder den totale mængde af påfyldning ud fra påfyldningerne der er i udgivelsen
+    public double getTotalMængdePåfyldning() {
+        double mængdeTotal = 0;
+        for (Påfyldning påfyldning : påfyldninger) {
+            for (double mængde : påfyldning.getDestillatMængder().values()) {
+                mængdeTotal += mængde;
+            }
+        }
+        return mængdeTotal;
+    }
+
+
+    //Beregner antallet af flasker ud fra den totale mængde af påfyldning og mængden af vand,
+    //divideret med unit størrelsen
+    private int beregnAntalFlasker() {
+        double totalMængdePåfyldning = getTotalMængdePåfyldning();
+        return (int) ((totalMængdePåfyldning + vandMængdeL) / unitStørrelse);
     }
 }

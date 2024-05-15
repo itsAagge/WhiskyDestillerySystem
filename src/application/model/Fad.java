@@ -16,6 +16,7 @@ public class Fad {
     private String leverandør;
     private ArrayList<Påfyldning> påfyldninger;
 
+    //Constructor
     public Fad(String fraLand, String tidligereIndhold, int størrelseL, String træType, double alderAfTidligereIndhold, String leverandør) {
         antalFade++;
         this.fadNr = antalFade;
@@ -31,10 +32,13 @@ public class Fad {
         this.påfyldninger = new ArrayList<>();
     }
 
+    //Getter til påfyldningerne
     public ArrayList<Påfyldning> getPåfyldninger() {
         return new ArrayList<>(påfyldninger);
     }
 
+    //Tilføjer en påfyldning til fadet, hvor den sidste påfyldning i listen
+    //er den nuværende, hvis fadet er fyldt.
     public void addPåfyldning(Påfyldning påfyldning) {
         if (!påfyldninger.contains(påfyldning)) {
             påfyldninger.add(påfyldning);
@@ -43,6 +47,7 @@ public class Fad {
         }
     }
 
+    //Fjerner en påfyldning fra fadet (mest relevant hvis fadet går i stykker eller lign)
     public void removePåfyldning(Påfyldning påfyldning) {
         if (påfyldninger.contains(påfyldning)) {
             påfyldninger.remove(påfyldning);
@@ -51,6 +56,7 @@ public class Fad {
         }
     }
 
+    //Getters
     public static int getAntalFade() {
         return antalFade;
     }
@@ -95,6 +101,8 @@ public class Fad {
         return leverandør;
     }
 
+
+    //Setters
     public void setAktiv(boolean bool) {
         this.erAktiv = bool;
     }
@@ -127,6 +135,8 @@ public class Fad {
         this.erFyldt = erFyldt;
     }
 
+
+    //To string og beskrivelses metoder
     @Override
     public String toString() {
         return "Fad nr. " + this.fadNr + ". Ex-" + this.tidligereIndhold + " fad. " + this.størrelseL + " L";

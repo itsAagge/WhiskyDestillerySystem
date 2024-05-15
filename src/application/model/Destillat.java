@@ -14,6 +14,7 @@ public class Destillat {
     private Maltbatch maltbatch;
     private ArrayList<Påfyldning> påfyldninger;
 
+    //Constructor
     public Destillat(String spiritBatchNr, double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato, Maltbatch maltbatch) {
         this.spiritBatchNr = spiritBatchNr;
         this.mængdeL = mængdeL;
@@ -26,18 +27,21 @@ public class Destillat {
         this.påfyldninger = new ArrayList<>();
     }
 
+    //Tilføjer en påfyldning til destillatet
     public void addPåfyldning(Påfyldning påfyldning) {
         if (!påfyldninger.contains(påfyldning)) {
             påfyldninger.add(påfyldning);
         }
     }
 
+    //Fjerner en påfyldning fra destillatet
     public void removePåfyldning(Påfyldning påfyldning) {
         if (påfyldninger.contains(påfyldning)) {
             påfyldninger.remove(påfyldning);
         }
     }
 
+    //Getters
     public double getMængdeL() {
         return mængdeL;
     }
@@ -74,6 +78,8 @@ public class Destillat {
         return new ArrayList<>(påfyldninger);
     }
 
+
+    //Setters
     public void setSpiritBatchNr(String spiritBatchNr) {
         this.spiritBatchNr = spiritBatchNr;
     }
@@ -106,6 +112,8 @@ public class Destillat {
         this.maltbatch = maltbatch;
     }
 
+
+    //To string og beskrivelses metoder
     @Override
     public String toString() {
         return "Destillat " + this.spiritBatchNr + ". Tilbage: " + this.mængdeTilbage() + "L";
@@ -129,6 +137,9 @@ public class Destillat {
         return s;
     }
 
+
+    //Finder den resterende mængde af destillatet ud fra hvor meget der er brugt
+    //i hver påfyldning
     public double mængdeTilbage() {
         double mængdeTilbage = this.mængdeL;
         for (Påfyldning påfyldning : påfyldninger) {
@@ -136,6 +147,7 @@ public class Destillat {
         }
         return mængdeTilbage;
     }
+
 
     //TODO udregn mængde tilbage af destillat efter påfyldning
 
