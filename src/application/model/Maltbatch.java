@@ -49,7 +49,7 @@ public class Maltbatch {
     }
 
     public String getBeskrivelse() {
-        String s = "Denne maltbatch har " + mængdeL + "L. Den startede med at gære den: " + gæringStart + " og sluttede med at gære den: " + gæringSlut + " og gærTypen er: " + gærType;
+        String s = "Denne maltbatch har " + mængdeL + "L og er lavet på kornet: " + korn.getSort() + ". Den startede med at gære den: " + gæringStart + " og sluttede med at gære den: " + gæringSlut + " og gærTypen er: " + gærType;
         return s;
     }
 }
