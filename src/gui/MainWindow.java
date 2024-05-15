@@ -44,7 +44,7 @@ public class MainWindow extends Application {
         Tab tabDestillater = new Tab("Administrer destillater");
         Tab tabPåfyldninger = new Tab("Påfyld fad");
         Tab tabUdgivelser = new Tab("Udgiv whisky");
-        Tab tabKorn = new Tab("Registrer korn");
+        Tab tabKorn = new Tab("Registrer korn og maltbatches");
 
         FadPane fadPane = new FadPane();
         tabFade.setContent(fadPane);
