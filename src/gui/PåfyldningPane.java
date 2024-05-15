@@ -14,7 +14,6 @@ import javafx.scene.layout.HBox;
 
 
 public class PåfyldningPane extends GridPane {
-
     private ListView<Påfyldning> lvwPåfyldninger = new ListView<>();
     private TextArea txaPåfyldningsBeskrivelse = new TextArea();
     private Button btnOpretPåfyldning = new Button("Opret");
@@ -60,7 +59,6 @@ public class PåfyldningPane extends GridPane {
 
     private void changePåfyldning() {
         Påfyldning påfyldning = lvwPåfyldninger.getSelectionModel().getSelectedItem();
-
         if (påfyldning != null) {
             txaPåfyldningsBeskrivelse.setText(påfyldning.getBeskrivelse());
             if (påfyldning.erUdgivet()) {

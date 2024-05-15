@@ -35,12 +35,25 @@ public class UdgivelsePane extends GridPane {
 
         HBox hBoxButtons = new HBox();
         hBoxButtons.setSpacing(20);
-        Button btnOpret = new Button("Opret");
-        btnOpret.setOnAction(actionEvent -> this.opretAction());
+        Button btnUdgivFad = new Button("Udgiv fad");
+        btnUdgivFad.setOnAction(actionEvent -> this.udgivFad());
         btnPrint.setOnAction(actionEvent -> this.printAction());
 
-        hBoxButtons.getChildren().addAll(btnOpret, btnPrint);
-        this.add(hBoxButtons,0,2);
+        Button btnUdgivFlasker = new Button("Udskriv Flasker");
+        btnUdgivFlasker.setOnAction(actionEvent -> this.UdskrivFlaskerAction());
+
+
+        hBoxButtons.getChildren().addAll(btnUdgivFad, btnUdgivFlasker,btnPrint);
+        this.add(hBoxButtons,0,2,2,1);
+        setKnapperAktive(false);
+    }
+
+    private void UdskrivFlaskerAction() {
+
+        UdgivFlaskerDialog udgivFlaskerDialog = new UdgivFlaskerDialog();
+        udgivFlaskerDialog.showAndWait();
+        lvwUdgivelser.getItems().setAll(Controller.getUdgivelser());
+        lvwUdgivelser.getSelectionModel().clearSelection();
         setKnapperAktive(false);
     }
 
@@ -57,7 +70,7 @@ public class UdgivelsePane extends GridPane {
         Controller.udtrækBeskrivelse(udgivelse);
     }
 
-    private void opretAction() {
+    private void udgivFad() {
         UdgivelseDialog udgivelseDialog = new UdgivelseDialog();
         udgivelseDialog.showAndWait();
         lvwUdgivelser.getItems().setAll(Controller.getUdgivelser());
