@@ -11,8 +11,7 @@ public class Påfyldning {
     private LocalDate færdigDato;
     private HashMap<Destillat, Double> destillatMængder;
     private ArrayList<Fad> fade;
-    private boolean erUdgivet;
-    private Udgivelse udgivelse;
+    private ArrayList<Udgivelse> udgivelser;
 
 
     //Constructor
@@ -24,7 +23,7 @@ public class Påfyldning {
         this.destillatMængder = new HashMap<>();
         this.fade = new ArrayList<>();
         this.fade.add(førsteFad);
-        this.erUdgivet = false;
+        this.udgivelser = new ArrayList<>();
     }
 
 
@@ -41,22 +40,15 @@ public class Påfyldning {
         return påfyldningsNr;
     }
 
-    public boolean erUdgivet() {
-        return erUdgivet;
+    public ArrayList<Udgivelse> getUdgivelser() {
+        return new ArrayList<>(this.udgivelser);
     }
 
-    public Udgivelse getUdgivelse() {
-        return udgivelse;
-    }
-
-    //Setters
-    public void setErUdgivet(boolean erUdgivet) {
-        this.erUdgivet = erUdgivet;
-    }
-
-    public void setUdgivelse(Udgivelse udgivelse) {
-        this.udgivelse = udgivelse;
-        setErUdgivet(true);
+    //Tilføjer en udgivelse til påfyldningen
+    public void tilføjUdgivelse(Udgivelse udgivelse) {
+        if (!this.udgivelser.contains(udgivelse)) {
+            this.udgivelser.add(udgivelse);
+        }
     }
 
     //Tilføjer et fad til fade listen, hvilket gør det til det nye fad påfyldningen
@@ -70,7 +62,6 @@ public class Påfyldning {
         }
     }
 
-
     //Fjerner et fad fra påfyldningen
     public void removeFad(Fad fad) {
         if (fade.contains(fad)) {
@@ -79,15 +70,13 @@ public class Påfyldning {
         }
     }
 
-
-    //Tilføjer et destillat med en bestemt mængde til påfyldningen
+    //Tilføjer destillater med en bestemt mængde til påfyldningen
     public void tilføjDestillatMedMængde(ArrayList<Destillat> destillater, ArrayList<Double> mængde) {
         for (int i = 0; i < destillater.size(); i++) {
             destillatMængder.put(destillater.get(i), mængde.get(i));
             destillater.get(i).addPåfyldning(this);
         }
     }
-
 
     //Beskrivelses metoder og to string metode
     @Override
@@ -128,9 +117,6 @@ public class Påfyldning {
             s += "\n" + fad.getBeskrivelse();
         }
         s += "\nDenne påfyldning blev hældt på fad d. " + this.påfyldningsDato;
-        if(erUdgivet) {
-            s += "\nDenne påfyldning er udgivet den: " + udgivelse.getUdgivelsesDato() + " i udgivelse: " + udgivelse.getUdgivelsesNr();
-        }
         return s;
     }
 
@@ -146,5 +132,15 @@ public class Påfyldning {
         return s;
     }
 
-
+    //Finder den resterende mængde af påfyldning ud fra hvor meget der er brugt i hver udgivelse
+    public double mængdeTilbage() {
+        double mængdeTilbage = 0.0;
+        for (Double value : destillatMængder.values()) {
+            mængdeTilbage += value;
+        }
+        for (Udgivelse udgivelse : udgivelser) {
+            mængdeTilbage -= udgivelse.getPåfyldningsMængder().get(this);
+        }
+        return mængdeTilbage;
+    }
 }

@@ -115,7 +115,8 @@ public class UdgivelseDialog extends Stage {
                 Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Pris pr unit skal være over 0");
             } else {
                 if (udgivelsesType.equals("Fad")) {
-                    udgivelse = Controller.opretUdgivelse(unitStørrelse, prisPrUnit, true, udgivelsesDato, alkoholProcent, vandMængde, medarbejder, påfyldninger);
+                    //TODO: opretUdgivelse kræver nu en arraylist af påfyldninger og en af mængder
+                    //udgivelse = Controller.opretUdgivelse(unitStørrelse, prisPrUnit, true, udgivelsesDato, alkoholProcent, vandMængde, medarbejder, påfyldninger);
                 } else {
                     if (Double.parseDouble(txfVandMængde.getText()) < 0) {
                         Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Vandmængde skal være over 0");
@@ -124,12 +125,9 @@ public class UdgivelseDialog extends Stage {
                     } else {
                         unitStørrelse = Double.parseDouble(txfUnitStørrelse.getText().trim());
                         vandMængde = Double.parseDouble(txfVandMængde.getText().trim());
-                        udgivelse = Controller.opretUdgivelse(unitStørrelse, prisPrUnit, false, udgivelsesDato, alkoholProcent, vandMængde, medarbejder, påfyldninger);
+                        //TODO: opretUdgivelse kræver nu en arraylist af påfyldninger og en af mængder
+                        //udgivelse = Controller.opretUdgivelse(unitStørrelse, prisPrUnit, false, udgivelsesDato, alkoholProcent, vandMængde, medarbejder, påfyldninger);
                     }
-                }
-                for (Påfyldning påfyldning : påfyldninger) {
-                    påfyldning.setErUdgivet(true);
-                    påfyldning.setUdgivelse(udgivelse);
                 }
                 this.close();
             }

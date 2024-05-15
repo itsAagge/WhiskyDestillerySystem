@@ -120,10 +120,21 @@ public class Controller {
         return oprettedePåfyldninger;
     }
 
-    public static Udgivelse opretUdgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder, List<Påfyldning> påfyldninger) {
-        Udgivelse udgivelse = new Udgivelse(unitStørrelse, prisPerUnit, erFad, udgivelsesDato, alkoholProcent, vandMængdeL, medarbejder, påfyldninger);
-        Storage.tilføjUdgivelse(udgivelse);
-        return udgivelse;
+    public static Udgivelse opretUdgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder, List<Påfyldning> påfyldninger, List<Double> mængder) {
+        //Beregner den totale mængde af påfyldninger og tjekker, om der er nok tilbage af påfyldningerne til at oprette denne udgivelse
+        boolean derErNokPåfyldningTilbage = true;
+        for (int i = 0; i < påfyldninger.size(); i++) {
+            if (påfyldninger.get(i).mængdeTilbage() < mængder.get(i)) {  //Tjekker om der er nok destillat tilbage til påfyldningerne
+                derErNokPåfyldningTilbage = false;
+            }
+        }
+        if(!derErNokPåfyldningTilbage) throw new IllegalArgumentException("Der er ikke nok påfyldning tilbage til dette");
+        else {
+            Udgivelse udgivelse = new Udgivelse(unitStørrelse, prisPerUnit, erFad, udgivelsesDato, alkoholProcent, vandMængdeL, medarbejder);
+            udgivelse.tilføjPåfyldningmedMængde(påfyldninger, mængder);
+            Storage.tilføjUdgivelse(udgivelse);
+            return udgivelse;
+        }
     }
 
     public static Alert opretAlert(Alert.AlertType alertType, String title, String contentText) {
@@ -210,7 +221,7 @@ public class Controller {
         ArrayList<Påfyldning> allePåfyldninger = getPåfyldninger();
         ArrayList<Påfyldning> ikkeUdgivedePåfyldninger = new ArrayList<>();
         for (Påfyldning påfyldning : allePåfyldninger) {
-            if (!påfyldning.erUdgivet()) {
+            if (påfyldning.getUdgivelser().isEmpty()) {
                 ikkeUdgivedePåfyldninger.add(påfyldning);
             }
         }

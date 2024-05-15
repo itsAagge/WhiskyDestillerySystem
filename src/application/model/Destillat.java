@@ -137,9 +137,7 @@ public class Destillat {
         return s;
     }
 
-
-    //Finder den resterende mængde af destillatet ud fra hvor meget der er brugt
-    //i hver påfyldning
+    //Finder den resterende mængde af destillatet ud fra hvor meget der er brugt i hver påfyldning
     public double mængdeTilbage() {
         double mængdeTilbage = this.mængdeL;
         for (Påfyldning påfyldning : påfyldninger) {
@@ -147,7 +145,4 @@ public class Destillat {
         }
         return mængdeTilbage;
     }
-
-
-
 }
