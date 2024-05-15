@@ -40,11 +40,11 @@ public class MainWindow extends Application {
     private void initTabPane(TabPane tabPane) {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        Tab tabFade = new Tab("Fade");
-        Tab tabDestillater = new Tab("Destillater");
-        Tab tabPåfyldninger = new Tab("Påfyldninger");
-        Tab tabUdgivelser = new Tab("Udgivelser");
-        Tab tabKorn = new Tab("Korn");
+        Tab tabFade = new Tab("Administrer fade");
+        Tab tabDestillater = new Tab("Administrer destillater");
+        Tab tabPåfyldninger = new Tab("Påfyld fad");
+        Tab tabUdgivelser = new Tab("Udgiv whisky");
+        Tab tabKorn = new Tab("Registrer korn");
 
         FadPane fadPane = new FadPane();
         tabFade.setContent(fadPane);
