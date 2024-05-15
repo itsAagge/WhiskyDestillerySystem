@@ -2,6 +2,7 @@ package application.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Udgivelse {
@@ -15,11 +16,11 @@ public class Udgivelse {
     private double alkoholProcent;
     private double vandMængdeL;
     private String medarbejder;
-    private List<Påfyldning> påfyldninger;
+    private HashMap<Påfyldning, Double> påfyldningsMængder;
 
 
     //Constructor
-    public Udgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder, List<Påfyldning> påfyldninger) {
+    public Udgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder) {
         antalUdgivelser++;
         this.udgivelsesNr = antalUdgivelser;
         this.erFad = erFad;
@@ -27,14 +28,12 @@ public class Udgivelse {
         this.alkoholProcent = alkoholProcent;
         this.vandMængdeL = vandMængdeL;
         this.medarbejder = medarbejder;
-        this.påfyldninger = påfyldninger;
         this.prisPerUnit = prisPerUnit;
         this.unitStørrelse = unitStørrelse;
         if (!this.erFad) {
             this.antalFlasker = beregnAntalFlasker();
         }
     }
-
 
     //Getters
     public int getUdgivelsesNr() {
@@ -57,6 +56,17 @@ public class Udgivelse {
         return antalFlasker;
     }
 
+    public HashMap<Påfyldning, Double> getPåfyldningsMængder() {
+        return new HashMap<>(påfyldningsMængder);
+    }
+
+    //Tilføjer påfyldninger med en bestemt mængde til udgivelsen
+    public void tilføjPåfyldningmedMængde(List<Påfyldning> påfyldninger, List<Double> mængder) {
+        for (int i = 0; i < påfyldninger.size(); i++) {
+            påfyldningsMængder.put(påfyldninger.get(i), mængder.get(i));
+            påfyldninger.get(i).tilføjUdgivelse(this);
+        }
+    }
 
     //To string og beskrivelses metoder
     @Override
@@ -64,14 +74,18 @@ public class Udgivelse {
         int size = 0;
         String s = "Udgivelse " + this.udgivelsesNr;
         if(erFad) {
-            Fad fad = this.påfyldninger.getFirst().getFade().getLast();
+            Fad fad = null;
+            //TODO: Finde ud af, om der er en bedre metode til dette
+            for (Påfyldning påfyldning : påfyldningsMængder.keySet()) { //Der er kun 1 påfyldning i HashMappet, når udgivelsen er et fad
+                fad = påfyldning.getFade().getLast();
+            }
             s += " Fad nr. " + fad.getFadNr() + " " + fad.getStørrelseL() + "L";
         } else {
             s += " Påfyldning: ";
-            for (Påfyldning påfyldning : påfyldninger) {
+            for (Påfyldning påfyldning : påfyldningsMængder.keySet()) {
                 s += påfyldning.getPåfyldningsNr();
                 size++;
-                if(size < this.påfyldninger.size()) {
+                if(size < this.påfyldningsMængder.size()) {
                     s += ", ";
                 }
             }
@@ -83,7 +97,12 @@ public class Udgivelse {
     public String getBeskrivelse() {
         String s = "Udgivelse nr. " + this.udgivelsesNr + ", udgivet d. " + this.udgivelsesDato;
         if(erFad) {
-            s += "\nUdgivelsen er fad nr. " + this.påfyldninger.getFirst().getFade().getLast().getFadNr();
+            Fad fad = null;
+            //TODO: Finde ud af, om der er en bedre metode til dette
+            for (Påfyldning påfyldning : påfyldningsMængder.keySet()) { //Der er kun 1 påfyldning i HashMappet, når udgivelsen er et fad
+                fad = påfyldning.getFade().getLast();
+            }
+            s += "\nUdgivelsen er fad nr. " + fad.getFadNr();
         } else {
             s += "\nUdgivelsen består af " + this.antalFlasker + " flasker, som hver koster " + this.prisPerUnit + " kr.";
         }
@@ -95,7 +114,7 @@ public class Udgivelse {
             s += "single malt, og der er brugt " + this.vandMængdeL + " liter vand til at blande de " + this.getTotalMængdePåfyldning() + " liter whisky op med.";
         }
         s += "\nUdgivelsen består af følgende påfyldninger af whisky:\n\n";
-        for (Påfyldning påfyldning : påfyldninger) {
+        for (Påfyldning påfyldning : påfyldningsMængder.keySet()) {
             s += påfyldning.getBeskrivelse() + "\n\n";
         }
         return s;
@@ -105,7 +124,7 @@ public class Udgivelse {
     //Finder den totale mængde af påfyldning ud fra påfyldningerne der er i udgivelsen
     public double getTotalMængdePåfyldning() {
         double mængdeTotal = 0;
-        for (Påfyldning påfyldning : påfyldninger) {
+        for (Påfyldning påfyldning : påfyldningsMængder.keySet()) {
             for (double mængde : påfyldning.getDestillatMængder().values()) {
                 mængdeTotal += mængde;
             }
