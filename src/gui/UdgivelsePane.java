@@ -49,7 +49,6 @@ public class UdgivelsePane extends GridPane {
     }
 
     private void UdskrivFlaskerAction() {
-
         UdgivFlaskerDialog udgivFlaskerDialog = new UdgivFlaskerDialog();
         udgivFlaskerDialog.showAndWait();
         lvwUdgivelser.getItems().setAll(Controller.getUdgivelser());
@@ -71,8 +70,8 @@ public class UdgivelsePane extends GridPane {
     }
 
     private void udgivFad() {
-        UdgivelseDialog udgivelseDialog = new UdgivelseDialog();
-        udgivelseDialog.showAndWait();
+        UdgivFadDialog udgivFadDialog = new UdgivFadDialog();
+        udgivFadDialog.showAndWait();
         lvwUdgivelser.getItems().setAll(Controller.getUdgivelser());
         lvwUdgivelser.getSelectionModel().clearSelection();
         setKnapperAktive(false);

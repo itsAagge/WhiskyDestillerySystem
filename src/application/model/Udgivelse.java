@@ -30,6 +30,7 @@ public class Udgivelse implements Logable {
         this.medarbejder = medarbejder;
         this.prisPerUnit = prisPerUnit;
         this.unitStørrelse = unitStørrelse;
+        this.påfyldningsMængder = new HashMap<>();
         if (!this.erFad) {
             this.antalFlasker = beregnAntalFlasker();
         }
@@ -55,7 +56,7 @@ public class Udgivelse implements Logable {
     //Tilføjer påfyldninger med en bestemt mængde til udgivelsen
     public void tilføjPåfyldningmedMængde(List<Påfyldning> påfyldninger, List<Double> mængder) {
         for (int i = 0; i < påfyldninger.size(); i++) {
-            påfyldningsMængder.put(påfyldninger.get(i), mængder.get(i));
+            this.påfyldningsMængder.put(påfyldninger.get(i), mængder.get(i));
             påfyldninger.get(i).tilføjUdgivelse(this);
         }
     }

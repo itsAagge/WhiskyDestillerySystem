@@ -217,17 +217,16 @@ public class Controller {
         return påfyldninger;
     }
 
-    public static ArrayList<Påfyldning> getAlleIkkeUdgivedePåfyldninger() {
+    public static ArrayList<Påfyldning> getAlleIkkeTommePåfyldninger() {
         ArrayList<Påfyldning> allePåfyldninger = getPåfyldninger();
         ArrayList<Påfyldning> ikkeUdgivedePåfyldninger = new ArrayList<>();
         for (Påfyldning påfyldning : allePåfyldninger) {
-            if (påfyldning.getUdgivelser().isEmpty()) {
+            if (påfyldning.mængdeTilbage() != 0) {
                 ikkeUdgivedePåfyldninger.add(påfyldning);
             }
         }
         return ikkeUdgivedePåfyldninger;
     }
-
 
     public static void udtrækBeskrivelse(String outputType, Logable object) {
         final String locationFolder = "resources/beskrivelser/";

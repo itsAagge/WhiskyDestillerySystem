@@ -1,9 +1,7 @@
 package gui;
 
 import application.controller.Controller;
-import application.model.Fad;
 import application.model.Påfyldning;
-import application.model.Udgivelse;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
@@ -17,14 +15,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UdgivelseDialog extends Stage {
+public class UdgivFadDialog extends Stage {
     private DatePicker dpUdgivelsesDato = new DatePicker();
     private TextField txfAlkoholProcent = new TextField();
     private TextField txfPrisForFadet = new TextField();
     private ComboBox<String> cbMedarbejdere = new ComboBox<>();
     private ListView<Påfyldning> lvwPåfyldning = new ListView<>();
 
-    public UdgivelseDialog() {
+    public UdgivFadDialog() {
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
@@ -48,7 +46,7 @@ public class UdgivelseDialog extends Stage {
         pane.add(lblAllePåfyldning, 0, 0);
         pane.add(lvwPåfyldning, 0, 1, 1, 8);
         lvwPåfyldning.setPrefWidth(250);
-        lvwPåfyldning.getItems().setAll(Controller.getAlleIkkeUdgivedePåfyldninger());
+        lvwPåfyldning.getItems().setAll(Controller.getAlleIkkeTommePåfyldninger());
         lvwPåfyldning.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         Label lblUdgivelsesDato = new Label("Udgivelses dato");
@@ -101,5 +99,4 @@ public class UdgivelseDialog extends Stage {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Indtastnings fejl");
         }
     }
-
 }
