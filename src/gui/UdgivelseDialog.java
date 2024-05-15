@@ -1,6 +1,7 @@
 package gui;
 
 import application.controller.Controller;
+import application.model.Fad;
 import application.model.Påfyldning;
 import application.model.Udgivelse;
 import javafx.geometry.Insets;
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UdgivelseDialog extends Stage {
@@ -81,7 +83,6 @@ public class UdgivelseDialog extends Stage {
             double alkoholProcent = Double.parseDouble(txfAlkoholProcent.getText().trim());
             double prisPrUnit = Double.parseDouble(txfPrisForFadet.getText().trim());
             String medarbejder = cbMedarbejdere.getSelectionModel().getSelectedItem();
-            Udgivelse udgivelse = null;
 
             if (påfyldninger.isEmpty()) {
                 Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen påfyldninger valgt");
@@ -92,11 +93,8 @@ public class UdgivelseDialog extends Stage {
             } else if (prisPrUnit <= 0) {
                 Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Pris pr unit skal være over 0");
             } else {
-                udgivelse = Controller.opretUdgivelse(unitStørrelse, prisPrUnit, true, udgivelsesDato, alkoholProcent, vandMængde, medarbejder, påfyldninger);
-                for (Påfyldning påfyldning : påfyldninger) {
-                    påfyldning.setErUdgivet(true);
-                    påfyldning.setUdgivelse(udgivelse);
-                }
+                List<Double> mængder = new ArrayList<>(List.of(påfyldninger.getFirst().mængdeTilbage()));
+                Controller.opretUdgivelse(unitStørrelse, prisPrUnit, true, udgivelsesDato, alkoholProcent, vandMængde, medarbejder, påfyldninger, mængder);
                 this.close();
             }
         } catch (NumberFormatException e) {
