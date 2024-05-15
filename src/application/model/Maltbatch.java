@@ -47,4 +47,9 @@ public class Maltbatch {
     public String toString() {
         return this.gæringSlut.toString() + ". Korn: " + this.korn.getSort() + ". Gær: " + this.gærType;
     }
+
+    public String getBeskrivelse() {
+        String s = "Denne maltbatch har " + mængdeL + "L. Den startede med at gære den: " + gæringStart + " og sluttede med at gære den: " + gæringSlut + " og gærTypen er: " + gærType;
+        return s;
+    }
 }

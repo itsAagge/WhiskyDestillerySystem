@@ -39,4 +39,9 @@ public class Korn {
     public String toString() {
         return this.høstDato.toString() + ". Sort: " + this.sort + " fra " + this.markNavn;
     }
+
+    public String getBeskrivelse() {
+        String s = "Dette korn er høstet den: " + høstDato + " fra marken: " + markNavn + " og har sorten: " + sort + " og den samlede mængde i kg er: " + mængdeKg;
+        return s;
+    }
 }
