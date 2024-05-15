@@ -64,6 +64,7 @@ public class PåfyldningPane extends GridPane {
         if (påfyldning != null) {
             txaPåfyldningsBeskrivelse.setText(påfyldning.getBeskrivelse());
         }
+        //TODO nullpointerException
         if (påfyldning.erUdgivet()) {
             setKnapperAktive(false);
         }

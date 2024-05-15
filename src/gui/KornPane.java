@@ -1,8 +1,10 @@
 package gui;
 
 import application.controller.Controller;
+import application.model.Destillat;
 import application.model.Korn;
 import application.model.Maltbatch;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -30,6 +32,8 @@ public class KornPane extends GridPane {
         this.add(lvwKorn, 0,1,1,3);
         lvwKorn.getItems().setAll(Controller.getKorn());
         lvwKorn.setPrefWidth(400);
+        ChangeListener<Korn> kornChangeListener = (observableValue, oldValue, newValue) -> this.changeKorn();
+        lvwKorn.getSelectionModel().selectedItemProperty().addListener(kornChangeListener);
 
         Label lblKornBeskrivelse = new Label("Korn beskrivelse");
         this.add(lblKornBeskrivelse, 1,0);
@@ -44,6 +48,8 @@ public class KornPane extends GridPane {
         this.add(lvwMaltbatch, 2,1,1,3);
         lvwMaltbatch.getItems().setAll(Controller.getAlleMaltbatche());
         lvwMaltbatch.setPrefWidth(400);
+        ChangeListener<Maltbatch> maltbatchChangeListener = (observableValue, oldValue, newValue) -> this.changeMaltbatch();
+        lvwMaltbatch.getSelectionModel().selectedItemProperty().addListener(maltbatchChangeListener);
 
         Button btnRegistrerKorn = new Button("Registrer korn");
         this.add(btnRegistrerKorn, 0,4);
@@ -53,6 +59,18 @@ public class KornPane extends GridPane {
         this.add(btnRegistrerMaltchbatch, 2,4);
         btnRegistrerMaltchbatch.setOnAction(actionEvent -> this.registrerMaltbatchAction());
 
+    }
+
+    private void changeMaltbatch() {
+        Maltbatch maltbatch = lvwMaltbatch.getSelectionModel().getSelectedItem();
+
+        if (maltbatch != null) {
+
+        }
+
+    }
+
+    private void changeKorn() {
     }
 
     private void registrerMaltbatchAction() {
