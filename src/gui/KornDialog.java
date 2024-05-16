@@ -49,6 +49,7 @@ public class KornDialog extends Stage {
         Label lblHøstDato = new Label("Høst dato");
         pane.add(lblHøstDato, 1,0);
         pane.add(dpHøstdato, 1,1);
+        dpHøstdato.setEditable(false);
 
         Label lblMængdeKg = new Label("Mængde i kg");
         pane.add(lblMængdeKg,1,2);

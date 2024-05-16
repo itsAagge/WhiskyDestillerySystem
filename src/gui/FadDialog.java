@@ -47,27 +47,27 @@ public class FadDialog extends Stage {
         pane.setVgap(10);
         pane.setGridLinesVisible(false);
 
-        Label lblLand = new Label("Fra hvilket land kommer fadet?");
+        Label lblLand = new Label("Fra land:");
         pane.add(lblLand,0,0);
         pane.add(txfLand,1,0);
 
-        Label lblFirma = new Label("Fra hvilket firma kommer fadet?");
+        Label lblFirma = new Label("Leverandør:");
         pane.add(lblFirma,0,1);
         pane.add(txfFirma,1,1);
 
-        Label lblTidligereIndhold = new Label("Hvad har fadet tidligere indeholdt?");
+        Label lblTidligereIndhold = new Label("Tidligere indhold:");
         pane.add(lblTidligereIndhold,0,2);
         pane.add(txfTidligereIndhold,1,2);
 
-        Label lblTidligereIndholdAlder = new Label("Hvor mange år har det tidligere indhold ligget på fadet?");
+        Label lblTidligereIndholdAlder = new Label("Tidligere indhold alder:");
         pane.add(lblTidligereIndholdAlder,0,3);
         pane.add(txfTidligereIndholdAlder,1,3);
 
-        Label lblStørrelse = new Label("Hvor mange liter kan fadet indeholde?");
+        Label lblStørrelse = new Label("Størrelse i liter:");
         pane.add(lblStørrelse,0,4);
         pane.add(txfStørrelse,1,4);
 
-        Label lblTræType = new Label("Hvilket type træ er fadet lavet af?");
+        Label lblTræType = new Label("Trætype:");
         pane.add(lblTræType,0,5);
         pane.add(txfTræType,1,5);
 

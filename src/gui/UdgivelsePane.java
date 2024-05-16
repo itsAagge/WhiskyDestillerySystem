@@ -39,7 +39,7 @@ public class UdgivelsePane extends GridPane {
         btnUdgivFad.setOnAction(actionEvent -> this.udgivFad());
         btnPrint.setOnAction(actionEvent -> this.printAction());
 
-        Button btnUdgivFlasker = new Button("Udskriv Flasker");
+        Button btnUdgivFlasker = new Button("Udgiv Flasker");
         btnUdgivFlasker.setOnAction(actionEvent -> this.UdskrivFlaskerAction());
 
 

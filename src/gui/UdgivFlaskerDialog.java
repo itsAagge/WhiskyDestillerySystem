@@ -28,14 +28,14 @@ public class UdgivFlaskerDialog extends Stage {
     ListView<String> lvwGemtePåfyldningerMedMængde = new ListView<>();
     TextField txfMængdeL = new TextField();
     TextField txfPrisPerFlaske = new TextField();
-    Label lblLiterTilbage = new Label();
+    Label lblLiterTilbage = new Label("Liter tilbage: ");
 
     public UdgivFlaskerDialog() {
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
         this.setMinWidth(640);
-        this.setTitle("Opret udgivelse");
+        this.setTitle("Udgiv flasker");
 
         GridPane pane = new GridPane();
         Scene scene = new Scene(pane);
@@ -53,19 +53,21 @@ public class UdgivFlaskerDialog extends Stage {
         pane.add(lblFlaskeStørrelse, 0,0);
         pane.add(txfFlaskeStørrelse, 0,1);
 
-        Label lblPrisPrFlaske = new Label("Pris pr flaske");
-        pane.add(lblPrisPrFlaske, 0,2);
-        pane.add(txfPrisPerFlaske, 0,3);
-
         Label lblUdgivelsesDato = new Label("Udgivelses dato");
         pane.add(lblUdgivelsesDato, 1,0);
         pane.add(dpUdgivelsesDato, 1,1);
+        dpUdgivelsesDato.setEditable(false);
+        dpUdgivelsesDato.setValue(LocalDate.now());
+
+        Label lblPrisPrFlaske = new Label("Pris pr flaske");
+        pane.add(lblPrisPrFlaske, 0,2);
+        pane.add(txfPrisPerFlaske, 0,3);
 
         Label lblAlkoholProcent = new Label("Alkohol procent");
         pane.add(lblAlkoholProcent,1,2);
         pane.add(txfAlkoholProcent,1,3);
 
-        Label lblVandMængde = new Label("Vand mængde");
+        Label lblVandMængde = new Label("Liter vand tilføjet");
         pane.add(lblVandMængde, 0,4);
         pane.add(txfVandMængde, 0,5);
 
@@ -109,11 +111,12 @@ public class UdgivFlaskerDialog extends Stage {
 
     private void changePåfyldning() {
         Påfyldning påfyldning = cBPåfylninger.getSelectionModel().getSelectedItem();
+        String s = "Liter tilbage: ";
 
         if (påfyldning != null) {
-            String s = "Liter tilbage: " + påfyldning.mængdeTilbage() + " L";
-            lblLiterTilbage.setText(s);
+            s += påfyldning.mængdeTilbage() + " L";
         }
+        lblLiterTilbage.setText(s);
     }
 
     ArrayList<Double> mængder = new ArrayList<>();

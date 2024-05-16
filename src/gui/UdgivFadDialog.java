@@ -27,7 +27,7 @@ public class UdgivFadDialog extends Stage {
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
         this.setMinWidth(640);
-        this.setTitle("Opret udgivelse");
+        this.setTitle("Udgiv fad");
 
         GridPane pane = new GridPane();
         Scene scene = new Scene(pane);
@@ -50,6 +50,8 @@ public class UdgivFadDialog extends Stage {
         Label lblUdgivelsesDato = new Label("Udgivelses dato");
         pane.add(lblUdgivelsesDato, 1, 0);
         pane.add(dpUdgivelsesDato, 1, 1);
+        dpUdgivelsesDato.setEditable(false);
+        dpUdgivelsesDato.setValue(LocalDate.now());
 
         Label lblAlkoholprocent = new Label("Alkohol procent");
         pane.add(lblAlkoholprocent, 2, 0);

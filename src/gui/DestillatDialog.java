@@ -77,6 +77,8 @@ public class DestillatDialog extends Stage {
         Label lblDato = new Label("Dato:");
         pane.add(lblDato,0,5);
         pane.add(datePicker,1,5);
+        datePicker.setEditable(false);
+        datePicker.setValue(LocalDate.now());
 
         Label lblMedarbejder = new Label("Medarbejder:");
         pane.add(lblMedarbejder,0,6);

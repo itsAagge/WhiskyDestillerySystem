@@ -130,8 +130,7 @@ public class Controller {
         }
         if(!derErNokPåfyldningTilbage) throw new IllegalArgumentException("Der er ikke nok påfyldning tilbage til dette");
         else {
-            Udgivelse udgivelse = new Udgivelse(unitStørrelse, prisPerUnit, erFad, udgivelsesDato, alkoholProcent, vandMængdeL, medarbejder);
-            udgivelse.tilføjPåfyldningmedMængde(påfyldninger, mængder);
+            Udgivelse udgivelse = new Udgivelse(unitStørrelse, prisPerUnit, erFad, udgivelsesDato, alkoholProcent, vandMængdeL, medarbejder, påfyldninger, mængder);
             Storage.tilføjUdgivelse(udgivelse);
             return udgivelse;
         }
