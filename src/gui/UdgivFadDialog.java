@@ -47,7 +47,6 @@ public class UdgivFadDialog extends Stage {
         pane.add(lvwPåfyldning, 0, 1, 1, 8);
         lvwPåfyldning.setPrefWidth(250);
         lvwPåfyldning.getItems().setAll(Controller.getAlleIkkeTommePåfyldninger());
-        lvwPåfyldning.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         Label lblUdgivelsesDato = new Label("Udgivelses dato");
         pane.add(lblUdgivelsesDato, 1, 0);

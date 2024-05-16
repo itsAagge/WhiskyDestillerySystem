@@ -61,7 +61,7 @@ public class PåfyldningPane extends GridPane {
         Påfyldning påfyldning = lvwPåfyldninger.getSelectionModel().getSelectedItem();
         if (påfyldning != null) {
             txaPåfyldningsBeskrivelse.setText(påfyldning.getBeskrivelse());
-            if (påfyldning.getUdgivelser().isEmpty()) {
+            if (!påfyldning.getUdgivelser().isEmpty()) {
                 setKnapperAktive(false);
             }
             else {
