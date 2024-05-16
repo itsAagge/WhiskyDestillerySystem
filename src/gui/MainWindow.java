@@ -43,6 +43,7 @@ public class MainWindow extends Application {
         Tab tabPåfyldninger = new Tab("Påfyld fad");
         Tab tabUdgivelser = new Tab("Udgiv whisky");
         Tab tabKorn = new Tab("Registrer korn og maltbatches");
+        Tab tabLager = new Tab("Administrer lagre");
 
         FadPane fadPane = new FadPane();
         tabFade.setContent(fadPane);
@@ -54,11 +55,14 @@ public class MainWindow extends Application {
         tabUdgivelser.setContent(udgivelsePane);
         KornOgMaltbatchPane kornOgMaltbatchPane = new KornOgMaltbatchPane();
         tabKorn.setContent(kornOgMaltbatchPane);
+        LagerPane lagerPane = new LagerPane();
+        tabLager.setContent(lagerPane);
 
         tabPane.getTabs().add(tabFade);
         tabPane.getTabs().add(tabDestillater);
         tabPane.getTabs().add(tabPåfyldninger);
         tabPane.getTabs().add(tabUdgivelser);
         tabPane.getTabs().add(tabKorn);
+        tabPane.getTabs().add(tabLager);
     }
 }
