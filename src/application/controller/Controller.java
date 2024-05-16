@@ -187,6 +187,9 @@ public class Controller {
     public static List<Korn> getKorn() {
         return Storage.getKornList();
     }
+    public static List<Lager> getLagre() {
+        return Storage.getLagre();
+    }
 
     public static void fjernFad(Fad fad) {
         Storage.fjernFad(fad);
