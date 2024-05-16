@@ -20,7 +20,7 @@ public class Udgivelse implements Logable {
 
 
     //Constructor
-    public Udgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder) {
+    public Udgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder, List<Påfyldning> påfyldninger, List<Double> mængder) {
         antalUdgivelser++;
         this.udgivelsesNr = antalUdgivelser;
         this.erFad = erFad;
@@ -31,6 +31,7 @@ public class Udgivelse implements Logable {
         this.prisPerUnit = prisPerUnit;
         this.unitStørrelse = unitStørrelse;
         this.påfyldningsMængder = new HashMap<>();
+        this.tilføjPåfyldningmedMængde(påfyldninger, mængder);
         if (!this.erFad) {
             this.antalFlasker = beregnAntalFlasker();
         }
@@ -115,13 +116,11 @@ public class Udgivelse implements Logable {
     }
 
 
-    //Finder den totale mængde af påfyldning ud fra påfyldningerne der er i udgivelsen
+    //Finder den totale mængde af påfyldning i udgivelsen
     public double getTotalMængdePåfyldning() {
         double mængdeTotal = 0;
-        for (Påfyldning påfyldning : påfyldningsMængder.keySet()) {
-            for (double mængde : påfyldning.getDestillatMængder().values()) {
-                mængdeTotal += mængde;
-            }
+        for (Double mængde : påfyldningsMængder.values()) {
+            mængdeTotal += mængde;
         }
         return mængdeTotal;
     }

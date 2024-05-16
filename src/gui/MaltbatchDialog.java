@@ -61,10 +61,12 @@ public class MaltbatchDialog extends Stage {
         Label lblGærringsStartDato = new Label("Gærrings startdato");
         pane.add(lblGærringsStartDato, 1,2);
         pane.add(dpGærringStart, 1,3);
+        dpGærringStart.setEditable(false);
 
         Label lblGærringsSlutDato = new Label("Gærring slutdato");
         pane.add(lblGærringsSlutDato, 2,2);
         pane.add(dpGærringSlut,2,3);
+        dpGærringSlut.setEditable(false);
 
         Label lblGærType = new Label("Gærtype");
         pane.add(lblGærType, 2,0);

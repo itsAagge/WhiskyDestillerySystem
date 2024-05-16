@@ -68,10 +68,12 @@ public class PåfyldningsDialog extends Stage {
         Label lblpåfyldningsDato = new Label("Påfyldnings dato");
         pane.add(lblpåfyldningsDato, 1, 0);
         pane.add(dpPåfyldningsdato, 1, 1);
+        dpPåfyldningsdato.setEditable(false);
 
         Label lblFærdigDato = new Label("Færdig dato");
         pane.add(lblFærdigDato, 1, 2);
         pane.add(dpFærdigDato, 1, 3);
+        dpFærdigDato.setEditable(false);
 
         Label lblMængde = new Label("Mængde i liter");
         pane.add(lblMængde, 2, 2);
