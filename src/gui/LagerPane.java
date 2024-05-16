@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 
 public class LagerPane extends GridPane {
 
@@ -17,6 +16,8 @@ public class LagerPane extends GridPane {
     ListView<Reol> lvwReol = new ListView<>();
     ListView<Hylde> lvwHylde = new ListView<>();
     ListView<Fad> lvwFad = new ListView<>();
+    Button btnTilføjReol = new Button("Tilføj Reol");
+    Button btnFlytFad = new Button("Flyt fad");
 
 
     public LagerPane() {
@@ -47,19 +48,47 @@ public class LagerPane extends GridPane {
         Label lblFad = new Label("Fade på hylden");
         this.add(lblFad, 3,0);
         this.add(lvwFad, 3,1);
+        ChangeListener<Fad> fadChangeListener = (observableValue, oldValue, newValue) -> this.changeFad();
+        lvwFad.getSelectionModel().selectedItemProperty().addListener(fadChangeListener);
 
         Button btnOpret = new Button("Opret");
         this.add(btnOpret, 0,2);
         btnOpret.setOnAction(actionEvent -> this.opretAction());
 
-        Button btnFlytFad = new Button("Flyt fad");
+
         this.add(btnFlytFad,3,2);
         this.setHalignment(btnFlytFad, HPos.RIGHT);
 
 
+        this.add(btnTilføjReol,1,2);
+        btnTilføjReol.setOnAction(actionEvent -> this.tilføjAction());
+        setKnapperAktive(false);
+
+
+    }
+
+    private void changeFad() {
+        Fad fad = lvwFad.getSelectionModel().getSelectedItem();
+        if (fad != null) {
+            btnFlytFad.setDisable(false);
+        }
+    }
+
+    private void tilføjAction() {
+        Lager lager = lvwLager.getSelectionModel().getSelectedItem();
+        if (lager != null) {
+            ReolDialog reolDialog = new ReolDialog(lager);
+            reolDialog.showAndWait();
+            lvwReol.getItems().setAll(lager.getReoler());
+        }
+
     }
 
     private void changeHylde() {
+        Hylde hylde = lvwHylde.getSelectionModel().getSelectedItem();
+        if (hylde != null) {
+            lvwFad.getItems().setAll(hylde.getFade());
+        }
     }
 
     private void changeReol() {
@@ -75,6 +104,7 @@ public class LagerPane extends GridPane {
 
         if (lager != null) {
             lvwReol.getItems().setAll(lager.getReoler());
+            btnTilføjReol.setDisable(false);
         }
 
     }
@@ -84,6 +114,11 @@ public class LagerPane extends GridPane {
         lagerDialog.showAndWait();
         lvwLager.getItems().setAll(Controller.getLagre());
 
+    }
+
+    private void setKnapperAktive(boolean bool) {
+        btnTilføjReol.setDisable(!bool);
+        btnFlytFad.setDisable(!bool);
     }
 
 }

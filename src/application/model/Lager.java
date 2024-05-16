@@ -25,8 +25,10 @@ public class Lager {
         return new ArrayList<>(reoler);
     }
 
-    public void tilføjReol(int antalHylder, int maxPladsPåHylderne) {
-        this.reoler.add(new Reol(this.reoler.size() + 1, antalHylder, maxPladsPåHylderne, this));
+    public void tilføjReol(int antalReoler, int antalHylder, int maxPladsPåHylderne) {
+        for (int i = 0; i < antalReoler; i++) {
+            this.reoler.add(new Reol(this.reoler.size() + 1, antalHylder, maxPladsPåHylderne, this));
+        }
     }
 
     @Override

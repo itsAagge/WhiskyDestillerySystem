@@ -18,16 +18,13 @@ public class LagerDialog extends Stage {
 
     TextField txfAdresse = new TextField();
     TextField txfKvadrat = new TextField();
-    TextField txfAntalReoler = new TextField();
-    TextField txfHyldeMaxPlads = new TextField();
-    TextField txfAntalHylder = new TextField();
 
 
     public LagerDialog() {
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
-        this.setMinWidth(640);
+        //this.setMinWidth(640);
         this.setTitle("Opret lager");
 
         GridPane pane = new GridPane();
@@ -51,18 +48,6 @@ public class LagerDialog extends Stage {
         pane.add(lblKvadratMeter, 1,0);
         pane.add(txfKvadrat, 1,1);
 
-        Label lblReol = new Label("Antal reoler");
-        pane.add(lblReol, 0,2);
-        pane.add(txfAntalReoler,0,3);
-
-        Label lblAntalHylder = new Label("Antal hylder");
-        pane.add(lblAntalHylder,1,2);
-        pane.add(txfAntalHylder, 1,3);
-
-        Label lblHyldeMaxPlads = new Label("Max plads pr. hylde");
-        pane.add(lblHyldeMaxPlads, 0,4);
-        pane.add(txfHyldeMaxPlads, 0,5);
-
         Button btnOpret = new Button("Opret");
         pane.add(btnOpret,1,5);
         pane.setHalignment(btnOpret, HPos.RIGHT);
@@ -74,15 +59,8 @@ public class LagerDialog extends Stage {
     private void opretAction() {
         String adresse = txfAdresse.getText().trim();
         String kvadratMeter = txfKvadrat.getText().trim();
-        int antalReoler = Integer.parseInt(txfAntalReoler.getText().trim());
-        int antalHylder = Integer.parseInt(txfAntalHylder.getText().trim());
-        int hyldeMaxPlads = Integer.parseInt(txfHyldeMaxPlads.getText().trim());
 
-
-        Lager lager = Controller.opretLager(adresse, kvadratMeter);
-        for (int i = 0; i < antalReoler; i++) {
-            lager.tilføjReol(antalHylder, hyldeMaxPlads);
-        }
+        Controller.opretLager(adresse, kvadratMeter);
         this.close();
 
     }

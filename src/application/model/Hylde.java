@@ -15,6 +15,9 @@ public class Hylde {
         this.fade = new ArrayList<>();
     }
 
+    public ArrayList<Fad> getFade() {
+        return fade;
+    }
     public Reol getReol() {
         return reol;
     }
