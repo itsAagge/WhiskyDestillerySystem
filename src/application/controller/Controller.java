@@ -136,7 +136,7 @@ public class Controller {
         }
     }
 
-    public Lager opretLager(String adresse, String kvadratmeter) {
+    public static Lager opretLager(String adresse, String kvadratmeter) {
         Lager lager = new Lager(adresse, kvadratmeter);
         Storage.tilføjLager(lager);
         return lager;

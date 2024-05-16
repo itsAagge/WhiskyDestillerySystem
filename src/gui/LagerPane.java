@@ -1,10 +1,8 @@
 package gui;
 
 import application.controller.Controller;
-import application.model.Fad;
-import application.model.Hylde;
-import application.model.Lager;
-import application.model.Reol;
+import application.model.*;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -31,14 +29,20 @@ public class LagerPane extends GridPane {
         this.add(lblAlleLagre, 0,0);
         this.add(lvwLager,0,1);
         lvwLager.getItems().setAll(Controller.getLagre());
+        ChangeListener<Lager> lagerChangeListener = (observableValue, oldValue, newValue) -> this.changeLager();
+        lvwLager.getSelectionModel().selectedItemProperty().addListener(lagerChangeListener);
 
         Label lblReol = new Label("Reoler på lageret");
         this.add(lblReol, 1,0);
         this.add(lvwReol,1,1);
+        ChangeListener<Reol> reolChangeListener = (observableValue, oldValue, newValue) -> this.changeReol();
+        lvwReol.getSelectionModel().selectedItemProperty().addListener(reolChangeListener);
 
         Label lblHylde = new Label("Hylder på reolen");
         this.add(lblHylde,2,0);
         this.add(lvwHylde,2,1);
+        ChangeListener<Hylde> hyldeChangeListener = (observableValue, oldValue, newValue) -> this.changeHylde();
+        lvwHylde.getSelectionModel().selectedItemProperty().addListener(hyldeChangeListener);
 
         Label lblFad = new Label("Fade på hylden");
         this.add(lblFad, 3,0);
@@ -52,6 +56,26 @@ public class LagerPane extends GridPane {
         this.add(btnFlytFad,3,2);
         this.setHalignment(btnFlytFad, HPos.RIGHT);
 
+
+    }
+
+    private void changeHylde() {
+    }
+
+    private void changeReol() {
+        Reol reol = lvwReol.getSelectionModel().getSelectedItem();
+
+        if (reol != null) {
+            lvwHylde.getItems().setAll(reol.getHylder());
+        }
+    }
+
+    private void changeLager() {
+        Lager lager = lvwLager.getSelectionModel().getSelectedItem();
+
+        if (lager != null) {
+            lvwReol.getItems().setAll(lager.getReoler());
+        }
 
     }
 

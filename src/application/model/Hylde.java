@@ -42,4 +42,9 @@ public class Hylde {
     public boolean ledigPlads() {
         return this.fade.size() < maxPlads;
     }
+
+    @Override
+    public String toString() {
+        return "Hylde nr.: " + nr;
+    }
 }

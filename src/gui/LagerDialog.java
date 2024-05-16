@@ -1,7 +1,12 @@
 package gui;
 
+import application.controller.Controller;
+import application.model.Lager;
+import application.model.Reol;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -13,9 +18,9 @@ public class LagerDialog extends Stage {
 
     TextField txfAdresse = new TextField();
     TextField txfKvadrat = new TextField();
-    TextField reolNr = new TextField();
-    TextField hyldeMaxPlads = new TextField();
-    TextField hyldeNr = new TextField();
+    TextField txfAntalReoler = new TextField();
+    TextField txfHyldeMaxPlads = new TextField();
+    TextField txfAntalHylder = new TextField();
 
 
     public LagerDialog() {
@@ -46,8 +51,42 @@ public class LagerDialog extends Stage {
         pane.add(lblKvadratMeter, 1,0);
         pane.add(txfKvadrat, 1,1);
 
-        //Label lblReol = new Label("");
+        Label lblReol = new Label("Antal reoler");
+        pane.add(lblReol, 0,2);
+        pane.add(txfAntalReoler,0,3);
 
+        Label lblAntalHylder = new Label("Antal hylder");
+        pane.add(lblAntalHylder,1,2);
+        pane.add(txfAntalHylder, 1,3);
+
+        Label lblHyldeMaxPlads = new Label("Max plads pr. hylde");
+        pane.add(lblHyldeMaxPlads, 0,4);
+        pane.add(txfHyldeMaxPlads, 0,5);
+
+        Button btnOpret = new Button("Opret");
+        pane.add(btnOpret,1,5);
+        pane.setHalignment(btnOpret, HPos.RIGHT);
+        btnOpret.setOnAction(actionEvent -> this.opretAction());
+
+
+    }
+
+    private void opretAction() {
+        String adresse = txfAdresse.getText().trim();
+        String kvadratMeter = txfKvadrat.getText().trim();
+        int antalReoler = Integer.parseInt(txfAntalReoler.getText().trim());
+        int antalHylder = Integer.parseInt(txfAntalHylder.getText().trim());
+        int hyldeMaxPlads = Integer.parseInt(txfHyldeMaxPlads.getText().trim());
+        int count = 1;
+
+
+        Lager lager = Controller.opretLager(adresse, kvadratMeter);
+        for (int i = 0; i < antalReoler; i++) {
+            Reol reol = lager.tilføjReol(antalHylder, hyldeMaxPlads);
+            reol.setNr(count);
+            count++;
+        }
+        this.close();
 
     }
 

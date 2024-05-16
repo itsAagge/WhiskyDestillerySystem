@@ -1,6 +1,7 @@
 package application.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Lager {
     private String adresse;
@@ -20,8 +21,18 @@ public class Lager {
     public String getKvadratmeter() {
         return kvadratmeter;
     }
+    public List<Reol> getReoler() {
+        return new ArrayList<>(reoler);
+    }
 
-    public void tilføjReol(int antalHylder, int maxPladsPåHylderne) {
-        this.reoler.add(new Reol(this.reoler.size() + 1, antalHylder, maxPladsPåHylderne,this));
+    public Reol tilføjReol(int antalHylder, int maxPladsPåHylderne) {
+        Reol reol = new Reol(this.reoler.size() + 1, antalHylder, maxPladsPåHylderne, this);
+        this.reoler.add(reol);
+        return reol;
+    }
+
+    @Override
+    public String toString() {
+        return "Lageradresse: " + adresse;
     }
 }
