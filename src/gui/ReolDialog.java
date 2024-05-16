@@ -1,10 +1,12 @@
 package gui;
 
+import application.controller.Controller;
 import application.model.Lager;
 import application.model.Reol;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -60,12 +62,24 @@ public class ReolDialog extends Stage {
     }
 
     private void tilføjAction() {
-        int antalReoler = Integer.parseInt(txfAntalReoler.getText().trim());
-        int antalHylder = Integer.parseInt(txfAntalHylder.getText().trim());
-        int hyldeMaxPlads = Integer.parseInt(txfHyldeMaxPlads.getText().trim());
+        try {
+            int antalReoler = Integer.parseInt(txfAntalReoler.getText().trim());
+            int antalHylder = Integer.parseInt(txfAntalHylder.getText().trim());
+            int hyldeMaxPlads = Integer.parseInt(txfHyldeMaxPlads.getText().trim());
 
-        lager.tilføjReol(antalReoler, antalHylder, hyldeMaxPlads);
-        this.close();
+            if (antalReoler <= 0) {
+                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "antal reoler skal være over nul");
+            } else if (antalHylder <= 0) {
+                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "antal hylder skal være over nul");
+            } else if (hyldeMaxPlads <= 0) {
+                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Hylde max plads skal være over nul");
+            } else {
+                lager.tilføjReol(antalReoler, antalHylder, hyldeMaxPlads);
+                this.close();
+            }
+        } catch (NumberFormatException e) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Indtastningsfejl");
+        }
 
     }
 

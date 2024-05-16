@@ -55,15 +55,24 @@ public class LagerPane extends GridPane {
         this.add(btnOpret, 0,2);
         btnOpret.setOnAction(actionEvent -> this.opretAction());
 
-
         this.add(btnFlytFad,3,2);
         this.setHalignment(btnFlytFad, HPos.RIGHT);
-
+        btnFlytFad.setOnAction(actionEvent -> this.flytFadAction());
 
         this.add(btnTilføjReol,1,2);
         btnTilføjReol.setOnAction(actionEvent -> this.tilføjAction());
         setKnapperAktive(false);
 
+
+    }
+
+    private void flytFadAction() {
+        Fad fad = lvwFad.getSelectionModel().getSelectedItem();
+
+        if (fad != null) {
+            FlytFadPåLagerDialog flytFadPåLagerDialog = new FlytFadPåLagerDialog(fad);
+            flytFadPåLagerDialog.showAndWait();
+        }
 
     }
 

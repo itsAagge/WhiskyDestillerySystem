@@ -6,6 +6,7 @@ import application.model.Reol;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -24,7 +25,6 @@ public class LagerDialog extends Stage {
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
-        //this.setMinWidth(640);
         this.setTitle("Opret lager");
 
         GridPane pane = new GridPane();
@@ -60,8 +60,14 @@ public class LagerDialog extends Stage {
         String adresse = txfAdresse.getText().trim();
         String kvadratMeter = txfKvadrat.getText().trim();
 
-        Controller.opretLager(adresse, kvadratMeter);
-        this.close();
+        if (txfAdresse.getText().isEmpty()) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen adresse indtastet");
+        } else if (txfKvadrat.getText().isEmpty()) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen kvadratmeter indtastet");
+        } else {
+            Controller.opretLager(adresse, kvadratMeter);
+            this.close();
+        }
 
     }
 
