@@ -60,6 +60,5 @@ public class MainWindow extends Application {
         tabPane.getTabs().add(tabPåfyldninger);
         tabPane.getTabs().add(tabUdgivelser);
         tabPane.getTabs().add(tabKorn);
-
     }
 }

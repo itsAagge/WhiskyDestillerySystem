@@ -47,15 +47,6 @@ public class Fad implements Logable {
         }
     }
 
-    //Fjerner en påfyldning fra fadet (mest relevant hvis fadet går i stykker eller lign)
-    public void removePåfyldning(Påfyldning påfyldning) {
-        if (påfyldninger.contains(påfyldning)) {
-            påfyldninger.remove(påfyldning);
-            påfyldning.removeFad(null);
-            this.setFyldt(false);
-        }
-    }
-
     //Getters
     public static int getAntalFade() {
         return antalFade;
