@@ -91,13 +91,13 @@ public class FadDialog extends Stage {
         String træType = null;
 
         if(txfLand.getText().isEmpty()) {
-            opretFejl("Du mangler at angive et land");
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive et land");
         } else if(txfFirma.getText().isEmpty()) {
-            opretFejl("Du mangler at angive et leverandør");
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive et leverandør");
         } else if(txfStørrelse.getText().isEmpty() || txfStørrelse.getText().equals("0")) {
-            opretFejl("Du mangler at angive antal liter, der er plads til i fadet");
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive antal liter, der er plads til i fadet");
         } else if (txfTræType.getText().isEmpty()) {
-            opretFejl("Du mangler at angive en type af træ");
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en type af træ");
         } else {
             if (!txfTidligereIndhold.getText().isEmpty()) {
                 tidligereIndhold = txfTidligereIndhold.getText().trim();
@@ -127,13 +127,5 @@ public class FadDialog extends Stage {
             txfTidligereIndhold.setText(tidligereIndhold);
             txfTidligereIndholdAlder.setText(tidligereIndholdAlder + "");
         }
-    }
-
-    private Alert opretFejl(String contentText) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Fejl");
-        alert.setContentText(contentText);
-        alert.initModality(Modality.APPLICATION_MODAL);
-        return alert;
     }
 }

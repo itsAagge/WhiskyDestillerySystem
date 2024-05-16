@@ -33,7 +33,6 @@ public class UdgivFadDialog extends Stage {
         Scene scene = new Scene(pane);
         this.initContent(pane);
         this.setScene(scene);
-
     }
 
     private void initContent(GridPane pane) {

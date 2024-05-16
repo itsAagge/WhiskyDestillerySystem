@@ -52,14 +52,12 @@ public class FlytPåfyldningDialog extends Stage {
         Button btnGem = new Button("Gem");
         pane.add(btnGem,0,2);
         btnGem.setOnAction(actionEvent -> this.gemAction());
-
-
     }
 
     private void gemAction() {
         Fad fad = lvwFade.getSelectionModel().getSelectedItem();
         if (fad != null) {
-            fad.addPåfyldning(påfyldning);
+            påfyldning.flytPåfyldning(fad);
         }
         this.close();
 

@@ -15,6 +15,7 @@ public class Fad implements Logable {
     private boolean erAktiv;
     private String leverandør;
     private ArrayList<Påfyldning> påfyldninger;
+    private Hylde hylde;
 
     //Constructor
     public Fad(String fraLand, String tidligereIndhold, int størrelseL, String træType, double alderAfTidligereIndhold, String leverandør) {
@@ -44,15 +45,6 @@ public class Fad implements Logable {
             påfyldninger.add(påfyldning);
             påfyldning.addFad(this);
             this.setFyldt(true);
-        }
-    }
-
-    //Fjerner en påfyldning fra fadet (mest relevant hvis fadet går i stykker eller lign)
-    public void removePåfyldning(Påfyldning påfyldning) {
-        if (påfyldninger.contains(påfyldning)) {
-            påfyldninger.remove(påfyldning);
-            påfyldning.removeFad(null);
-            this.setFyldt(false);
         }
     }
 
@@ -101,6 +93,9 @@ public class Fad implements Logable {
         return leverandør;
     }
 
+    public Hylde getHylde() {
+        return hylde;
+    }
 
     //Setters
     public void setAktiv(boolean bool) {
@@ -135,6 +130,9 @@ public class Fad implements Logable {
         this.erFyldt = erFyldt;
     }
 
+    public void setHylde(Hylde hylde) {
+        this.hylde = hylde;
+    }
 
     //To string og beskrivelses metoder
     @Override

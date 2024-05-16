@@ -191,6 +191,16 @@ public class Controller {
         Storage.fjernDestilat(destillat);
     }
 
+    public static void flytFad(Fad fad, Hylde hylde) {
+        if (fad.getHylde().equals(hylde)) throw new IllegalArgumentException("Fadet er allerede på denne hylde");
+        else if (!hylde.ledigPlads()) throw new IllegalArgumentException("Der er ikke mere plads på denne hylde");
+        else {
+            fad.getHylde().removeFad(fad);
+            fad.setHylde(hylde);
+            hylde.addFad(fad);
+        }
+    }
+
     public static List<String> getMedarbejdere() {
         List<String> medarbejdere = new ArrayList<>();
         File file = new File("resources/medarbejdere.txt");

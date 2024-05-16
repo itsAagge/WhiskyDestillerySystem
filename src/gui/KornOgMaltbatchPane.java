@@ -1,7 +1,6 @@
 package gui;
 
 import application.controller.Controller;
-import application.model.Destillat;
 import application.model.Korn;
 import application.model.Maltbatch;
 import javafx.beans.value.ChangeListener;
@@ -11,17 +10,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 
-public class KornPane extends GridPane {
+public class KornOgMaltbatchPane extends GridPane {
 
     private ListView<Korn> lvwKorn = new ListView<>();
     private ListView<Maltbatch> lvwMaltbatch = new ListView<>();
     private TextArea txaKornBeskrivelse = new TextArea();
     private TextArea txaMaltbatchBeskrivelse = new TextArea();
 
-    public KornPane() {
-
+    public KornOgMaltbatchPane() {
         this.setPadding(new Insets(20));
         this.setHgap(20);
         this.setVgap(10);
@@ -60,7 +57,6 @@ public class KornPane extends GridPane {
         Button btnRegistrerMaltchbatch = new Button("Registrer maltbatch");
         this.add(btnRegistrerMaltchbatch, 2,4);
         btnRegistrerMaltchbatch.setOnAction(actionEvent -> this.registrerMaltbatchAction());
-
     }
 
     private void changeMaltbatch() {
@@ -69,7 +65,6 @@ public class KornPane extends GridPane {
         if (maltbatch != null) {
             txaMaltbatchBeskrivelse.setText(maltbatch.getBeskrivelse());
         }
-
     }
 
     private void changeKorn() {
@@ -83,7 +78,6 @@ public class KornPane extends GridPane {
         MaltbatchDialog maltbatchDialog = new MaltbatchDialog();
         maltbatchDialog.showAndWait();
         lvwMaltbatch.getItems().setAll(Controller.getAlleMaltbatche());
-
     }
 
     private void registrerKornAction() {
@@ -91,6 +85,4 @@ public class KornPane extends GridPane {
         kornDialog.showAndWait();
         lvwKorn.getItems().setAll(Controller.getKorn());
     }
-
-
 }

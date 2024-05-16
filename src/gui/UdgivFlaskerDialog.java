@@ -34,7 +34,7 @@ public class UdgivFlaskerDialog extends Stage {
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
-        this.setMinWidth(500);
+        this.setMinWidth(640);
         this.setTitle("Opret udgivelse");
 
         GridPane pane = new GridPane();
@@ -93,7 +93,7 @@ public class UdgivFlaskerDialog extends Stage {
         pane.add(btnTilføjPåfyldning, 1,9);
         btnTilføjPåfyldning.setOnAction(actionEvent -> this.tilføjAction());
         pane.setHalignment(btnTilføjPåfyldning, HPos.RIGHT);
-        
+
         Button btnOpret = new Button("Opret");
         pane.add(btnOpret, 0,11);
         btnOpret.setOnAction(actionEvent -> this.opretAction());

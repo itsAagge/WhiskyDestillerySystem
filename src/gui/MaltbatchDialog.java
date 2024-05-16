@@ -75,38 +75,31 @@ public class MaltbatchDialog extends Stage {
         pane.setValignment(btnRegistrer, VPos.BOTTOM);
         pane.setHalignment(btnRegistrer, HPos.RIGHT);
         btnRegistrer.setOnAction(actionEvent -> this.registrerAction());
-
     }
 
     private void registrerAction() {
         try {
-            Korn korn = lvwKorn.getSelectionModel().getSelectedItem();
-            double mængdeL = Double.parseDouble(txfMængdeL.getText().trim());
-            LocalDate startdato = dpGærringStart.getValue();
-            LocalDate slutdato = dpGærringSlut.getValue();
-            String gærType = txfGærType.getText().trim();
-
-            if (korn == null) {
+            if (lvwKorn.getSelectionModel().getSelectedItem() == null) {
                 Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Intet korn valgt");
-            } else if (mængdeL <= 0) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Mængde skal være over 0");
-            } else if (startdato == null) {
+            } else if (txfMængdeL.getText() == null || Double.parseDouble(txfMængdeL.getText()) <= 0) {
+                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Mængde skal være indtastet og over 0");
+            } else if (dpGærringStart.getValue() == null) {
                 Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen startdato angivet");
-            } else if (slutdato == null) {
+            } else if (dpGærringSlut.getValue() == null) {
                 Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen slutdato angivet");
             } else if (txfGærType.getText().isEmpty()) {
                 Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Gærtype skal angives");
             } else {
+                Korn korn = lvwKorn.getSelectionModel().getSelectedItem();
+                double mængdeL = Double.parseDouble(txfMængdeL.getText().trim());
+                LocalDate startdato = dpGærringStart.getValue();
+                LocalDate slutdato = dpGærringSlut.getValue();
+                String gærType = txfGærType.getText().trim();
                 Controller.opretMaltbatch(mængdeL, startdato, slutdato, gærType, korn);
                 this.close();
             }
-
         } catch (Exception e) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Indtastningsfejl");
         }
-
-
-
     }
-
 }

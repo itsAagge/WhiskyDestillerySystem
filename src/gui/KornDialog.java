@@ -65,28 +65,24 @@ public class KornDialog extends Stage {
 
     private void registrerKorn() {
         try {
-            String markNavn = txfMarkNavn.getText().trim();
-            String sort = txfSort.getText().trim();
-            LocalDate høstDato = dpHøstdato.getValue();
-            double mængdeKg = Double.parseDouble(txfMængdeKg.getText().trim());
-
-            if (markNavn == null) {
+            if (txfMarkNavn.getText() == null) {
                 Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "mark navn skal udfyldes");
-            } else if (sort == null) {
+            } else if (txfSort.getText() == null) {
                 Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "korn sort skal udfyldes");
-            } else if (høstDato == null) {
+            } else if (dpHøstdato.getValue() == null) {
                 Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen høst dato");
-            } else if (mængdeKg <= 0) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Mængde skal være over 0");
+            } else if (txfMængdeKg.getText() == null || Double.parseDouble(txfMængdeKg.getText()) <= 0) {
+                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Mængde skal være indtastet og over 0");
             } else {
+                String markNavn = txfMarkNavn.getText().trim();
+                String sort = txfSort.getText().trim();
+                LocalDate høstDato = dpHøstdato.getValue();
+                double mængdeKg = Double.parseDouble(txfMængdeKg.getText().trim());
                 Controller.opretKorn(markNavn, sort, høstDato, mængdeKg);
                 this.close();
             }
-
         } catch (Exception e) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "indtastningsfejl");
         }
-
     }
-
 }

@@ -51,6 +51,13 @@ public class Påfyldning implements Logable {
         }
     }
 
+    public void flytPåfyldning(Fad fad) {
+        this.fade.getLast().setFyldt(false);
+        this.fade.add(fad);
+        fad.addPåfyldning(this);
+    }
+
+    //TODO: Muligvis fjernes
     //Tilføjer et fad til fade listen, hvilket gør det til det nye fad påfyldningen
     //ligger på og fylder det fad og gør det gamle tomt.
     public void addFad(Fad fad) {
@@ -59,14 +66,6 @@ public class Påfyldning implements Logable {
             fade.add(fad);
             fad.setFyldt(true);
             fad.addPåfyldning(this);
-        }
-    }
-
-    //Fjerner et fad fra påfyldningen
-    public void removeFad(Fad fad) {
-        if (fade.contains(fad)) {
-            fade.remove(fad);
-            fad.removePåfyldning(this);
         }
     }
 
