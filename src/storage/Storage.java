@@ -11,6 +11,7 @@ public class Storage {
     private static ArrayList<Korn> kornList = new ArrayList<>();
     private static ArrayList<Maltbatch> maltbatches = new ArrayList<>();
     private static ArrayList<Udgivelse> udgivelser = new ArrayList<>();
+    private static ArrayList<Lager> lagre = new ArrayList<>();
 
 
     //Getters til listerne
@@ -33,6 +34,9 @@ public class Storage {
         return new ArrayList<>(udgivelser);
     }
 
+    public static ArrayList<Lager> getLagre() {
+        return new ArrayList<>(lagre);
+    }
 
     //Tilføj til listerne
     public static void tilføjDestillat(Destillat destillat) {
@@ -65,6 +69,12 @@ public class Storage {
         }
     }
 
+    public static void tilføjLager(Lager lager) {
+        if(!lagre.contains(lager)) {
+            lagre.add(lager);
+        }
+    }
+
 
     //Fjern fra listerne (hvis relevant)
     public static void fjernDestilat(Destillat destillat) {
@@ -88,6 +98,12 @@ public class Storage {
     public static void fjernMaltbatch(Maltbatch maltbatch) {
         if (maltbatches.contains(maltbatch)) {
             maltbatches.remove(maltbatch);
+        }
+    }
+
+    public static void fjernLager(Lager lager) {
+        if(lagre.contains(lager)) {
+            lagre.add(lager);
         }
     }
 
