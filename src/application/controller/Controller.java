@@ -137,6 +137,12 @@ public class Controller {
         }
     }
 
+    public Lager opretLager(String adresse, String kvadratmeter) {
+        Lager lager = new Lager(adresse, kvadratmeter);
+        Storage.tilføjLager(lager);
+        return lager;
+    }
+
     public static Alert opretAlert(Alert.AlertType alertType, String title, String contentText) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
