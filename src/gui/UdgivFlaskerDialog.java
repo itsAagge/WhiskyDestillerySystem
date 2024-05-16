@@ -27,8 +27,6 @@ public class UdgivFlaskerDialog extends Stage {
         pane.setHgap(20);
         pane.setVgap(10);
         pane.setGridLinesVisible(false);
-
-
     }
 
 }

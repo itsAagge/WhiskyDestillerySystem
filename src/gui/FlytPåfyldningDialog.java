@@ -52,8 +52,6 @@ public class FlytPåfyldningDialog extends Stage {
         Button btnGem = new Button("Gem");
         pane.add(btnGem,0,2);
         btnGem.setOnAction(actionEvent -> this.gemAction());
-
-
     }
 
     private void gemAction() {

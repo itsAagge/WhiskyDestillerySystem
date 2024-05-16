@@ -2,12 +2,10 @@ package gui;
 
 import application.controller.Controller;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class MainWindow extends Application {
@@ -54,8 +52,8 @@ public class MainWindow extends Application {
         tabPåfyldninger.setContent(påfyldningPane);
         UdgivelsePane udgivelsePane = new UdgivelsePane();
         tabUdgivelser.setContent(udgivelsePane);
-        KornPane kornPane = new KornPane();
-        tabKorn.setContent(kornPane);
+        KornOgMaltbatchPane kornOgMaltbatchPane = new KornOgMaltbatchPane();
+        tabKorn.setContent(kornOgMaltbatchPane);
 
         tabPane.getTabs().add(tabFade);
         tabPane.getTabs().add(tabDestillater);
