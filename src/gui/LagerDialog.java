@@ -77,14 +77,11 @@ public class LagerDialog extends Stage {
         int antalReoler = Integer.parseInt(txfAntalReoler.getText().trim());
         int antalHylder = Integer.parseInt(txfAntalHylder.getText().trim());
         int hyldeMaxPlads = Integer.parseInt(txfHyldeMaxPlads.getText().trim());
-        int count = 1;
 
 
         Lager lager = Controller.opretLager(adresse, kvadratMeter);
         for (int i = 0; i < antalReoler; i++) {
-            Reol reol = lager.tilføjReol(antalHylder, hyldeMaxPlads);
-            reol.setNr(count);
-            count++;
+            lager.tilføjReol(antalHylder, hyldeMaxPlads);
         }
         this.close();
 
