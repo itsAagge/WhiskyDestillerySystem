@@ -42,8 +42,8 @@ public class Hylde {
         }
     }
 
-    public boolean ledigPlads() {
-        return this.fade.size() < maxPlads;
+    public boolean ledigPlads(int antal) {
+        return this.fade.size() < maxPlads + antal;
     }
 
     @Override

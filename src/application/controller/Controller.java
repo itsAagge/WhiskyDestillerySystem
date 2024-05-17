@@ -216,17 +216,18 @@ public class Controller {
         Storage.fjernDestilat(destillat);
     }
 
-    public static void flytFad(Fad fad, Hylde hylde) {
-        if (fad.getHylde() != null)
-        if (fad.getHylde().equals(hylde)) throw new IllegalArgumentException("Fadet er allerede på denne hylde");
-        else if (!hylde.ledigPlads()) throw new IllegalArgumentException("Der er ikke mere plads på denne hylde");
+    public static void flytFad(List<Fad> fade, Hylde hylde) {
+        if (hylde != null && !hylde.ledigPlads(fade.size())) throw new IllegalArgumentException("Der er ikke nok plads på denne hylde");
         else {
-            fad.getHylde().removeFad(fad);
-            fad.setHylde(hylde);
-            hylde.addFad(fad);
-        } else {
-            fad.setHylde(hylde);
-            hylde.addFad(fad);
+            for (Fad fad : fade) {
+                if (fad.getHylde() != null) {
+                    fad.getHylde().removeFad(fad);
+                }
+                fad.setHylde(hylde);
+                if (hylde != null) {
+                    hylde.addFad(fad);
+                }
+            }
         }
     }
 
