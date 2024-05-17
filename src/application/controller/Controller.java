@@ -165,6 +165,7 @@ public class Controller {
         return ledigeFade;
     }
 
+
     public static List<Maltbatch> getAlleMaltbatche() { return Storage.getMaltbatche(); }
 
     public static List<Destillat> getAlleDestillater() {
@@ -191,6 +192,22 @@ public class Controller {
         return Storage.getLagre();
     }
 
+    public static ArrayList<Reol> getReolNumre(Lager lager) {
+        ArrayList<Reol> reoler = new ArrayList<>();
+        for (int i = 0; i < lager.getReoler().size(); i++) {
+            reoler.add(lager.getReoler().get(i));
+        }
+        return reoler;
+    }
+
+    public static ArrayList<Hylde> getHyldeNumre(Reol reol) {
+        ArrayList<Hylde> hylder = new ArrayList<>();
+        for (int i = 0; i < reol.getHylder().size(); i++) {
+            hylder.add(reol.getHylder().get(i));
+        }
+        return hylder;
+    }
+
     public static void fjernFad(Fad fad) {
         Storage.fjernFad(fad);
     }
@@ -200,10 +217,14 @@ public class Controller {
     }
 
     public static void flytFad(Fad fad, Hylde hylde) {
+        if (fad.getHylde() != null)
         if (fad.getHylde().equals(hylde)) throw new IllegalArgumentException("Fadet er allerede på denne hylde");
         else if (!hylde.ledigPlads()) throw new IllegalArgumentException("Der er ikke mere plads på denne hylde");
         else {
             fad.getHylde().removeFad(fad);
+            fad.setHylde(hylde);
+            hylde.addFad(fad);
+        } else {
             fad.setHylde(hylde);
             hylde.addFad(fad);
         }
