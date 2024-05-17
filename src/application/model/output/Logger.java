@@ -1,5 +1,7 @@
 package application.model.output;
 
+import application.model.Logable;
+
 public interface Logger {
-    public void log(String message);
+    public void log(Logable object);
 }

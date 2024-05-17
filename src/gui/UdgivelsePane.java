@@ -11,7 +11,7 @@ import javafx.scene.layout.HBox;
 public class UdgivelsePane extends GridPane {
     private ListView<Udgivelse> lvwUdgivelser = new ListView<>();
     private TextArea txaBeskrivelse = new TextArea();
-    private Button btnPrint = new Button("Print");
+    private Button btnPrintUdgivelse = new Button("Print beskrivelse");
 
     public UdgivelsePane() {
         this.setPadding(new Insets(20));
@@ -37,13 +37,10 @@ public class UdgivelsePane extends GridPane {
         hBoxButtons.setSpacing(20);
         Button btnUdgivFad = new Button("Udgiv fad");
         btnUdgivFad.setOnAction(actionEvent -> this.udgivFad());
-        btnPrint.setOnAction(actionEvent -> this.printAction());
-
+        btnPrintUdgivelse.setOnAction(actionEvent -> this.printAction());
         Button btnUdgivFlasker = new Button("Udgiv Flasker");
         btnUdgivFlasker.setOnAction(actionEvent -> this.UdskrivFlaskerAction());
-
-
-        hBoxButtons.getChildren().addAll(btnUdgivFad, btnUdgivFlasker,btnPrint);
+        hBoxButtons.getChildren().setAll(btnUdgivFad, btnUdgivFlasker, btnPrintUdgivelse);
         this.add(hBoxButtons,0,2,2,1);
         setKnapperAktive(false);
     }
@@ -66,7 +63,9 @@ public class UdgivelsePane extends GridPane {
 
     private void printAction() {
         Udgivelse udgivelse = lvwUdgivelser.getSelectionModel().getSelectedItem();
-        Controller.udtrækBeskrivelse("Fil", udgivelse);
+        Controller.udtrækBeskrivelse(Controller.getFileLoggerStrategy(), udgivelse);
+        Controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse printet succesfuldt til resources/beskrivelser/" + udgivelse.getFileName() + ".txt");
+        setKnapperAktive(false);
     }
 
     private void udgivFad() {
@@ -78,6 +77,6 @@ public class UdgivelsePane extends GridPane {
     }
 
     private void setKnapperAktive(boolean bool) {
-        btnPrint.setDisable(!bool);
+        btnPrintUdgivelse.setDisable(!bool);
     }
 }

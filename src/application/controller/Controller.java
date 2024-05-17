@@ -147,6 +147,10 @@ public class Controller {
         alert.setTitle(title);
         alert.setContentText(contentText);
         alert.initModality(Modality.APPLICATION_MODAL);
+        if (alertType.equals(Alert.AlertType.INFORMATION)) {
+            alert.getDialogPane().setPrefWidth(500);
+        }
+        alert.setResizable(true);
         alert.show();
         return alert;
     }
@@ -164,7 +168,6 @@ public class Controller {
         }
         return ledigeFade;
     }
-
 
     public static List<Maltbatch> getAlleMaltbatche() { return Storage.getMaltbatche(); }
 
@@ -268,20 +271,11 @@ public class Controller {
         return ikkeUdgivedePåfyldninger;
     }
 
-    public static void udtrækBeskrivelse(String outputType, Logable object) {
-        final String locationFolder = "resources/beskrivelser/";
-        String beskrivelse = object.getBeskrivelse();
-        Logger logger;
+    public static FileLogger getFileLoggerStrategy() {
+        return new FileLogger();
+    }
 
-        switch (outputType) {
-            case "Fil" -> {
-                String fileName = object.getFileName();
-                String fileLocation = locationFolder + fileName;
-                logger = new FileLogger(fileLocation);
-            }
-            default -> throw new IllegalArgumentException("Denne type logger findes ikke.");
-        }
-
-        logger.log(beskrivelse);
+    public static void udtrækBeskrivelse(Logger logger, Logable object) {
+        logger.log(object);
     }
 }

@@ -18,6 +18,7 @@ public class FadPane extends GridPane {
     private Button btnRedigerFad = new Button("Rediger");
     private Button btnDeaktiverFad = new Button("Deaktiver");
     private Button btnSletFad = new Button("Slet");
+    private Button btnPrintFad = new Button("Print beskrivelse");
 
     public FadPane() {
         this.setPadding(new Insets(20));
@@ -44,14 +45,12 @@ public class FadPane extends GridPane {
         HBox hBoxButtons = new HBox();
         hBoxButtons.setSpacing(20);
         this.add(hBoxButtons, 0, 4, 4, 1);
+        hBoxButtons.getChildren().setAll(btnOpretFad, btnRedigerFad, btnSletFad, btnDeaktiverFad, btnPrintFad);
         btnOpretFad.setOnAction(event -> this.opretFadAction());
-        hBoxButtons.getChildren().add(btnOpretFad);
         btnRedigerFad.setOnAction(event -> this.redigerFadAction());
-        hBoxButtons.getChildren().add(btnRedigerFad);
         btnSletFad.setOnAction(event -> this.sletFadAction());
-        hBoxButtons.getChildren().add(btnSletFad);
         btnDeaktiverFad.setOnAction(event -> this.deaktiverFadAction());
-        hBoxButtons.getChildren().add(btnDeaktiverFad);
+        btnPrintFad.setOnAction(event -> this.printFadAction());
         setKnapperAktive(false);
 
         Label lblFadBeskrivelse = new Label("Fadets historie");
@@ -123,9 +122,17 @@ public class FadPane extends GridPane {
         setKnapperAktive(false);
     }
 
+    private void printFadAction() {
+        Fad fad = lvwFade.getSelectionModel().getSelectedItem();
+        Controller.udtrækBeskrivelse(Controller.getFileLoggerStrategy(), fad);
+        Controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse printet succesfuldt til resources/beskrivelser/" + fad.getFileName() + ".txt");
+        setKnapperAktive(false);
+    }
+
     private void setKnapperAktive(boolean bool) {
         btnRedigerFad.setDisable(!bool);
         btnSletFad.setDisable(!bool);
         btnDeaktiverFad.setDisable(!bool);
+        btnPrintFad.setDisable(!bool);
     }
 }

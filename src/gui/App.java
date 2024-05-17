@@ -22,11 +22,11 @@ public class App {
         Fad fad4 = Controller.opretFad("Spanien", "Bourbon", 250, "Eg", 5, "El egetræsfadfirma");
         Fad fad5 = Controller.opretFad("Spanien", "Bourbon", 100, "Eg", 9.5, "El fakefadefirma");
 
-        Korn hvede = Controller.opretKorn("Mark 1", "Hvede", LocalDate.of(2019, 8, 20), 200);
-        Controller.opretKorn("Mark 2", "Hvede", LocalDate.of(2019, 8, 23), 200);
+        Korn byg = Controller.opretKorn("Mark 1", "Byg", LocalDate.of(2019, 8, 20), 200);
+        Controller.opretKorn("Mark 2", "Byg", LocalDate.of(2019, 8, 23), 200);
 
-        Maltbatch maltbatch1 = Controller.opretMaltbatch(100, LocalDate.of(2019, 12, 15), LocalDate.of(2019, 12, 17), "Gær", hvede);
-        Maltbatch maltbatch2 = Controller.opretMaltbatch(100, LocalDate.of(2019, 12, 15), LocalDate.of(2019, 12, 19), "Special gær", hvede);
+        Maltbatch maltbatch1 = Controller.opretMaltbatch(100, LocalDate.of(2019, 12, 15), LocalDate.of(2019, 12, 17), "Gær", byg);
+        Maltbatch maltbatch2 = Controller.opretMaltbatch(100, LocalDate.of(2019, 12, 15), LocalDate.of(2019, 12, 19), "Special gær", byg);
 
         Destillat destillat1 = Controller.opretDestillat("NM77P", 500, 70, "Snævar Njáll Albertsson", null, null, LocalDate.of(2020, 1, 17), maltbatch1);
         Destillat destillat2 = Controller.opretDestillat("NM78P", 500, 70, "Ingus Brikmanis", null, "Kommentar2", LocalDate.of(2020, 1, 19), maltbatch1);

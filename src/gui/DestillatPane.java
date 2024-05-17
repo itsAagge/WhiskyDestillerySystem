@@ -18,6 +18,7 @@ public class DestillatPane extends GridPane {
     private Button btnOpretDestillat = new Button("Opret");
     private Button btnRedigerDestillat = new Button("Rediger");
     private Button btnSletDestillat = new Button("Slet");
+    private Button btnPrintDestillat = new Button("Print beskrivelse");
 
     public DestillatPane() {
         this.setPadding(new Insets(20));
@@ -47,11 +48,12 @@ public class DestillatPane extends GridPane {
 
         HBox hBoxButtons = new HBox();
         hBoxButtons.setSpacing(20);
-        this.add(hBoxButtons, 0, 4, 4, 1);
-        hBoxButtons.getChildren().addAll(List.of(btnOpretDestillat, btnRedigerDestillat, btnSletDestillat));
-        btnOpretDestillat.setOnAction(event -> opretDestillatAction());
-        btnRedigerDestillat.setOnAction(event -> redigerDestillatAction());
-        btnSletDestillat.setOnAction(event -> sletDestillatAction());
+        this.add(hBoxButtons, 0, 2, 4, 1);
+        hBoxButtons.getChildren().addAll(List.of(btnOpretDestillat, btnRedigerDestillat, btnSletDestillat, btnPrintDestillat));
+        btnOpretDestillat.setOnAction(event -> this.opretDestillatAction());
+        btnRedigerDestillat.setOnAction(event -> this.redigerDestillatAction());
+        btnSletDestillat.setOnAction(event -> this.sletDestillatAction());
+        btnPrintDestillat.setOnAction(event -> this.printDestillatAction());
         setKnapperAktive(false);
     }
 
@@ -79,6 +81,13 @@ public class DestillatPane extends GridPane {
         lvwDestillater.getItems().setAll(Controller.getAlleDestillater());
     }
 
+    private void printDestillatAction() {
+        Destillat destillat = lvwDestillater.getSelectionModel().getSelectedItem();
+        Controller.udtrækBeskrivelse(Controller.getFileLoggerStrategy(), destillat);
+        Controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse printet succesfuldt til resources/beskrivelser/" + destillat.getFileName() + ".txt");
+        setKnapperAktive(false);
+    }
+
     private void changeDestillat() {
         Destillat destillat = lvwDestillater.getSelectionModel().getSelectedItem();
 
@@ -95,5 +104,6 @@ public class DestillatPane extends GridPane {
     private void setKnapperAktive(boolean bool) {
         btnRedigerDestillat.setDisable(!bool);
         btnSletDestillat.setDisable(!bool);
+        btnPrintDestillat.setDisable(!bool);
     }
 }

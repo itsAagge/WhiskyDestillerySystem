@@ -5,11 +5,11 @@ import application.model.Korn;
 import application.model.Maltbatch;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+
+import java.util.List;
 
 public class KornOgMaltbatchPane extends GridPane {
 
@@ -17,6 +17,8 @@ public class KornOgMaltbatchPane extends GridPane {
     private ListView<Maltbatch> lvwMaltbatch = new ListView<>();
     private TextArea txaKornBeskrivelse = new TextArea();
     private TextArea txaMaltbatchBeskrivelse = new TextArea();
+    private Button btnPrintBeskrivelse = new Button("Print beskrivelse af: ");
+    private ComboBox<String> comboBoxVælgBeskrivelse = new ComboBox<>();
 
     public KornOgMaltbatchPane() {
         this.setPadding(new Insets(20));
@@ -54,6 +56,15 @@ public class KornOgMaltbatchPane extends GridPane {
         this.add(btnRegistrerKorn, 0,4);
         btnRegistrerKorn.setOnAction(actionEvent -> this.registrerKornAction());
 
+        HBox hBoxBeskrivelse = new HBox();
+        hBoxBeskrivelse.setSpacing(10);
+        hBoxBeskrivelse.getChildren().setAll(btnPrintBeskrivelse, comboBoxVælgBeskrivelse);
+        btnPrintBeskrivelse.setOnAction(event -> this.printBeskrivelseAction());
+        comboBoxVælgBeskrivelse.getItems().setAll(List.of("Korn", "Maltbatch"));
+        comboBoxVælgBeskrivelse.setPrefWidth(100);
+        this.add(hBoxBeskrivelse,1,4);
+        setPrintBeskrivelseAktiv(false);
+
         Button btnRegistrerMaltchbatch = new Button("Registrer maltbatch");
         this.add(btnRegistrerMaltchbatch, 2,4);
         btnRegistrerMaltchbatch.setOnAction(actionEvent -> this.registrerMaltbatchAction());
@@ -61,10 +72,10 @@ public class KornOgMaltbatchPane extends GridPane {
 
     private void changeMaltbatch() {
         Maltbatch maltbatch = lvwMaltbatch.getSelectionModel().getSelectedItem();
-
         if (maltbatch != null) {
             txaMaltbatchBeskrivelse.setText(maltbatch.getBeskrivelse());
         }
+        setPrintBeskrivelseAktiv(true);
     }
 
     private void changeKorn() {
@@ -72,6 +83,7 @@ public class KornOgMaltbatchPane extends GridPane {
         if (korn != null) {
             txaKornBeskrivelse.setText(korn.getBeskrivelse());
         }
+        setPrintBeskrivelseAktiv(true);
     }
 
     private void registrerMaltbatchAction() {
@@ -84,5 +96,31 @@ public class KornOgMaltbatchPane extends GridPane {
         KornDialog kornDialog = new KornDialog();
         kornDialog.showAndWait();
         lvwKorn.getItems().setAll(Controller.getKorn());
+    }
+
+    private void printBeskrivelseAction() {
+        if (comboBoxVælgBeskrivelse.getSelectionModel().getSelectedItem() == null) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du skal vælge, hvad du vil printe en beskrivelse af, før du kan printe den");
+        } else if (comboBoxVælgBeskrivelse.getSelectionModel().getSelectedItem().equals("Korn") && lvwKorn.getSelectionModel().getSelectedItem() == null) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge den omgang korn, som du vil printe en beskrivelse af");
+        } else if (comboBoxVælgBeskrivelse.getSelectionModel().getSelectedItem().equals("Maltbatch") && lvwMaltbatch.getSelectionModel().getSelectedItem() == null) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge det maltbatch, som du vil printe en beskrivelse af");
+        } else {
+            if (comboBoxVælgBeskrivelse.getSelectionModel().getSelectedItem().equals("Korn")) {
+                Korn korn = lvwKorn.getSelectionModel().getSelectedItem();
+                Controller.udtrækBeskrivelse(Controller.getFileLoggerStrategy(), korn);
+                Controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse printet succesfuldt til resources/beskrivelser/" + korn.getFileName() + ".txt");
+            } else {
+                Maltbatch maltbatch = lvwMaltbatch.getSelectionModel().getSelectedItem();
+                Controller.udtrækBeskrivelse(Controller.getFileLoggerStrategy(), maltbatch);
+                Controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse printet succesfuldt til resources/beskrivelser/" + maltbatch.getFileName() + ".txt");
+            }
+        setPrintBeskrivelseAktiv(false);
+        }
+    }
+
+    private void setPrintBeskrivelseAktiv(boolean bool) {
+        btnPrintBeskrivelse.setDisable(!bool);
+        comboBoxVælgBeskrivelse.setDisable(!bool);
     }
 }

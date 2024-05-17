@@ -30,6 +30,7 @@ public class Storage {
     public static ArrayList<Maltbatch> getMaltbatche() {
         return new ArrayList<>(maltbatches);
     }
+
     public static ArrayList<Udgivelse> getUdgivelser() {
         return new ArrayList<>(udgivelser);
     }
@@ -75,7 +76,6 @@ public class Storage {
         }
     }
 
-
     //Fjern fra listerne (hvis relevant)
     public static void fjernDestilat(Destillat destillat) {
         if (destillater.contains(destillat)) {
@@ -106,6 +106,4 @@ public class Storage {
             lagre.add(lager);
         }
     }
-
-
 }

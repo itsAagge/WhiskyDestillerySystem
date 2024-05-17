@@ -4,10 +4,7 @@ import application.controller.Controller;
 import application.model.Påfyldning;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
@@ -18,6 +15,7 @@ public class PåfyldningPane extends GridPane {
     private TextArea txaPåfyldningsBeskrivelse = new TextArea();
     private Button btnOpretPåfyldning = new Button("Opret");
     private Button btnFlytPåfyldning = new Button("Flyt");
+    private Button btnPrintPåfyldning = new Button("Print beskrivelse");
 
     public PåfyldningPane() {
         this.setPadding(new Insets(20));
@@ -42,17 +40,13 @@ public class PåfyldningPane extends GridPane {
         lvwPåfyldninger.getSelectionModel().selectedItemProperty().addListener(påfyldningChangeListener);
 
 
-        //Hbox af knapper
         HBox hBoxButtons = new HBox();
         hBoxButtons.setSpacing(20);
-        this.add(hBoxButtons, 0, 4, 4, 1);
-        //Knap til oprettelse af ny påfyldning
+        this.add(hBoxButtons, 0, 2, 4, 1);
+        hBoxButtons.getChildren().setAll(btnOpretPåfyldning, btnFlytPåfyldning, btnPrintPåfyldning);
         btnOpretPåfyldning.setOnAction(event -> this.opretPåfyldningAction());
-        hBoxButtons.getChildren().add(btnOpretPåfyldning);
-        //Knap til flytning af påfyldning
         btnFlytPåfyldning.setOnAction(event -> this.flytPåfyldningAction());
-        hBoxButtons.getChildren().add(btnFlytPåfyldning);
-
+        btnPrintPåfyldning.setOnAction(event -> this.printPåfyldningAction());
         setKnapperAktive(false);
 
     }
@@ -85,8 +79,16 @@ public class PåfyldningPane extends GridPane {
         lvwPåfyldninger.getItems().setAll(Controller.getPåfyldninger());
     }
 
+    private void printPåfyldningAction() {
+        Påfyldning påfyldning = lvwPåfyldninger.getSelectionModel().getSelectedItem();
+        Controller.udtrækBeskrivelse(Controller.getFileLoggerStrategy(), påfyldning);
+        Controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse printet succesfuldt til resources/beskrivelser/" + påfyldning.getFileName() + ".txt");
+        setKnapperAktive(false);
+    }
+
     private void setKnapperAktive(boolean bool) {
         btnFlytPåfyldning.setDisable(!bool);
+        btnPrintPåfyldning.setDisable(!bool);
     }
 
 }
