@@ -6,7 +6,9 @@ import application.model.Hylde;
 import application.model.Lager;
 import application.model.Reol;
 import javafx.beans.value.ChangeListener;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -76,6 +78,8 @@ public class FlytFadPåLagerDialog extends Stage {
 
         Button btnPlacer = new Button("Placer");
         pane.add(btnPlacer, 1,6);
+        pane.setValignment(btnPlacer, VPos.BOTTOM);
+        pane.setHalignment(btnPlacer, HPos.RIGHT);
         btnPlacer.setOnAction(actionEvent -> this.placerAction());
 
     }
@@ -88,7 +92,6 @@ public class FlytFadPåLagerDialog extends Stage {
             //Controller.flytFad(valgtFade, hylde);
             this.close();
         }
-
 
     }
 

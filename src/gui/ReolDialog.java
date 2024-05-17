@@ -50,9 +50,10 @@ public class ReolDialog extends Stage {
         pane.add(lblAntalHylder, 1, 0);
         pane.add(txfAntalHylder, 1, 1);
 
-        Label lblHyldeMaxPlads = new Label("Max plads pr. hylde");
+        Label lblHyldeMaxPlads = new Label("Max antal fade pr. hylde");
         pane.add(lblHyldeMaxPlads, 0, 2);
         pane.add(txfHyldeMaxPlads, 0, 3);
+
 
         Button btnTilføj = new Button("Tilføj");
         pane.add(btnTilføj, 1, 3);
