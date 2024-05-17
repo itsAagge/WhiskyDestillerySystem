@@ -33,6 +33,6 @@ public class Lager {
 
     @Override
     public String toString() {
-        return "Lageradresse: " + adresse;
+        return adresse + ", Areal: " + kvadratmeter + " m2";
     }
 }

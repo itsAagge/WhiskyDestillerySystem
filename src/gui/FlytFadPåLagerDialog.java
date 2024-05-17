@@ -10,10 +10,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -50,8 +47,9 @@ public class FlytFadPåLagerDialog extends Stage {
         pane.setGridLinesVisible(false);
 
         Label lblValgteFad = new Label("Valgte fad");
-        pane.add(lblValgteFad, 0,0);
-        pane.add(lvwFade, 0,1,1,7);
+        pane.add(lblValgteFad, 0, 0);
+        pane.add(lvwFade, 0, 1, 1, 7);
+        lvwFade.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         if (!fade.isEmpty()) {
             lvwFade.getItems().setAll(fade);
         } else {
@@ -59,25 +57,25 @@ public class FlytFadPåLagerDialog extends Stage {
         }
 
         Label lblLager = new Label("Vælg lager");
-        pane.add(lblLager,1,0);
-        pane.add(cBLager, 1,1);
+        pane.add(lblLager, 1, 0);
+        pane.add(cBLager, 1, 1);
         cBLager.getItems().setAll(Controller.getLagre());
         ChangeListener<Lager> lagerChangeListener = (observableValue, oldValue, newValue) -> this.changeLager();
         cBLager.getSelectionModel().selectedItemProperty().addListener(lagerChangeListener);
 
         Label lblReol = new Label("Vælg reol nr.");
-        pane.add(lblReol, 1,2);
-        pane.add(cBreol,1,3);
+        pane.add(lblReol, 1, 2);
+        pane.add(cBreol, 1, 3);
         ChangeListener<Reol> reolChangeListener = (observableValue, oldValue, newValue) -> this.changeReol();
         cBreol.getSelectionModel().selectedItemProperty().addListener(reolChangeListener);
 
 
         Label lblHylde = new Label("Vælg hylde nr.");
-        pane.add(lblHylde, 1,4);
-        pane.add(cBhylde, 1,5);
+        pane.add(lblHylde, 1, 4);
+        pane.add(cBhylde, 1, 5);
 
         Button btnPlacer = new Button("Placer");
-        pane.add(btnPlacer, 1,6);
+        pane.add(btnPlacer, 1, 6);
         pane.setValignment(btnPlacer, VPos.BOTTOM);
         pane.setHalignment(btnPlacer, HPos.RIGHT);
         btnPlacer.setOnAction(actionEvent -> this.placerAction());
@@ -88,8 +86,14 @@ public class FlytFadPåLagerDialog extends Stage {
         Hylde hylde = cBhylde.getSelectionModel().getSelectedItem();
         List<Fad> valgtFade = lvwFade.getSelectionModel().getSelectedItems();
 
-        if (hylde != null && !valgtFade.isEmpty()) {
-            //Controller.flytFad(valgtFade, hylde);
+        if (hylde == null) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Hylde skal være valgt");
+        } else if (valgtFade.isEmpty()) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen fade valgt");
+        } else if (!hylde.erLedigPlads(valgtFade.size())) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der er ikke nok plads på hylden, vælg en anden");
+        } else {
+            Controller.flytFad(valgtFade, hylde);
             this.close();
         }
 
@@ -111,8 +115,6 @@ public class FlytFadPåLagerDialog extends Stage {
         }
 
     }
-
-
 
 
 }

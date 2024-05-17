@@ -217,7 +217,7 @@ public class Controller {
     }
 
     public static void flytFad(List<Fad> fade, Hylde hylde) {
-        if (hylde != null && !hylde.ledigPlads(fade.size())) throw new IllegalArgumentException("Der er ikke nok plads på denne hylde");
+        if (hylde != null && !hylde.erLedigPlads(fade.size())) throw new IllegalArgumentException("Der er ikke nok plads på denne hylde");
         else {
             for (Fad fad : fade) {
                 if (fad.getHylde() != null) {
