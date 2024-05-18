@@ -65,6 +65,7 @@ public class UdgivFadDialog extends Stage {
         pane.add(lblMedarbejder, 2, 2);
         pane.add(cbMedarbejdere, 2, 3);
         cbMedarbejdere.getItems().setAll(Controller.getMedarbejdere());
+        if (IndstillingPane.erMedarbejderValgt()) cbMedarbejdere.getSelectionModel().select(IndstillingPane.getValgtMedarbejder());
 
         Button btnOpret = new Button("Opret");
         pane.add(btnOpret, 1, 8);

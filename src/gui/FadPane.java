@@ -124,9 +124,11 @@ public class FadPane extends GridPane {
 
     private void printFadAction() {
         Fad fad = lvwFade.getSelectionModel().getSelectedItem();
-        Controller.udtrækBeskrivelse(Controller.getFileLoggerStrategy(), fad);
-        Controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse printet succesfuldt til resources/beskrivelser/" + fad.getFileName() + ".txt");
-        setKnapperAktive(false);
+        if(!IndstillingPane.erOutputStrategiValgt()) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
+        } else {
+            Controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), fad);
+        }
     }
 
     private void setKnapperAktive(boolean bool) {

@@ -83,9 +83,11 @@ public class DestillatPane extends GridPane {
 
     private void printDestillatAction() {
         Destillat destillat = lvwDestillater.getSelectionModel().getSelectedItem();
-        Controller.udtrækBeskrivelse(Controller.getFileLoggerStrategy(), destillat);
-        Controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse printet succesfuldt til resources/beskrivelser/" + destillat.getFileName() + ".txt");
-        setKnapperAktive(false);
+        if(!IndstillingPane.erOutputStrategiValgt()) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
+        } else {
+            Controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), destillat);
+        }
     }
 
     private void changeDestillat() {

@@ -75,6 +75,7 @@ public class UdgivFlaskerDialog extends Stage {
         pane.add(lblMedarbejder, 1,4);
         pane.add(cBMedarbejder, 1,5);
         cBMedarbejder.getItems().setAll(Controller.getMedarbejdere());
+        if (IndstillingPane.erMedarbejderValgt()) cBMedarbejder.getSelectionModel().select(IndstillingPane.getValgtMedarbejder());
 
         Label lblPåfyldninger = new Label("Alle påfyldninger");
         pane.add(lblPåfyldninger, 0,6);
@@ -150,7 +151,6 @@ public class UdgivFlaskerDialog extends Stage {
         } catch (Exception e) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Indtastfejl");
         }
-
     }
 
     private void tilføjAction() {
@@ -177,7 +177,5 @@ public class UdgivFlaskerDialog extends Stage {
         } catch (Exception e) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "mængde er ikke registreret");
         }
-
     }
-
 }

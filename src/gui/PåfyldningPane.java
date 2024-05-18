@@ -81,9 +81,11 @@ public class PåfyldningPane extends GridPane {
 
     private void printPåfyldningAction() {
         Påfyldning påfyldning = lvwPåfyldninger.getSelectionModel().getSelectedItem();
-        Controller.udtrækBeskrivelse(Controller.getFileLoggerStrategy(), påfyldning);
-        Controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse printet succesfuldt til resources/beskrivelser/" + påfyldning.getFileName() + ".txt");
-        setKnapperAktive(false);
+        if(!IndstillingPane.erOutputStrategiValgt()) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
+        } else {
+            Controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), påfyldning);
+        }
     }
 
     private void setKnapperAktive(boolean bool) {

@@ -108,14 +108,19 @@ public class KornOgMaltbatchPane extends GridPane {
         } else {
             if (comboBoxVælgBeskrivelse.getSelectionModel().getSelectedItem().equals("Korn")) {
                 Korn korn = lvwKorn.getSelectionModel().getSelectedItem();
-                Controller.udtrækBeskrivelse(Controller.getFileLoggerStrategy(), korn);
-                Controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse printet succesfuldt til resources/beskrivelser/" + korn.getFileName() + ".txt");
+                if(!IndstillingPane.erOutputStrategiValgt()) {
+                    Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
+                } else {
+                    Controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), korn);
+                }
             } else {
                 Maltbatch maltbatch = lvwMaltbatch.getSelectionModel().getSelectedItem();
-                Controller.udtrækBeskrivelse(Controller.getFileLoggerStrategy(), maltbatch);
-                Controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse printet succesfuldt til resources/beskrivelser/" + maltbatch.getFileName() + ".txt");
+                if(!IndstillingPane.erOutputStrategiValgt()) {
+                    Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
+                } else {
+                    Controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), maltbatch);
+                }
             }
-        setPrintBeskrivelseAktiv(false);
         }
     }
 

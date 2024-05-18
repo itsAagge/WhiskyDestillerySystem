@@ -63,9 +63,11 @@ public class UdgivelsePane extends GridPane {
 
     private void printAction() {
         Udgivelse udgivelse = lvwUdgivelser.getSelectionModel().getSelectedItem();
-        Controller.udtrækBeskrivelse(Controller.getFileLoggerStrategy(), udgivelse);
-        Controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse printet succesfuldt til resources/beskrivelser/" + udgivelse.getFileName() + ".txt");
-        setKnapperAktive(false);
+        if(!IndstillingPane.erOutputStrategiValgt()) {
+            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
+        } else {
+            Controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), udgivelse);
+        }
     }
 
     private void udgivFad() {

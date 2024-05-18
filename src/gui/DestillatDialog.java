@@ -84,6 +84,7 @@ public class DestillatDialog extends Stage {
         pane.add(lblMedarbejder,0,6);
         pane.add(comboBoxMedarbejdere,1,6);
         comboBoxMedarbejdere.getItems().setAll(Controller.getMedarbejdere());
+        if (IndstillingPane.erMedarbejderValgt()) comboBoxMedarbejdere.getSelectionModel().select(IndstillingPane.getValgtMedarbejder());
 
         Label lblMaltbatche = new Label("Maltbatches");
         pane.add(lblMaltbatche,3,0);

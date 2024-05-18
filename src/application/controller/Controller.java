@@ -1,7 +1,7 @@
 package application.controller;
 
 import application.model.*;
-import application.model.output.FileLogger;
+import application.model.output.FilLogger;
 import application.model.output.Logger;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
@@ -271,11 +271,31 @@ public class Controller {
         return ikkeUdgivedePåfyldninger;
     }
 
-    public static FileLogger getFileLoggerStrategy() {
-        return new FileLogger();
+    public static FilLogger getFileLoggerStrategy() {
+        return new FilLogger();
     }
 
     public static void udtrækBeskrivelse(Logger logger, Logable object) {
         logger.log(object);
+    }
+
+    public static ArrayList<String> getOutputStrategies() {
+        ArrayList<String> foundStrategies = new ArrayList<>();
+        File file = new File("src/application/model/output/");
+        String[] directory = file.list();
+        for (String s : directory) {
+            if (!s.equals("Logger.java")) {
+                foundStrategies.add(s);
+            }
+        }
+        for (int i = 0; i < foundStrategies.size(); i++) {
+            foundStrategies.set(i, foundStrategies.get(i).substring(0,foundStrategies.get(i).length()-11));
+        }
+        return foundStrategies;
+    }
+
+    public static Logger getLoggerStrategy(String LoggerType) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+        String className = "application.model.output." + LoggerType + "Logger";
+        return (Logger) Class.forName(className).newInstance();
     }
 }

@@ -9,12 +9,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class MainWindow extends Application {
-    private Controller controller;
-
-    @Override
-    public void init() {
-        controller = new Controller();
-    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -44,6 +38,7 @@ public class MainWindow extends Application {
         Tab tabUdgivelser = new Tab("Udgiv whisky");
         Tab tabKorn = new Tab("Registrer korn og maltbatches");
         Tab tabLager = new Tab("Administrer lagre");
+        Tab tabIndstillinger = new Tab("Indstillinger");
 
         FadPane fadPane = new FadPane();
         tabFade.setContent(fadPane);
@@ -57,6 +52,8 @@ public class MainWindow extends Application {
         tabKorn.setContent(kornOgMaltbatchPane);
         LagerPane lagerPane = new LagerPane();
         tabLager.setContent(lagerPane);
+        IndstillingPane indstillingPane = new IndstillingPane();
+        tabIndstillinger.setContent(indstillingPane);
 
         tabPane.getTabs().add(tabFade);
         tabPane.getTabs().add(tabDestillater);
@@ -64,5 +61,6 @@ public class MainWindow extends Application {
         tabPane.getTabs().add(tabUdgivelser);
         tabPane.getTabs().add(tabKorn);
         tabPane.getTabs().add(tabLager);
+        tabPane.getTabs().add(tabIndstillinger);
     }
 }

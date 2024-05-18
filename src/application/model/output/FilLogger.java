@@ -7,9 +7,9 @@ import javafx.scene.control.Alert;
 import java.io.File;
 import java.io.PrintWriter;
 
-public class FileLogger implements Logger {
+public class FilLogger implements Logger {
 
-    public FileLogger() {
+    public FilLogger() {
     }
 
     @Override
@@ -20,6 +20,7 @@ public class FileLogger implements Logger {
             PrintWriter printWriter = new PrintWriter(file);
             printWriter.print(object.getBeskrivelse());
             printWriter.close();
+            Controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse printet succesfuldt til resources/beskrivelser/" + object.getFileName() + ".txt");
         } catch (Exception e) {
             Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der opstod en fejl i oprettelsen af filen. Prøv igen senere");
         }
