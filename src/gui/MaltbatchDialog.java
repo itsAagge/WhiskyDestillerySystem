@@ -26,9 +26,11 @@ public class MaltbatchDialog extends Stage {
     private DatePicker dpGærringStart = new DatePicker();
     private DatePicker dpGærringSlut = new DatePicker();
     private TextField txfGærType = new TextField();
+    private Controller controller;
 
 
     public MaltbatchDialog() {
+        controller = Controller.getController();
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
@@ -52,7 +54,7 @@ public class MaltbatchDialog extends Stage {
         pane.add(lvwKorn, 0,1,1,4);
         lvwKorn.setPrefWidth(250);
         lvwKorn.setPrefHeight(300);
-        lvwKorn.getItems().setAll(Controller.getKorn());
+        lvwKorn.getItems().setAll(controller.getKorn());
 
         Label lblMængdeL = new Label("Mængde i liter");
         pane.add(lblMængdeL, 1,0);
@@ -82,26 +84,26 @@ public class MaltbatchDialog extends Stage {
     private void registrerAction() {
         try {
             if (lvwKorn.getSelectionModel().getSelectedItem() == null) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Intet korn valgt");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Intet korn valgt");
             } else if (txfMængdeL.getText() == null || Double.parseDouble(txfMængdeL.getText()) <= 0) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Mængde skal være indtastet og over 0");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Mængde skal være indtastet og over 0");
             } else if (dpGærringStart.getValue() == null) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen startdato angivet");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen startdato angivet");
             } else if (dpGærringSlut.getValue() == null) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen slutdato angivet");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen slutdato angivet");
             } else if (txfGærType.getText().isEmpty()) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Gærtype skal angives");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Gærtype skal angives");
             } else {
                 Korn korn = lvwKorn.getSelectionModel().getSelectedItem();
                 double mængdeL = Double.parseDouble(txfMængdeL.getText().trim());
                 LocalDate startdato = dpGærringStart.getValue();
                 LocalDate slutdato = dpGærringSlut.getValue();
                 String gærType = txfGærType.getText().trim();
-                Controller.opretMaltbatch(mængdeL, startdato, slutdato, gærType, korn);
+                controller.opretMaltbatch(mængdeL, startdato, slutdato, gærType, korn);
                 this.close();
             }
         } catch (Exception e) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Indtastningsfejl");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Indtastningsfejl");
         }
     }
 }

@@ -16,14 +16,32 @@ import java.util.Scanner;
 
 public class Controller {
 
-    public static Destillat opretDestillat(String spiritBatchNr, double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato, Maltbatch maltbatch) {
+    private Storage storage;
+    private static Controller controller;
+
+    private Controller() {
+        storage = new Storage();
+    }
+
+    public static Controller getController() {
+        if (controller == null) {
+            controller = new Controller();
+        }
+        return controller;
+    }
+
+    public static Controller getTestController() {
+        return new Controller();
+    }
+
+    public Destillat opretDestillat(String spiritBatchNr, double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato, Maltbatch maltbatch) {
         Destillat destillat = new Destillat(spiritBatchNr, mængdeL, alkoholprocent, medarbejder, rygemateriale, kommentar, destilleringsdato, maltbatch);
-        Storage.tilføjDestillat(destillat);
+        storage.tilføjDestillat(destillat);
         return destillat;
     }
 
     //Todo: Finde ud af, om opret og opdater burde være 1 eller 2 metoder
-    public static Destillat opdaterDestillat(Destillat destillat, String spiritBatchNr, double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato, Maltbatch maltbatch) {
+    public Destillat opdaterDestillat(Destillat destillat, String spiritBatchNr, double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato, Maltbatch maltbatch) {
         if(destillat == null || spiritBatchNr == null || mængdeL == 0.0 || alkoholprocent == 0.0 || medarbejder == null || destilleringsdato == null || maltbatch == null) throw new IllegalArgumentException("Information mangler eller er null. Kun String rygemateriale og String kommentar må være null.");
         else {
             destillat.setSpiritBatchNr(spiritBatchNr);
@@ -38,14 +56,14 @@ public class Controller {
         }
     }
 
-    public static Fad opretFad(String fraLand, String tidligereIndhold, int størrelseL, String træType, double alderAfTidligereIndhold, String leverandør) {
+    public Fad opretFad(String fraLand, String tidligereIndhold, int størrelseL, String træType, double alderAfTidligereIndhold, String leverandør) {
         Fad fad = new Fad(fraLand, tidligereIndhold, størrelseL, træType, alderAfTidligereIndhold, leverandør);
-        Storage.tilføjFad(fad);
+        storage.tilføjFad(fad);
         return fad;
     }
 
     //Todo: Finde ud af, om opret og opdater burde være 1 eller 2 metoder
-    public static Fad opdaterFad(Fad fad, String fraLand, String tidligereIndhold, int størrelseL, String træType, double alderAfTidligereIndhold, String leverandør) {
+    public Fad opdaterFad(Fad fad, String fraLand, String tidligereIndhold, int størrelseL, String træType, double alderAfTidligereIndhold, String leverandør) {
         if(fad == null || fraLand == null || størrelseL == 0 || træType == null || leverandør == null) throw new IllegalArgumentException("Information mangler eller er null. Kun String tidligereIndhold og double alderAfTidligereIndhold må være null/0.0");
         else {
             fad.setFraLand(fraLand);
@@ -58,26 +76,26 @@ public class Controller {
         }
     }
 
-    public static Korn opretKorn(String markNavn, String sort, LocalDate høstDato, double mængdeKg) {
+    public Korn opretKorn(String markNavn, String sort, LocalDate høstDato, double mængdeKg) {
         Korn korn = new Korn(markNavn, sort, høstDato, mængdeKg);
-        Storage.tilføjKorn(korn);
+        storage.tilføjKorn(korn);
         return korn;
     }
 
-    public static Maltbatch opretMaltbatch(double mængdeL, LocalDate gæringStart, LocalDate gæringSlut, String gærType, Korn korn) {
+    public Maltbatch opretMaltbatch(double mængdeL, LocalDate gæringStart, LocalDate gæringSlut, String gærType, Korn korn) {
         Maltbatch maltbatch = new Maltbatch(mængdeL, gæringStart, gæringSlut, gærType, korn);
-        Storage.tilføjMaltBatch(maltbatch);
+        storage.tilføjMaltBatch(maltbatch);
         return maltbatch;
     }
 
-    private static Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad, ArrayList<Destillat> destillater, ArrayList<Double> mængder) {
+    public Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad, ArrayList<Destillat> destillater, ArrayList<Double> mængder) {
         Påfyldning påfyldning = new Påfyldning(påfyldningsDato, færdigDato, førsteFad);
         påfyldning.tilføjDestillatMedMængde(destillater, mængder);
         førsteFad.addPåfyldning(påfyldning);
         return påfyldning;
     }
 
-    public static List<Påfyldning> opretPåfyldninger(List<Fad> fade, LocalDate påfyldningsDato, LocalDate færdigDato, ArrayList<Destillat> destillater, ArrayList<Double> mængder) {
+    public List<Påfyldning> opretPåfyldninger(List<Fad> fade, LocalDate påfyldningsDato, LocalDate færdigDato, ArrayList<Destillat> destillater, ArrayList<Double> mængder) {
         ArrayList<Påfyldning> oprettedePåfyldninger = new ArrayList<>();
 
         //Beregner den totale mængde af destillater og tjekker, om der er nok tilbage af destillaterne til at oprette disse påfyldninger
@@ -120,7 +138,7 @@ public class Controller {
         return oprettedePåfyldninger;
     }
 
-    public static Udgivelse opretUdgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder, List<Påfyldning> påfyldninger, List<Double> mængder) {
+    public Udgivelse opretUdgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder, List<Påfyldning> påfyldninger, List<Double> mængder) {
         //Beregner den totale mængde af påfyldninger og tjekker, om der er nok tilbage af påfyldningerne til at oprette denne udgivelse
         boolean derErNokPåfyldningTilbage = true;
         for (int i = 0; i < påfyldninger.size(); i++) {
@@ -131,18 +149,18 @@ public class Controller {
         if(!derErNokPåfyldningTilbage) throw new IllegalArgumentException("Der er ikke nok påfyldning tilbage til dette");
         else {
             Udgivelse udgivelse = new Udgivelse(unitStørrelse, prisPerUnit, erFad, udgivelsesDato, alkoholProcent, vandMængdeL, medarbejder, påfyldninger, mængder);
-            Storage.tilføjUdgivelse(udgivelse);
+            storage.tilføjUdgivelse(udgivelse);
             return udgivelse;
         }
     }
 
-    public static Lager opretLager(String adresse, String kvadratmeter) {
+    public Lager opretLager(String adresse, String kvadratmeter) {
         Lager lager = new Lager(adresse, kvadratmeter);
-        Storage.tilføjLager(lager);
+        storage.tilføjLager(lager);
         return lager;
     }
 
-    public static Alert opretAlert(Alert.AlertType alertType, String title, String contentText) {
+    public Alert opretAlert(Alert.AlertType alertType, String title, String contentText) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setContentText(contentText);
@@ -155,13 +173,23 @@ public class Controller {
         return alert;
     }
 
-    public static List<Fad> getAlleFade() {
-        return Storage.getFade();
+    public List<Fad> getAlleFade() {
+        return storage.getFade();
     }
 
-    public static ArrayList<Fad> getLedigeFad() {
+    public  List<Fad> getFadeUdenHylde() {
+       ArrayList<Fad> fadeUdenHylde = new ArrayList<>();
+        for (Fad fad : storage.getFade()) {
+            if (fad.getHylde() == null) {
+                fadeUdenHylde.add(fad);
+            }
+        }
+        return fadeUdenHylde;
+    }
+
+    public ArrayList<Fad> getLedigeFad() {
         ArrayList<Fad> ledigeFade = new ArrayList<>();
-        for (Fad fad : Storage.getFade()) {
+        for (Fad fad : storage.getFade()) {
             if (!fad.erFyldt() && fad.erAktiv()) {
                 ledigeFade.add(fad);
             }
@@ -169,33 +197,33 @@ public class Controller {
         return ledigeFade;
     }
 
-    public static List<Maltbatch> getAlleMaltbatche() { return Storage.getMaltbatche(); }
+    public List<Maltbatch> getAlleMaltbatche() { return storage.getMaltbatche(); }
 
-    public static List<Destillat> getAlleDestillater() {
-        return Storage.getDestillater();
+    public List<Destillat> getAlleDestillater() {
+        return storage.getDestillater();
     }
 
-    public static List<Destillat> getUgensDestillater() {
+    public List<Destillat> getUgensDestillater() {
         ArrayList<Destillat> ugensDestillater = new ArrayList<>();
-        for (Destillat destillat : Storage.getDestillater()) {
+        for (Destillat destillat : storage.getDestillater()) {
             if (destillat.getDestilleringsdato().isAfter(LocalDate.now().minusWeeks(1))) {
                 ugensDestillater.add(destillat);
             }
         }
         return ugensDestillater;
     }
-    public static List<Udgivelse> getUdgivelser() {
-        return Storage.getUdgivelser();
+    public List<Udgivelse> getUdgivelser() {
+        return storage.getUdgivelser();
     }
 
-    public static List<Korn> getKorn() {
-        return Storage.getKornList();
+    public List<Korn> getKorn() {
+        return storage.getKornList();
     }
-    public static List<Lager> getLagre() {
-        return Storage.getLagre();
+    public List<Lager> getLagre() {
+        return storage.getLagre();
     }
 
-    public static ArrayList<Reol> getReolNumre(Lager lager) {
+    public ArrayList<Reol> getReolNumre(Lager lager) {
         ArrayList<Reol> reoler = new ArrayList<>();
         for (int i = 0; i < lager.getReoler().size(); i++) {
             reoler.add(lager.getReoler().get(i));
@@ -203,7 +231,7 @@ public class Controller {
         return reoler;
     }
 
-    public static ArrayList<Hylde> getHyldeNumre(Reol reol) {
+    public ArrayList<Hylde> getHyldeNumre(Reol reol) {
         ArrayList<Hylde> hylder = new ArrayList<>();
         for (int i = 0; i < reol.getHylder().size(); i++) {
             hylder.add(reol.getHylder().get(i));
@@ -211,15 +239,15 @@ public class Controller {
         return hylder;
     }
 
-    public static void fjernFad(Fad fad) {
-        Storage.fjernFad(fad);
+    public void fjernFad(Fad fad) {
+        storage.fjernFad(fad);
     }
 
-    public static void fjernDestillat(Destillat destillat) {
-        Storage.fjernDestilat(destillat);
+    public void fjernDestillat(Destillat destillat) {
+        storage.fjernDestilat(destillat);
     }
 
-    public static void flytFad(List<Fad> fade, Hylde hylde) {
+    public void flytFad(List<Fad> fade, Hylde hylde) {
         if (hylde != null && !hylde.erLedigPlads(fade.size())) throw new IllegalArgumentException("Der er ikke nok plads på denne hylde");
         else {
             for (Fad fad : fade) {
@@ -234,7 +262,7 @@ public class Controller {
         }
     }
 
-    public static List<String> getMedarbejdere() {
+    public List<String> getMedarbejdere() {
         List<String> medarbejdere = new ArrayList<>();
         File file = new File("resources/medarbejdere.txt");
         try {
@@ -250,9 +278,9 @@ public class Controller {
         return medarbejdere;
     }
 
-    public static ArrayList<Påfyldning> getPåfyldninger() {
+    public ArrayList<Påfyldning> getPåfyldninger() {
         ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
-        for (Fad fad : Controller.getAlleFade()) {
+        for (Fad fad : this.getAlleFade()) {
             if(fad.erFyldt()) {
                 påfyldninger.add(fad.getPåfyldninger().getLast());
             }
@@ -260,7 +288,7 @@ public class Controller {
         return påfyldninger;
     }
 
-    public static ArrayList<Påfyldning> getAlleIkkeTommePåfyldninger() {
+    public ArrayList<Påfyldning> getAlleIkkeTommePåfyldninger() {
         ArrayList<Påfyldning> allePåfyldninger = getPåfyldninger();
         ArrayList<Påfyldning> ikkeUdgivedePåfyldninger = new ArrayList<>();
         for (Påfyldning påfyldning : allePåfyldninger) {
@@ -271,15 +299,15 @@ public class Controller {
         return ikkeUdgivedePåfyldninger;
     }
 
-    public static FilLogger getFileLoggerStrategy() {
+    public FilLogger getFileLoggerStrategy() {
         return new FilLogger();
     }
 
-    public static void udtrækBeskrivelse(Logger logger, Logable object) {
+    public void udtrækBeskrivelse(Logger logger, Logable object) {
         logger.log(object);
     }
 
-    public static ArrayList<String> getOutputStrategies() {
+    public ArrayList<String> getOutputStrategies() {
         ArrayList<String> foundStrategies = new ArrayList<>();
         File file = new File("src/application/model/output/");
         String[] directory = file.list();
@@ -294,8 +322,49 @@ public class Controller {
         return foundStrategies;
     }
 
-    public static Logger getLoggerStrategy(String LoggerType) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public Logger getLoggerStrategy(String LoggerType) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         String className = "application.model.output." + LoggerType + "Logger";
         return (Logger) Class.forName(className).newInstance();
     }
+
+    public void initContent() {
+        Fad fad1 = this.opretFad("Spanien", "Cherry", 30, "Eg", 9.5, "El egetræsfadfirma");
+        Fad fad2 = this.opretFad("Spanien", "Cherry", 250, "Eg", 1.0, "El egetræsfadfirma");
+        Fad fad3 = this.opretFad("Spanien", "Bourbon", 30, "Eg", 9.5, "El fakefadefirma");
+        Fad fad4 = this.opretFad("Spanien", "Bourbon", 250, "Eg", 5, "El egetræsfadfirma");
+        Fad fad5 = this.opretFad("Spanien", "Bourbon", 100, "Eg", 9.5, "El fakefadefirma");
+
+        Korn byg = this.opretKorn("Mark 1", "Byg", LocalDate.of(2019, 8, 20), 200);
+        this.opretKorn("Mark 2", "Byg", LocalDate.of(2019, 8, 23), 200);
+
+        Maltbatch maltbatch1 = this.opretMaltbatch(100, LocalDate.of(2019, 12, 15), LocalDate.of(2019, 12, 17), "Gær", byg);
+        Maltbatch maltbatch2 = this.opretMaltbatch(100, LocalDate.of(2019, 12, 15), LocalDate.of(2019, 12, 19), "Special gær", byg);
+
+        Destillat destillat1 = this.opretDestillat("NM77P", 500, 70, "Snævar Njáll Albertsson", null, null, LocalDate.of(2020, 1, 17), maltbatch1);
+        Destillat destillat2 = this.opretDestillat("NM78P", 500, 70, "Ingus Brikmanis", null, "Kommentar2", LocalDate.of(2020, 1, 19), maltbatch1);
+        Destillat destillat3 = this.opretDestillat("NM79P", 500, 70, "Snævar Njáll Albertsson", "Tørv", null, LocalDate.of(2024, 5, 20), maltbatch2);
+        Destillat destillat4 = this.opretDestillat("NM80P", 500, 70, "Snævar Njáll Albertsson", null, null, LocalDate.of(2024, 5, 19), maltbatch2);
+        Destillat destillat5 = this.opretDestillat("NM81P", 500, 70, "Ingus Brikmanis", "Tørv", "Kommentar1", LocalDate.of(2024, 5, 18), maltbatch1);
+
+        ArrayList<Destillat> destillatArray1 = new ArrayList<>();
+        destillatArray1.add(destillat1);
+        destillatArray1.add(destillat2);
+        ArrayList<Double> mængdeArray1 = new ArrayList<>();
+        mængdeArray1.add(10.0);
+        mængdeArray1.add(15.0);
+        ArrayList<Destillat> destillatArray2 = new ArrayList<>();
+        destillatArray2.add(destillat3);
+        destillatArray2.add(destillat4);
+        ArrayList<Double> mængdeArray2 = new ArrayList<>();
+        mængdeArray2.add(100.0);
+        mængdeArray2.add(150.0);
+        ArrayList<Destillat> destillatArray3 = new ArrayList<>();
+        destillatArray3.add(destillat5);
+        ArrayList<Double> mængdeArray3 = new ArrayList<>();
+        mængdeArray3.add(20.0);
+        this.opretPåfyldninger(new ArrayList<>(List.of(fad1)), LocalDate.of(2019, 10, 25), LocalDate.of(2022, 10, 27), destillatArray1, mængdeArray1);
+        this.opretPåfyldninger(new ArrayList<>(List.of(fad2)), LocalDate.of(2021, 7, 17), LocalDate.of(2024, 7, 17), destillatArray2, mængdeArray2);
+        this.opretPåfyldninger(new ArrayList<>(List.of(fad3)), LocalDate.of(2022, 7, 17), null, destillatArray3, mængdeArray3);
+    }
+
 }

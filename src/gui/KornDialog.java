@@ -18,8 +18,10 @@ public class KornDialog extends Stage {
     private TextField txfSort = new TextField();
     private DatePicker dpHøstdato = new DatePicker();
     private TextField txfMængdeKg = new TextField();
+    private Controller controller;
 
     public KornDialog() {
+        controller = Controller.getController();
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
@@ -67,23 +69,23 @@ public class KornDialog extends Stage {
     private void registrerKorn() {
         try {
             if (txfMarkNavn.getText() == null) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "mark navn skal udfyldes");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "mark navn skal udfyldes");
             } else if (txfSort.getText() == null) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "korn sort skal udfyldes");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "korn sort skal udfyldes");
             } else if (dpHøstdato.getValue() == null) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen høst dato");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen høst dato");
             } else if (txfMængdeKg.getText() == null || Double.parseDouble(txfMængdeKg.getText()) <= 0) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Mængde skal være indtastet og over 0");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Mængde skal være indtastet og over 0");
             } else {
                 String markNavn = txfMarkNavn.getText().trim();
                 String sort = txfSort.getText().trim();
                 LocalDate høstDato = dpHøstdato.getValue();
                 double mængdeKg = Double.parseDouble(txfMængdeKg.getText().trim());
-                Controller.opretKorn(markNavn, sort, høstDato, mængdeKg);
+                controller.opretKorn(markNavn, sort, høstDato, mængdeKg);
                 this.close();
             }
         } catch (Exception e) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "indtastningsfejl");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "indtastningsfejl");
         }
     }
 }

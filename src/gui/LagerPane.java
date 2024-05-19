@@ -15,15 +15,17 @@ import java.util.List;
 
 public class LagerPane extends GridPane {
 
-    ListView<Lager> lvwLager = new ListView<>();
-    ListView<Reol> lvwReol = new ListView<>();
-    ListView<Hylde> lvwHylde = new ListView<>();
-    ListView<Fad> lvwFad = new ListView<>();
-    Button btnTilføjReol = new Button("Tilføj Reol");
-    Button btnFlytFad = new Button("Placer fad");
+    private ListView<Lager> lvwLager = new ListView<>();
+    private ListView<Reol> lvwReol = new ListView<>();
+    private ListView<Hylde> lvwHylde = new ListView<>();
+    private ListView<Fad> lvwFad = new ListView<>();
+    private Button btnTilføjReol = new Button("Tilføj Reol");
+    private Button btnFlytFad = new Button("Placer fad");
+    private Controller controller;
 
 
     public LagerPane() {
+        controller = Controller.getController();
         this.setPadding(new Insets(20));
         this.setHgap(20);
         this.setVgap(10);
@@ -32,7 +34,7 @@ public class LagerPane extends GridPane {
         Label lblAlleLagre = new Label("Alle lagre");
         this.add(lblAlleLagre, 0, 0);
         this.add(lvwLager, 0, 1);
-        lvwLager.getItems().setAll(Controller.getLagre());
+        lvwLager.getItems().setAll(controller.getLagre());
         ChangeListener<Lager> lagerChangeListener = (observableValue, oldValue, newValue) -> this.changeLager();
         lvwLager.getSelectionModel().selectedItemProperty().addListener(lagerChangeListener);
 
@@ -129,7 +131,7 @@ public class LagerPane extends GridPane {
     private void opretAction() {
         LagerDialog lagerDialog = new LagerDialog();
         lagerDialog.showAndWait();
-        lvwLager.getItems().setAll(Controller.getLagre());
+        lvwLager.getItems().setAll(controller.getLagre());
 
     }
 

@@ -17,11 +17,13 @@ import javafx.stage.StageStyle;
 
 public class LagerDialog extends Stage {
 
-    TextField txfAdresse = new TextField();
-    TextField txfKvadrat = new TextField();
+    private TextField txfAdresse = new TextField();
+    private TextField txfKvadrat = new TextField();
+    private Controller controller;
 
 
     public LagerDialog() {
+        controller = Controller.getController();
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
@@ -61,11 +63,11 @@ public class LagerDialog extends Stage {
         String kvadratMeter = txfKvadrat.getText().trim();
 
         if (txfAdresse.getText().isEmpty()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen adresse indtastet");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen adresse indtastet");
         } else if (txfKvadrat.getText().isEmpty()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen kvadratmeter indtastet");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen kvadratmeter indtastet");
         } else {
-            Controller.opretLager(adresse, kvadratMeter);
+            controller.opretLager(adresse, kvadratMeter);
             this.close();
         }
 

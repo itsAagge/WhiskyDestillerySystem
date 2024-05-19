@@ -30,8 +30,10 @@ public class PåfyldningsDialog extends Stage {
     private Label lblFadMængdeValgt = new Label("Fad mængde valgt:  0 L");
     private double totalDestillatMængdeValgt = 0.0;
     private Label lblDestillatMængdeValgt = new Label("Destillat mængde valgt:  0.0 L");
+    private Controller controller;
 
     public PåfyldningsDialog() {
+        controller = Controller.getController();
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
@@ -56,14 +58,14 @@ public class PåfyldningsDialog extends Stage {
         lvwFad.setPrefWidth(250);
         lvwFad.setPrefHeight(200);
         lvwFad.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        lvwFad.getItems().setAll(Controller.getLedigeFad());
+        lvwFad.getItems().setAll(controller.getLedigeFad());
         ChangeListener<Fad> changeListenerFad = (observableValue, fad, t1) -> this.changeFad();
         lvwFad.getSelectionModel().selectedItemProperty().addListener(changeListenerFad);
 
         Label lblUgensDestillater = new Label("Ugens destillater");
         pane.add(lblUgensDestillater, 2, 0);
         pane.add(cBoxDestillater, 2, 1);
-        cBoxDestillater.getItems().setAll(Controller.getUgensDestillater());
+        cBoxDestillater.getItems().setAll(controller.getUgensDestillater());
 
         Label lblpåfyldningsDato = new Label("Påfyldnings dato");
         pane.add(lblpåfyldningsDato, 1, 0);
@@ -111,11 +113,11 @@ public class PåfyldningsDialog extends Stage {
             double mængde = Double.parseDouble(txfMængde.getText().trim());
             Destillat destillat = cBoxDestillater.getSelectionModel().getSelectedItem();
             if (destillat == null) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Intet destillat valgt til at fylde på fad");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Intet destillat valgt til at fylde på fad");
             } else if (mængde <= 0) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Mængde skal være over 0");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Mængde skal være over 0");
             } else if (destillat.mængdeTilbage() < mængde) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der er ikke nok destillat tilbage");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der er ikke nok destillat tilbage");
             } else {
                 totalDestillatMængdeValgt += mængde;
                 lblDestillatMængdeValgt.setText("Destillat mængde valgt:  " + totalDestillatMængdeValgt + " L");
@@ -127,7 +129,7 @@ public class PåfyldningsDialog extends Stage {
                 lvwTilføjetDestillater.getItems().add(s);
             }
         } catch (NumberFormatException e) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "mængde er ikke registreret");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "mængde er ikke registreret");
         }
     }
 
@@ -137,19 +139,19 @@ public class PåfyldningsDialog extends Stage {
         LocalDate færdigDato = dpFærdigDato.getValue();
 
         if (fade.isEmpty()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Intet fad er blevet valgt");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Intet fad er blevet valgt");
         } else if (påfyldningsdato == null) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen påfyldningsdato registreret");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen påfyldningsdato registreret");
         } else if (destillats.isEmpty()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen destillater påfyldt");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen destillater påfyldt");
         } else if (mængder.isEmpty()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Mængden af de forskellige destillater skal registreres");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Mængden af de forskellige destillater skal registreres");
         } else if (destillats.size() != mængder.size()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "De registreret destillater og mængder stemmer ikke overens");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "De registreret destillater og mængder stemmer ikke overens");
         } else if (totalFadMængdeValgt < totalDestillatMængdeValgt) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der er ikke nok plads i fadene til denne mængde destillater");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der er ikke nok plads i fadene til denne mængde destillater");
         } else {
-            Controller.opretPåfyldninger(fade, påfyldningsdato, færdigDato, destillats, mængder);
+            controller.opretPåfyldninger(fade, påfyldningsdato, færdigDato, destillats, mængder);
             this.close();
         }
     }

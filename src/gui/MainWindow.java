@@ -10,6 +10,13 @@ import javafx.stage.Stage;
 
 public class MainWindow extends Application {
 
+    Controller controller;
+    @Override
+    public void init() {
+        controller = Controller.getController();
+        controller.initContent();
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Whisky Destillery System");

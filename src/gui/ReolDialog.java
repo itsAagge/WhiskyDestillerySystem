@@ -17,12 +17,15 @@ import javafx.stage.StageStyle;
 
 public class ReolDialog extends Stage {
 
-    Lager lager;
-    TextField txfAntalReoler = new TextField();
-    TextField txfHyldeMaxPlads = new TextField();
-    TextField txfAntalHylder = new TextField();
+    private Lager lager;
+    private TextField txfAntalReoler = new TextField();
+    private TextField txfHyldeMaxPlads = new TextField();
+    private TextField txfAntalHylder = new TextField();
+    private Controller controller;
+
 
     public ReolDialog(Lager lager) {
+        controller = Controller.getController();
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
@@ -69,17 +72,17 @@ public class ReolDialog extends Stage {
             int hyldeMaxPlads = Integer.parseInt(txfHyldeMaxPlads.getText().trim());
 
             if (antalReoler <= 0) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "antal reoler skal være over nul");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "antal reoler skal være over nul");
             } else if (antalHylder <= 0) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "antal hylder skal være over nul");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "antal hylder skal være over nul");
             } else if (hyldeMaxPlads <= 0) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Hylde max plads skal være over nul");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Hylde max plads skal være over nul");
             } else {
                 lager.tilføjReol(antalReoler, antalHylder, hyldeMaxPlads);
                 this.close();
             }
         } catch (NumberFormatException e) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Indtastningsfejl");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Indtastningsfejl");
         }
 
     }

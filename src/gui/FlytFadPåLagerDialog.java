@@ -21,13 +21,15 @@ import java.util.List;
 
 public class FlytFadPåLagerDialog extends Stage {
 
-    List<Fad> fade;
-    ListView<Fad> lvwFade = new ListView();
-    ComboBox<Lager> cBLager = new ComboBox<>();
-    ComboBox<Reol> cBreol = new ComboBox<>();
-    ComboBox<Hylde> cBhylde = new ComboBox<>();
+    private List<Fad> fade;
+    private ListView<Fad> lvwFade = new ListView();
+    private ComboBox<Lager> cBLager = new ComboBox<>();
+    private ComboBox<Reol> cBreol = new ComboBox<>();
+    private ComboBox<Hylde> cBhylde = new ComboBox<>();
+    private Controller controller;
 
     public FlytFadPåLagerDialog(List<Fad> fade) {
+        controller = Controller.getController();
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
@@ -53,13 +55,13 @@ public class FlytFadPåLagerDialog extends Stage {
         if (!fade.isEmpty()) {
             lvwFade.getItems().setAll(fade);
         } else {
-            lvwFade.getItems().setAll(Controller.getAlleFade());
+            lvwFade.getItems().setAll(controller.getFadeUdenHylde());
         }
 
         Label lblLager = new Label("Vælg lager");
         pane.add(lblLager, 1, 0);
         pane.add(cBLager, 1, 1);
-        cBLager.getItems().setAll(Controller.getLagre());
+        cBLager.getItems().setAll(controller.getLagre());
         ChangeListener<Lager> lagerChangeListener = (observableValue, oldValue, newValue) -> this.changeLager();
         cBLager.getSelectionModel().selectedItemProperty().addListener(lagerChangeListener);
 
@@ -87,13 +89,13 @@ public class FlytFadPåLagerDialog extends Stage {
         List<Fad> valgtFade = lvwFade.getSelectionModel().getSelectedItems();
 
         if (hylde == null) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Hylde skal være valgt");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Hylde skal være valgt");
         } else if (valgtFade.isEmpty()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen fade valgt");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen fade valgt");
         } else if (!hylde.erLedigPlads(valgtFade.size())) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der er ikke nok plads på hylden, vælg en anden");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der er ikke nok plads på hylden, vælg en anden");
         } else {
-            Controller.flytFad(valgtFade, hylde);
+            controller.flytFad(valgtFade, hylde);
             this.close();
         }
 
@@ -103,7 +105,7 @@ public class FlytFadPåLagerDialog extends Stage {
         Reol reol = cBreol.getSelectionModel().getSelectedItem();
 
         if (reol != null) {
-            cBhylde.getItems().setAll(Controller.getHyldeNumre(reol));
+            cBhylde.getItems().setAll(controller.getHyldeNumre(reol));
         }
     }
 
@@ -111,7 +113,7 @@ public class FlytFadPåLagerDialog extends Stage {
         Lager lager = cBLager.getSelectionModel().getSelectedItem();
 
         if (lager != null) {
-            cBreol.getItems().setAll(Controller.getReolNumre(lager));
+            cBreol.getItems().setAll(controller.getReolNumre(lager));
         }
 
     }

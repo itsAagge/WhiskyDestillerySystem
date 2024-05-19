@@ -12,8 +12,10 @@ public class UdgivelsePane extends GridPane {
     private ListView<Udgivelse> lvwUdgivelser = new ListView<>();
     private TextArea txaBeskrivelse = new TextArea();
     private Button btnPrintUdgivelse = new Button("Print beskrivelse");
+    private Controller controller;
 
     public UdgivelsePane() {
+        controller = Controller.getController();
         this.setPadding(new Insets(20));
         this.setHgap(20);
         this.setVgap(10);
@@ -22,7 +24,7 @@ public class UdgivelsePane extends GridPane {
         Label lblUdgivelser = new Label("Udgivelser");
         this.add(lblUdgivelser,0,0);
         this.add(lvwUdgivelser,0,1);
-        lvwUdgivelser.getItems().setAll(Controller.getUdgivelser());
+        lvwUdgivelser.getItems().setAll(controller.getUdgivelser());
         ChangeListener<Udgivelse> changeListenerUdgivelser = (observableValue, udgivelse, t1) -> this.changeUdgivelse();
         lvwUdgivelser.getSelectionModel().selectedItemProperty().addListener(changeListenerUdgivelser);
         lvwUdgivelser.setPrefWidth(250);
@@ -48,7 +50,7 @@ public class UdgivelsePane extends GridPane {
     private void UdskrivFlaskerAction() {
         UdgivFlaskerDialog udgivFlaskerDialog = new UdgivFlaskerDialog();
         udgivFlaskerDialog.showAndWait();
-        lvwUdgivelser.getItems().setAll(Controller.getUdgivelser());
+        lvwUdgivelser.getItems().setAll(controller.getUdgivelser());
         lvwUdgivelser.getSelectionModel().clearSelection();
         setKnapperAktive(false);
     }
@@ -64,16 +66,16 @@ public class UdgivelsePane extends GridPane {
     private void printAction() {
         Udgivelse udgivelse = lvwUdgivelser.getSelectionModel().getSelectedItem();
         if(!IndstillingPane.erOutputStrategiValgt()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
         } else {
-            Controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), udgivelse);
+            controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), udgivelse);
         }
     }
 
     private void udgivFad() {
         UdgivFadDialog udgivFadDialog = new UdgivFadDialog();
         udgivFadDialog.showAndWait();
-        lvwUdgivelser.getItems().setAll(Controller.getUdgivelser());
+        lvwUdgivelser.getItems().setAll(controller.getUdgivelser());
         lvwUdgivelser.getSelectionModel().clearSelection();
         setKnapperAktive(false);
     }

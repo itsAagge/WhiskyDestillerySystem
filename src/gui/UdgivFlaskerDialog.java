@@ -19,18 +19,21 @@ import java.util.ArrayList;
 
 public class UdgivFlaskerDialog extends Stage {
 
-    ComboBox<Påfyldning> cBPåfylninger = new ComboBox<>();
-    TextField txfFlaskeStørrelse = new TextField();
-    DatePicker dpUdgivelsesDato = new DatePicker();
-    TextField txfAlkoholProcent = new TextField();
-    TextField txfVandMængde = new TextField();
-    ComboBox<String> cBMedarbejder = new ComboBox<>();
-    ListView<String> lvwGemtePåfyldningerMedMængde = new ListView<>();
-    TextField txfMængdeL = new TextField();
-    TextField txfPrisPerFlaske = new TextField();
-    Label lblLiterTilbage = new Label("Liter tilbage: ");
+    private ComboBox<Påfyldning> cBPåfylninger = new ComboBox<>();
+    private TextField txfFlaskeStørrelse = new TextField();
+    private DatePicker dpUdgivelsesDato = new DatePicker();
+    private TextField txfAlkoholProcent = new TextField();
+    private TextField txfVandMængde = new TextField();
+    private ComboBox<String> cBMedarbejder = new ComboBox<>();
+    private ListView<String> lvwGemtePåfyldningerMedMængde = new ListView<>();
+    private TextField txfMængdeL = new TextField();
+    private TextField txfPrisPerFlaske = new TextField();
+    private Label lblLiterTilbage = new Label("Liter tilbage: ");
+    private Controller controller;
+
 
     public UdgivFlaskerDialog() {
+        controller = Controller.getController();
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
@@ -74,13 +77,13 @@ public class UdgivFlaskerDialog extends Stage {
         Label lblMedarbejder = new Label("Medarbejder");
         pane.add(lblMedarbejder, 1,4);
         pane.add(cBMedarbejder, 1,5);
-        cBMedarbejder.getItems().setAll(Controller.getMedarbejdere());
+        cBMedarbejder.getItems().setAll(controller.getMedarbejdere());
         if (IndstillingPane.erMedarbejderValgt()) cBMedarbejder.getSelectionModel().select(IndstillingPane.getValgtMedarbejder());
 
         Label lblPåfyldninger = new Label("Alle påfyldninger");
         pane.add(lblPåfyldninger, 0,6);
         pane.add(cBPåfylninger, 0,7);
-        cBPåfylninger.getItems().setAll(Controller.getAlleIkkeTommePåfyldninger());
+        cBPåfylninger.getItems().setAll(controller.getAlleIkkeTommePåfyldninger());
 
         Label lblMængde = new Label("Mængde i liter");
         pane.add(lblMængde, 1,6);
@@ -133,23 +136,23 @@ public class UdgivFlaskerDialog extends Stage {
             String medarbejder = cBMedarbejder.getSelectionModel().getSelectedItem();
 
             if (flaskeStørrelse <= 0) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Flaskestørrelse skal være over 0");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Flaskestørrelse skal være over 0");
             } else if (dato == null) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Dato er ikke registreret");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Dato er ikke registreret");
             } else if (prisPrFlaske <= 0) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Pris per flaske skal være over 0");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Pris per flaske skal være over 0");
             } else if (alkoholProcent <= 0) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Alkohol procent skal være over 0");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Alkohol procent skal være over 0");
             } else if (vandMængde <= 0) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Vandmængde skal være over 0");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Vandmængde skal være over 0");
             } else if (medarbejder == null) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der skal vælges en medarbjeder");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der skal vælges en medarbjeder");
             } else {
-                Controller.opretUdgivelse(flaskeStørrelse, prisPrFlaske, false, dato, alkoholProcent, vandMængde, medarbejder, påfyldninger, mængder);
+                controller.opretUdgivelse(flaskeStørrelse, prisPrFlaske, false, dato, alkoholProcent, vandMængde, medarbejder, påfyldninger, mængder);
                 this.close();
             }
         } catch (Exception e) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Indtastfejl");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Indtastfejl");
         }
     }
 
@@ -159,11 +162,11 @@ public class UdgivFlaskerDialog extends Stage {
             double mængde = Double.parseDouble(txfMængdeL.getText().trim());
 
             if (påfyldning == null) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen påfyldning valgt til at tilføje til udgivelse");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen påfyldning valgt til at tilføje til udgivelse");
             } else if (mængde <= 0) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Mængde skal være over 0");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Mængde skal være over 0");
             } else if (påfyldning.mængdeTilbage() < mængde) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der er ikke nok af påfyldningen tilbage");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der er ikke nok af påfyldningen tilbage");
             } else {
                 påfyldninger.add(påfyldning);
                 mængder.add(mængde);
@@ -175,7 +178,7 @@ public class UdgivFlaskerDialog extends Stage {
                 lvwGemtePåfyldningerMedMængde.getItems().add(s);
             }
         } catch (Exception e) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "mængde er ikke registreret");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "mængde er ikke registreret");
         }
     }
 }

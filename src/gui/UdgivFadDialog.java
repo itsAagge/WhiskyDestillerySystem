@@ -21,8 +21,10 @@ public class UdgivFadDialog extends Stage {
     private TextField txfPrisForFadet = new TextField();
     private ComboBox<String> cbMedarbejdere = new ComboBox<>();
     private ListView<Påfyldning> lvwPåfyldning = new ListView<>();
+    private Controller controller;
 
     public UdgivFadDialog() {
+        controller = Controller.getController();
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
@@ -45,7 +47,7 @@ public class UdgivFadDialog extends Stage {
         pane.add(lblAllePåfyldning, 0, 0);
         pane.add(lvwPåfyldning, 0, 1, 1, 8);
         lvwPåfyldning.setPrefWidth(250);
-        lvwPåfyldning.getItems().setAll(Controller.getAlleIkkeTommePåfyldninger());
+        lvwPåfyldning.getItems().setAll(controller.getAlleIkkeTommePåfyldninger());
 
         Label lblUdgivelsesDato = new Label("Udgivelses dato");
         pane.add(lblUdgivelsesDato, 1, 0);
@@ -64,7 +66,7 @@ public class UdgivFadDialog extends Stage {
         Label lblMedarbejder = new Label("Medarbejder");
         pane.add(lblMedarbejder, 2, 2);
         pane.add(cbMedarbejdere, 2, 3);
-        cbMedarbejdere.getItems().setAll(Controller.getMedarbejdere());
+        cbMedarbejdere.getItems().setAll(controller.getMedarbejdere());
         if (IndstillingPane.erMedarbejderValgt()) cbMedarbejdere.getSelectionModel().select(IndstillingPane.getValgtMedarbejder());
 
         Button btnOpret = new Button("Opret");
@@ -84,20 +86,20 @@ public class UdgivFadDialog extends Stage {
             String medarbejder = cbMedarbejdere.getSelectionModel().getSelectedItem();
 
             if (påfyldninger.isEmpty()) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen påfyldninger valgt");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen påfyldninger valgt");
             } else if (udgivelsesDato == null) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen dato valgt");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen dato valgt");
             } else if (alkoholProcent <= 0) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Alkohol procent skal være over 0");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Alkohol procent skal være over 0");
             } else if (prisPrUnit <= 0) {
-                Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Pris pr unit skal være over 0");
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Pris pr unit skal være over 0");
             } else {
                 List<Double> mængder = new ArrayList<>(List.of(påfyldninger.getFirst().mængdeTilbage()));
-                Controller.opretUdgivelse(unitStørrelse, prisPrUnit, true, udgivelsesDato, alkoholProcent, vandMængde, medarbejder, påfyldninger, mængder);
+                controller.opretUdgivelse(unitStørrelse, prisPrUnit, true, udgivelsesDato, alkoholProcent, vandMængde, medarbejder, påfyldninger, mængder);
                 this.close();
             }
         } catch (NumberFormatException e) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Indtastnings fejl");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Indtastnings fejl");
         }
     }
 }

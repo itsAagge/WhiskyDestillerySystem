@@ -11,7 +11,6 @@ public class Maltbatch implements Logable {
     private String gærType;
     private Korn korn;
 
-
     //Constructor
     public Maltbatch(double mængdeL, LocalDate gæringStart, LocalDate gæringSlut, String gærType, Korn korn) {
         antalMaltbatches++;

@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 
 public class FilLogger implements Logger {
 
+    private Controller controller = Controller.getController();
+
     public FilLogger() {
     }
 
@@ -20,9 +22,9 @@ public class FilLogger implements Logger {
             PrintWriter printWriter = new PrintWriter(file);
             printWriter.print(object.getBeskrivelse());
             printWriter.close();
-            Controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse printet succesfuldt til resources/beskrivelser/" + object.getFileName() + ".txt");
+            controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse printet succesfuldt til resources/beskrivelser/" + object.getFileName() + ".txt");
         } catch (Exception e) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der opstod en fejl i oprettelsen af filen. Prøv igen senere");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der opstod en fejl i oprettelsen af filen. Prøv igen senere");
         }
     }
 }

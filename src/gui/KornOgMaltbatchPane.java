@@ -19,8 +19,10 @@ public class KornOgMaltbatchPane extends GridPane {
     private TextArea txaMaltbatchBeskrivelse = new TextArea();
     private Button btnPrintBeskrivelse = new Button("Print beskrivelse af: ");
     private ComboBox<String> comboBoxVælgBeskrivelse = new ComboBox<>();
+    private Controller controller;
 
     public KornOgMaltbatchPane() {
+        controller = Controller.getController();
         this.setPadding(new Insets(20));
         this.setHgap(20);
         this.setVgap(10);
@@ -29,7 +31,7 @@ public class KornOgMaltbatchPane extends GridPane {
         Label lblAlleKorn = new Label("Registreret korn");
         this.add(lblAlleKorn, 0,0);
         this.add(lvwKorn, 0,1,1,3);
-        lvwKorn.getItems().setAll(Controller.getKorn());
+        lvwKorn.getItems().setAll(controller.getKorn());
         lvwKorn.setPrefWidth(400);
         ChangeListener<Korn> kornChangeListener = (observableValue, oldValue, newValue) -> this.changeKorn();
         lvwKorn.getSelectionModel().selectedItemProperty().addListener(kornChangeListener);
@@ -47,7 +49,7 @@ public class KornOgMaltbatchPane extends GridPane {
         Label lblAlleMaltbatch = new Label("Alle Maltbatches");
         this.add(lblAlleMaltbatch, 2,0);
         this.add(lvwMaltbatch, 2,1,1,3);
-        lvwMaltbatch.getItems().setAll(Controller.getAlleMaltbatche());
+        lvwMaltbatch.getItems().setAll(controller.getAlleMaltbatche());
         lvwMaltbatch.setPrefWidth(400);
         ChangeListener<Maltbatch> maltbatchChangeListener = (observableValue, oldValue, newValue) -> this.changeMaltbatch();
         lvwMaltbatch.getSelectionModel().selectedItemProperty().addListener(maltbatchChangeListener);
@@ -89,36 +91,36 @@ public class KornOgMaltbatchPane extends GridPane {
     private void registrerMaltbatchAction() {
         MaltbatchDialog maltbatchDialog = new MaltbatchDialog();
         maltbatchDialog.showAndWait();
-        lvwMaltbatch.getItems().setAll(Controller.getAlleMaltbatche());
+        lvwMaltbatch.getItems().setAll(controller.getAlleMaltbatche());
     }
 
     private void registrerKornAction() {
         KornDialog kornDialog = new KornDialog();
         kornDialog.showAndWait();
-        lvwKorn.getItems().setAll(Controller.getKorn());
+        lvwKorn.getItems().setAll(controller.getKorn());
     }
 
     private void printBeskrivelseAction() {
         if (comboBoxVælgBeskrivelse.getSelectionModel().getSelectedItem() == null) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du skal vælge, hvad du vil printe en beskrivelse af, før du kan printe den");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du skal vælge, hvad du vil printe en beskrivelse af, før du kan printe den");
         } else if (comboBoxVælgBeskrivelse.getSelectionModel().getSelectedItem().equals("Korn") && lvwKorn.getSelectionModel().getSelectedItem() == null) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge den omgang korn, som du vil printe en beskrivelse af");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge den omgang korn, som du vil printe en beskrivelse af");
         } else if (comboBoxVælgBeskrivelse.getSelectionModel().getSelectedItem().equals("Maltbatch") && lvwMaltbatch.getSelectionModel().getSelectedItem() == null) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge det maltbatch, som du vil printe en beskrivelse af");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge det maltbatch, som du vil printe en beskrivelse af");
         } else {
             if (comboBoxVælgBeskrivelse.getSelectionModel().getSelectedItem().equals("Korn")) {
                 Korn korn = lvwKorn.getSelectionModel().getSelectedItem();
                 if(!IndstillingPane.erOutputStrategiValgt()) {
-                    Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
+                    controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
                 } else {
-                    Controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), korn);
+                    controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), korn);
                 }
             } else {
                 Maltbatch maltbatch = lvwMaltbatch.getSelectionModel().getSelectedItem();
                 if(!IndstillingPane.erOutputStrategiValgt()) {
-                    Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
+                    controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
                 } else {
-                    Controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), maltbatch);
+                    controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), maltbatch);
                 }
             }
         }

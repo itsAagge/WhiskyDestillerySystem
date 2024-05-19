@@ -23,9 +23,11 @@ public class DestillatDialog extends Stage {
     private TextField txfKommentar = new TextField();
     private DatePicker datePicker = new DatePicker();
     private ComboBox<String> comboBoxMedarbejdere = new ComboBox<>();
-    ListView<Maltbatch> lvwMaltbatche = new ListView<>();
+    private ListView<Maltbatch> lvwMaltbatche = new ListView<>();
+    private Controller controller;
 
     public DestillatDialog(Destillat destillat) {
+        controller = Controller.getController();
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
@@ -83,14 +85,14 @@ public class DestillatDialog extends Stage {
         Label lblMedarbejder = new Label("Medarbejder:");
         pane.add(lblMedarbejder,0,6);
         pane.add(comboBoxMedarbejdere,1,6);
-        comboBoxMedarbejdere.getItems().setAll(Controller.getMedarbejdere());
+        comboBoxMedarbejdere.getItems().setAll(controller.getMedarbejdere());
         if (IndstillingPane.erMedarbejderValgt()) comboBoxMedarbejdere.getSelectionModel().select(IndstillingPane.getValgtMedarbejder());
 
         Label lblMaltbatche = new Label("Maltbatches");
         pane.add(lblMaltbatche,3,0);
         pane.add(lvwMaltbatche,3,1,1,6);
         lvwMaltbatche.setPrefHeight(180);
-        lvwMaltbatche.getItems().setAll(Controller.getAlleMaltbatche());
+        lvwMaltbatche.getItems().setAll(controller.getAlleMaltbatche());
 
         if(this.destillat != null) {
             hentDestillatData();
@@ -114,17 +116,17 @@ public class DestillatDialog extends Stage {
         Maltbatch maltbatch = null;
 
         if(txfSpiritBatchNr.getText().isEmpty()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive et Spirit Batch Nr.");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive et Spirit Batch Nr.");
         } else if(txfMængde.getText().isEmpty() || txfMængde.getText().equals("0")) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en mængde");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en mængde");
         } else if(txfAlkoholProcent.getText().isEmpty()|| txfAlkoholProcent.getText().equals("0")|| txfAlkoholProcent.getText().equals("0.0")) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en alkoholprocent");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en alkoholprocent");
         } else if(comboBoxMedarbejdere.getSelectionModel().isEmpty()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en medarbejder");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en medarbejder");
         } else if(destilleringsdato == null) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en dato");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en dato");
         } else if(lvwMaltbatche.getSelectionModel().isEmpty()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge et maltbatch");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge et maltbatch");
         } else {
             if(!txfRygemateriale.getText().isEmpty()) {
                 rygemateriale = txfRygemateriale.getText().trim();
@@ -139,9 +141,9 @@ public class DestillatDialog extends Stage {
             medarbejder = comboBoxMedarbejdere.getSelectionModel().getSelectedItem().trim();
             maltbatch = lvwMaltbatche.getSelectionModel().getSelectedItem();
             if (destillat != null) {
-                Controller.opdaterDestillat(destillat, spiritBatchNr, mængdeL, alkoholprocent, medarbejder, rygemateriale, kommentar, destilleringsdato, maltbatch);
+                controller.opdaterDestillat(destillat, spiritBatchNr, mængdeL, alkoholprocent, medarbejder, rygemateriale, kommentar, destilleringsdato, maltbatch);
             } else {
-                Controller.opretDestillat(spiritBatchNr, mængdeL, alkoholprocent, medarbejder, rygemateriale, kommentar, destilleringsdato, maltbatch);
+                controller.opretDestillat(spiritBatchNr, mængdeL, alkoholprocent, medarbejder, rygemateriale, kommentar, destilleringsdato, maltbatch);
             }
             this.close();
         }

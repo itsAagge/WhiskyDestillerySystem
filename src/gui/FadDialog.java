@@ -23,8 +23,10 @@ public class FadDialog extends Stage {
     private TextField txfStørrelse = new TextField();
     private TextField txfTræType = new TextField();
     private Fad fad;
+    private Controller controller;
 
     public FadDialog(Fad fad) {
+        controller = Controller.getController();
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
@@ -91,13 +93,13 @@ public class FadDialog extends Stage {
         String træType = null;
 
         if(txfLand.getText().isEmpty()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive et land");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive et land");
         } else if(txfFirma.getText().isEmpty()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive et leverandør");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive et leverandør");
         } else if(txfStørrelse.getText().isEmpty() || txfStørrelse.getText().equals("0")) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive antal liter, der er plads til i fadet");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive antal liter, der er plads til i fadet");
         } else if (txfTræType.getText().isEmpty()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en type af træ");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en type af træ");
         } else {
             if (!txfTidligereIndhold.getText().isEmpty()) {
                 tidligereIndhold = txfTidligereIndhold.getText().trim();
@@ -108,9 +110,9 @@ public class FadDialog extends Stage {
             størrelseL = Integer.parseInt(txfStørrelse.getText());
             træType = txfTræType.getText().trim();
             if (this.fad != null) {
-                Controller.opdaterFad(fad, fraLand, tidligereIndhold, størrelseL, træType, tidligereIndholdAlder, leverandør);
+                controller.opdaterFad(fad, fraLand, tidligereIndhold, størrelseL, træType, tidligereIndholdAlder, leverandør);
             } else {
-                Controller.opretFad(fraLand, tidligereIndhold, størrelseL, træType, tidligereIndholdAlder, leverandør);
+                controller.opretFad(fraLand, tidligereIndhold, størrelseL, træType, tidligereIndholdAlder, leverandør);
             }
             this.close();
         }

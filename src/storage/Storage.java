@@ -6,102 +6,111 @@ import java.util.ArrayList;
 
 public class Storage {
 
-    private static ArrayList<Destillat> destillater = new ArrayList<>();
-    private static ArrayList<Fad> fade = new ArrayList<>();
-    private static ArrayList<Korn> kornList = new ArrayList<>();
-    private static ArrayList<Maltbatch> maltbatches = new ArrayList<>();
-    private static ArrayList<Udgivelse> udgivelser = new ArrayList<>();
-    private static ArrayList<Lager> lagre = new ArrayList<>();
+    private ArrayList<Destillat> destillater = new ArrayList<>();
+    private ArrayList<Fad> fade = new ArrayList<>();
+    private ArrayList<Korn> kornList = new ArrayList<>();
+    private ArrayList<Maltbatch> maltbatches = new ArrayList<>();
+    private ArrayList<Udgivelse> udgivelser = new ArrayList<>();
+    private ArrayList<Lager> lagre = new ArrayList<>();
+
+    public Storage() {
+        destillater = new ArrayList<>();
+        fade = new ArrayList<>();
+        kornList = new ArrayList<>();
+        maltbatches = new ArrayList<>();
+        udgivelser = new ArrayList<>();
+        lagre = new ArrayList<>();
+    }
 
 
     //Getters til listerne
-    public static ArrayList<Destillat> getDestillater() {
+    public ArrayList<Destillat> getDestillater() {
         return new ArrayList<>(destillater);
     }
 
-    public static ArrayList<Fad> getFade() {
+    public ArrayList<Fad> getFade() {
         return new ArrayList<>(fade);
     }
 
-    public static ArrayList<Korn> getKornList() {
+    public ArrayList<Korn> getKornList() {
         return new ArrayList<>(kornList);
     }
 
-    public static ArrayList<Maltbatch> getMaltbatche() {
+    public ArrayList<Maltbatch> getMaltbatche() {
         return new ArrayList<>(maltbatches);
     }
 
-    public static ArrayList<Udgivelse> getUdgivelser() {
+    public ArrayList<Udgivelse> getUdgivelser() {
         return new ArrayList<>(udgivelser);
     }
 
-    public static ArrayList<Lager> getLagre() {
+    public ArrayList<Lager> getLagre() {
         return new ArrayList<>(lagre);
     }
 
     //Tilføj til listerne
-    public static void tilføjDestillat(Destillat destillat) {
+    public void tilføjDestillat(Destillat destillat) {
         if (!destillater.contains(destillat)) {
             destillater.add(destillat);
         }
     }
 
-    public static void  tilføjFad (Fad fad) {
+    public void  tilføjFad (Fad fad) {
         if (!fade.contains(fad)) {
             fade.add(fad);
         }
     }
 
-    public static void  tilføjKorn (Korn korn) {
+    public void  tilføjKorn (Korn korn) {
         if (!kornList.contains(korn)) {
             kornList.add(korn);
         }
     }
 
-    public static void  tilføjMaltBatch (Maltbatch maltbatch) {
+    public void  tilføjMaltBatch (Maltbatch maltbatch) {
         if (!maltbatches.contains(maltbatch)) {
             maltbatches.add(maltbatch);
         }
     }
 
-    public static void tilføjUdgivelse (Udgivelse udgivelse) {
+    public void tilføjUdgivelse (Udgivelse udgivelse) {
         if(!udgivelser.contains(udgivelse)) {
             udgivelser.add(udgivelse);
         }
     }
 
-    public static void tilføjLager(Lager lager) {
+    public void tilføjLager(Lager lager) {
         if(!lagre.contains(lager)) {
             lagre.add(lager);
         }
     }
 
     //Fjern fra listerne (hvis relevant)
-    public static void fjernDestilat(Destillat destillat) {
+    public void fjernDestilat(Destillat destillat) {
         if (destillater.contains(destillat)) {
             destillater.remove(destillat);
         }
     }
 
-    public static void fjernFad(Fad fad) {
+    public void fjernFad(Fad fad) {
         if (fade.contains(fad)) {
             fade.remove(fad);
         }
     }
 
-    public static void fjernKorn(Korn korn) {
+    public void fjernKorn(Korn korn) {
         if (kornList.contains(korn)) {
             kornList.remove(korn);
         }
     }
 
-    public static void fjernMaltbatch(Maltbatch maltbatch) {
+    public void fjernMaltbatch(Maltbatch maltbatch) {
         if (maltbatches.contains(maltbatch)) {
             maltbatches.remove(maltbatch);
         }
     }
 
-    public static void fjernLager(Lager lager) {
+    public void fjernLager(Lager lager) {
         if(lagre.contains(lager)) {
             lagre.add(lager);
         }

@@ -17,14 +17,12 @@ import javafx.stage.StageStyle;
 
 public class FlytPåfyldningDialog extends Stage {
 
-    Påfyldning påfyldning;
-
-    ListView<Fad> lvwFade = new ListView<>();
-
-
-
+    private Påfyldning påfyldning;
+    private ListView<Fad> lvwFade = new ListView<>();
+    private Controller controller;
 
     public FlytPåfyldningDialog(Påfyldning påfyldning) {
+        controller = Controller.getController();
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
@@ -47,7 +45,7 @@ public class FlytPåfyldningDialog extends Stage {
         pane.add(lblLedigeFade,0,0);
         pane.add(lvwFade,0,1);
         lvwFade.setPrefWidth(250);
-        lvwFade.getItems().setAll(Controller.getLedigeFad());
+        lvwFade.getItems().setAll(controller.getLedigeFad());
 
         Button btnGem = new Button("Gem");
         pane.add(btnGem,0,2);

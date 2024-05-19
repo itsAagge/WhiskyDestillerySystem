@@ -19,8 +19,10 @@ public class DestillatPane extends GridPane {
     private Button btnRedigerDestillat = new Button("Rediger");
     private Button btnSletDestillat = new Button("Slet");
     private Button btnPrintDestillat = new Button("Print beskrivelse");
+    private Controller controller;
 
     public DestillatPane() {
+        controller = Controller.getController();
         this.setPadding(new Insets(20));
         this.setHgap(20);
         this.setVgap(10);
@@ -29,7 +31,7 @@ public class DestillatPane extends GridPane {
         Label lblAlleDestillater = new Label("Alle destillater");
         this.add(lblAlleDestillater,0,0);
         this.add(lvwDestillater,0,1);
-        lvwDestillater.getItems().setAll(Controller.getAlleDestillater());
+        lvwDestillater.getItems().setAll(controller.getAlleDestillater());
         ChangeListener<Destillat> destillatChangeListener = (observableValue, oldValue, newValue) -> this.changeDestillat();
         lvwDestillater.getSelectionModel().selectedItemProperty().addListener(destillatChangeListener);
         lvwDestillater.setPrefWidth(200);
@@ -61,9 +63,9 @@ public class DestillatPane extends GridPane {
         Destillat destillat = lvwDestillater.getSelectionModel().getSelectedItem();
 
         if(!destillat.getPåfyldninger().isEmpty()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et destillat, der er hældt på fade");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et destillat, der er hældt på fade");
         } else {
-            Controller.fjernDestillat(destillat);
+            controller.fjernDestillat(destillat);
         }
     }
 
@@ -71,22 +73,22 @@ public class DestillatPane extends GridPane {
         Destillat destillat = lvwDestillater.getSelectionModel().getSelectedItem();
         DestillatDialog destillatDialog = new DestillatDialog(destillat);
         destillatDialog.showAndWait();
-        lvwDestillater.getItems().setAll(Controller.getAlleDestillater());
+        lvwDestillater.getItems().setAll(controller.getAlleDestillater());
         setKnapperAktive(false);
     }
 
     private void opretDestillatAction() {
         DestillatDialog destillatDialog = new DestillatDialog(null);
         destillatDialog.showAndWait();
-        lvwDestillater.getItems().setAll(Controller.getAlleDestillater());
+        lvwDestillater.getItems().setAll(controller.getAlleDestillater());
     }
 
     private void printDestillatAction() {
         Destillat destillat = lvwDestillater.getSelectionModel().getSelectedItem();
         if(!IndstillingPane.erOutputStrategiValgt()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
         } else {
-            Controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), destillat);
+            controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), destillat);
         }
     }
 

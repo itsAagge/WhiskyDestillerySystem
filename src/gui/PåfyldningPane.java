@@ -16,8 +16,10 @@ public class PåfyldningPane extends GridPane {
     private Button btnOpretPåfyldning = new Button("Opret");
     private Button btnFlytPåfyldning = new Button("Flyt");
     private Button btnPrintPåfyldning = new Button("Print beskrivelse");
+    private Controller controller;
 
     public PåfyldningPane() {
+        controller = Controller.getController();
         this.setPadding(new Insets(20));
         this.setHgap(20);
         this.setVgap(10);
@@ -27,7 +29,7 @@ public class PåfyldningPane extends GridPane {
         Label lblAllePåfyldninger = new Label("Alle påfyldninger");
         this.add(lblAllePåfyldninger, 0, 0);
         this.add(lvwPåfyldninger, 0, 1);
-        lvwPåfyldninger.getItems().setAll(Controller.getPåfyldninger());
+        lvwPåfyldninger.getItems().setAll(controller.getPåfyldninger());
 
 
         //Label og textarea til påfyldninges beskrivelse
@@ -69,22 +71,22 @@ public class PåfyldningPane extends GridPane {
         FlytPåfyldningDialog flytPåfyldningDialog = new FlytPåfyldningDialog(påfyldning);
         flytPåfyldningDialog.showAndWait();
         txaPåfyldningsBeskrivelse.clear();
-        lvwPåfyldninger.getItems().setAll(Controller.getPåfyldninger());
+        lvwPåfyldninger.getItems().setAll(controller.getPåfyldninger());
         setKnapperAktive(false);
     }
 
     private void opretPåfyldningAction() {
         PåfyldningsDialog påfyldningsDialog = new PåfyldningsDialog();
         påfyldningsDialog.showAndWait();
-        lvwPåfyldninger.getItems().setAll(Controller.getPåfyldninger());
+        lvwPåfyldninger.getItems().setAll(controller.getPåfyldninger());
     }
 
     private void printPåfyldningAction() {
         Påfyldning påfyldning = lvwPåfyldninger.getSelectionModel().getSelectedItem();
         if(!IndstillingPane.erOutputStrategiValgt()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
         } else {
-            Controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), påfyldning);
+            controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), påfyldning);
         }
     }
 

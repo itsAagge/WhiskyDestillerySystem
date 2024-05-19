@@ -19,8 +19,10 @@ public class FadPane extends GridPane {
     private Button btnDeaktiverFad = new Button("Deaktiver");
     private Button btnSletFad = new Button("Slet");
     private Button btnPrintFad = new Button("Print beskrivelse");
+    private Controller controller;
 
     public FadPane() {
+        controller = Controller.getController();
         this.setPadding(new Insets(20));
         this.setHgap(20);
         this.setVgap(10);
@@ -29,7 +31,7 @@ public class FadPane extends GridPane {
         Label lblAlleFade = new Label("Alle fade");
         this.add(lblAlleFade, 0, 0);
         this.add(lvwFade, 0,1,3,3);
-        lvwFade.getItems().setAll(Controller.getAlleFade());
+        lvwFade.getItems().setAll(controller.getAlleFade());
         ChangeListener<Fad> fadChangeListener = (observableValue, oldValue, newValue) -> {
             if(newValue == null) {
                 txtAreaBeskrivelse.clear();
@@ -91,7 +93,7 @@ public class FadPane extends GridPane {
     private void opretFadAction() {
         FadDialog fadDialog = new FadDialog(null);
         fadDialog.showAndWait();
-        lvwFade.getItems().setAll(Controller.getAlleFade());
+        lvwFade.getItems().setAll(controller.getAlleFade());
         setKnapperAktive(false);
     }
 
@@ -99,35 +101,35 @@ public class FadPane extends GridPane {
         Fad fad = lvwFade.getSelectionModel().getSelectedItem();
         FadDialog fadDialog = new FadDialog(fad);
         fadDialog.showAndWait();
-        lvwFade.getItems().setAll(Controller.getAlleFade());
+        lvwFade.getItems().setAll(controller.getAlleFade());
         setKnapperAktive(false);
     }
 
     private void deaktiverFadAction() {
         lvwFade.getSelectionModel().getSelectedItem().setAktiv(false);
-        lvwFade.getItems().setAll(Controller.getAlleFade());
+        lvwFade.getItems().setAll(controller.getAlleFade());
         setKnapperAktive(false);
     }
 
     private void sletFadAction() {
         Fad fad = lvwFade.getSelectionModel().getSelectedItem();
         if(fad.erFyldt()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et fad med indhold.");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et fad med indhold.");
         } else if(!fad.getPåfyldninger().isEmpty()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et fad, der har været indhold i tidligere. Disse fade skal deaktiveres");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et fad, der har været indhold i tidligere. Disse fade skal deaktiveres");
         } else {
-            Controller.fjernFad(fad);
+            controller.fjernFad(fad);
         }
-        lvwFade.getItems().setAll(Controller.getAlleFade());
+        lvwFade.getItems().setAll(controller.getAlleFade());
         setKnapperAktive(false);
     }
 
     private void printFadAction() {
         Fad fad = lvwFade.getSelectionModel().getSelectedItem();
         if(!IndstillingPane.erOutputStrategiValgt()) {
-            Controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
         } else {
-            Controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), fad);
+            controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), fad);
         }
     }
 
