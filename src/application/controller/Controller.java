@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Controller {
-
     private Storage storage;
     private static Controller controller;
 
