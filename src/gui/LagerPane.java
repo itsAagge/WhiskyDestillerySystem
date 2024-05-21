@@ -66,24 +66,24 @@ public class LagerPane extends GridPane {
         btnFlytFad.setOnAction(actionEvent -> this.flytFadAction());
 
         this.add(btnTilføjReol, 1, 2);
-        btnTilføjReol.setOnAction(actionEvent -> this.tilføjAction());
+        btnTilføjReol.setOnAction(actionEvent -> this.tilføjReolAction());
         setKnapperAktive(false);
 
 
     }
 
-    private void flytFadAction() {
-        List<Fad> fade = lvwFad.getSelectionModel().getSelectedItems();
+    List<Fad> fade = lvwFad.getSelectionModel().getSelectedItems();
 
+    private void flytFadAction() {
         if (fade != null) {
             FlytFadPåLagerDialog flytFadPåLagerDialog = new FlytFadPåLagerDialog(fade);
             flytFadPåLagerDialog.showAndWait();
-        }
-        else {
+            lvwHylde.getSelectionModel().clearSelection();
+            lvwFad.getItems().clear();
+        } else {
             FlytFadPåLagerDialog flytFadPåLagerDialog = new FlytFadPåLagerDialog(null);
             flytFadPåLagerDialog.showAndWait();
         }
-
     }
 
     private void changeFad() {
@@ -93,7 +93,7 @@ public class LagerPane extends GridPane {
         }
     }
 
-    private void tilføjAction() {
+    private void tilføjReolAction() {
         Lager lager = lvwLager.getSelectionModel().getSelectedItem();
         if (lager != null) {
             ReolDialog reolDialog = new ReolDialog(lager);

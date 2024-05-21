@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Controller {
-
     private Storage storage;
     private static Controller controller;
 
@@ -89,10 +88,14 @@ public class Controller {
     }
 
     public Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad, ArrayList<Destillat> destillater, ArrayList<Double> mængder) {
-        Påfyldning påfyldning = new Påfyldning(påfyldningsDato, færdigDato, førsteFad);
-        påfyldning.tilføjDestillatMedMængde(destillater, mængder);
-        førsteFad.addPåfyldning(påfyldning);
-        return påfyldning;
+        if (destillater.size() == mængder.size()) {
+            throw new IllegalArgumentException("antal af Mængder og destillater er ikke det samme");
+        } else {
+            Påfyldning påfyldning = new Påfyldning(påfyldningsDato, færdigDato, førsteFad);
+            påfyldning.tilføjDestillatMedMængde(destillater, mængder);
+            førsteFad.addPåfyldning(påfyldning);
+            return påfyldning;
+        }
     }
 
     public List<Påfyldning> opretPåfyldninger(List<Fad> fade, LocalDate påfyldningsDato, LocalDate færdigDato, ArrayList<Destillat> destillater, ArrayList<Double> mængder) {

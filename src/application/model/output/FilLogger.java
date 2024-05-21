@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.PrintWriter;
 
 public class FilLogger implements Logger {
-
     private Controller controller = Controller.getController();
 
     public FilLogger() {

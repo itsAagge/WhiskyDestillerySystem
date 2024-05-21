@@ -13,8 +13,6 @@ class ControllerTest {
 
     private Controller controller = Controller.getTestController();
 
-
-
     @Test
     void opretPåfyldninger() {
     }
