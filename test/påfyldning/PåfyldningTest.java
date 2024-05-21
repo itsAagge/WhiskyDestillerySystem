@@ -114,7 +114,7 @@ class PåfyldningTest {
         assertEquals(destillater.size(), mængder.size());
         assertTrue(påfyldning.getDestillatMængder().containsValue(-100.0));
         Throwable excepction = assertThrows(IllegalArgumentException.class,() -> påfyldning.tilføjDestillatMedMængde(destillater, mængder));
-        assertEquals("En mængde kan ikke være negativ", excepction.getMessage());
+        assertEquals("Mængder må ikke være under 0", excepction.getMessage());
 
     }
 

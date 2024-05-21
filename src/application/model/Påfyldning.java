@@ -72,8 +72,13 @@ public class Påfyldning implements Logable {
     //Tilføjer destillater med en bestemt mængde til påfyldningen
     public void tilføjDestillatMedMængde(ArrayList<Destillat> destillater, ArrayList<Double> mængder) {
         for (int i = 0; i < destillater.size(); i++) {
-            destillatMængder.put(destillater.get(i), mængder.get(i));
-            destillater.get(i).addPåfyldning(this);
+            if (mængder.get(i) < 0) {
+                throw new IllegalArgumentException("Mængder må ikke være under 0");
+            }
+            else {
+                destillatMængder.put(destillater.get(i), mængder.get(i));
+                destillater.get(i).addPåfyldning(this);
+            }
         }
     }
 
