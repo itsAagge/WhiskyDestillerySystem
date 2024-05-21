@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Controller {
+
     private Storage storage;
     private static Controller controller;
 
@@ -88,14 +89,10 @@ public class Controller {
     }
 
     public Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad, ArrayList<Destillat> destillater, ArrayList<Double> mængder) {
-        if (destillater.size() == mængder.size()) {
-            throw new IllegalArgumentException("antal af Mængder og destillater er ikke det samme");
-        } else {
-            Påfyldning påfyldning = new Påfyldning(påfyldningsDato, færdigDato, førsteFad);
-            påfyldning.tilføjDestillatMedMængde(destillater, mængder);
-            førsteFad.addPåfyldning(påfyldning);
-            return påfyldning;
-        }
+        Påfyldning påfyldning = new Påfyldning(påfyldningsDato, færdigDato, førsteFad);
+        påfyldning.tilføjDestillatMedMængde(destillater, mængder);
+        førsteFad.addPåfyldning(påfyldning);
+        return påfyldning;
     }
 
     public List<Påfyldning> opretPåfyldninger(List<Fad> fade, LocalDate påfyldningsDato, LocalDate færdigDato, ArrayList<Destillat> destillater, ArrayList<Double> mængder) {
@@ -124,6 +121,7 @@ public class Controller {
         //Kaster fejlmeldinger, hvis noget er galt, og opretter påfyldningerne, hvis intet er galt
         if(mængdeIAlt > fadPladsTotalt) throw new IllegalArgumentException("Der er ikke nok plads i fadene til denne mængde destillater");
         else if(!derErNokDestillatTilbage) throw new IllegalArgumentException("Der er ikke nok destillat tilbage");
+        else if (mængder.size() != destillater.size()) throw new IllegalArgumentException("Antal mængder og destillater er ikke det samme");
         else if(!alleFadeErAktive) throw new IllegalArgumentException("Et eller flere valgte fade er deaktiveret, og kan derfor ikke bruges");
         else if(!alleFadeErTomme) throw new IllegalArgumentException("Et eller flere fade er allerede fyldte");
         else {
@@ -150,6 +148,7 @@ public class Controller {
             }
         }
         if(!derErNokPåfyldningTilbage) throw new IllegalArgumentException("Der er ikke nok påfyldning tilbage til dette");
+        else if (mængder.size() != påfyldninger.size()) throw new IllegalArgumentException("Antal mængder og påfyldninger er ikke det samme");
         else {
             Udgivelse udgivelse = new Udgivelse(unitStørrelse, prisPerUnit, erFad, udgivelsesDato, alkoholProcent, vandMængdeL, medarbejder, påfyldninger, mængder);
             storage.tilføjUdgivelse(udgivelse);
