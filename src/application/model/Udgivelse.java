@@ -57,8 +57,13 @@ public class Udgivelse implements Logable {
     //Tilføjer påfyldninger med en bestemt mængde til udgivelsen
     public void tilføjPåfyldningmedMængde(List<Påfyldning> påfyldninger, List<Double> mængder) {
         for (int i = 0; i < påfyldninger.size(); i++) {
-            this.påfyldningsMængder.put(påfyldninger.get(i), mængder.get(i));
-            påfyldninger.get(i).tilføjUdgivelse(this);
+            if (mængder.get(i) < 0) {
+                throw new IllegalArgumentException("Mængder må ikke være under 0");
+            }
+            else {
+                this.påfyldningsMængder.put(påfyldninger.get(i), mængder.get(i));
+                påfyldninger.get(i).tilføjUdgivelse(this);
+            }
         }
     }
 
