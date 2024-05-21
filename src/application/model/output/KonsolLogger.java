@@ -9,6 +9,5 @@ public class KonsolLogger implements Logger {
     @Override
     public void log(Logable object) {
         System.out.println(object.getBeskrivelse());
-        controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse printet succesfuldt i konsollen");
     }
 }

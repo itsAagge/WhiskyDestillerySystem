@@ -1,14 +1,16 @@
-package controller;
+package application.controller;
 
-import application.controller.Controller;
 import application.model.*;
+import application.model.output.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -65,7 +67,6 @@ class ControllerTest {
         int expected2 = 2;
         int actual2 = påfyldninger.size();
         assertEquals(expected2, actual2);
-
     }
 
 
@@ -77,7 +78,6 @@ class ControllerTest {
 
         Throwable excepction = assertThrows(IllegalArgumentException.class,() -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, destillatMængder));
         assertEquals("Antal mængder og destillater er ikke det samme", excepction.getMessage());
-
     }
 
     @Test
@@ -87,8 +87,6 @@ class ControllerTest {
 
         Throwable excepction = assertThrows(IllegalArgumentException.class,() -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, destillatMængder));
         assertEquals("Et eller flere fade er allerede fyldte", excepction.getMessage());
-
-
     }
 
     @Test
@@ -98,7 +96,6 @@ class ControllerTest {
 
         Throwable excepction = assertThrows(IllegalArgumentException.class,() -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, destillatMængder));
         assertEquals("Et eller flere valgte fade er deaktiveret, og kan derfor ikke bruges", excepction.getMessage());
-
     }
 
     @Test
@@ -109,7 +106,6 @@ class ControllerTest {
 
         Throwable excepction = assertThrows(IllegalArgumentException.class,() -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, destillatMængder));
         assertEquals("Der er ikke nok plads i fadene til denne mængde destillater", excepction.getMessage());
-
     }
 
     @Test
@@ -120,7 +116,6 @@ class ControllerTest {
 
         Throwable excepction = assertThrows(IllegalArgumentException.class,() -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, destillatMængder));
         assertEquals("Der er ikke nok destillat tilbage", excepction.getMessage());
-
     }
 
     @Test
@@ -132,10 +127,59 @@ class ControllerTest {
         assertEquals("Der er ikke tilføjet en mængde og et destillat", excepction.getMessage());
     }
 
+    //TODO: Spørg Benn ind til throws i test
+    @Test
+    @DisplayName("Log Fad til fil")
+    void udtrækBeskrivelse() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Fad fad = new Fad("Spanien", "Sherry", 250, "Eg", 8, "Fadfirma");
+        Logger logger = controller.getLoggerStrategy("Fil");
+        String expected = fad.getBeskrivelse();
 
+        controller.udtrækBeskrivelse(logger, fad);
+
+        File file = new File("resources/beskrivelser/");
+        String[] directory = file.list();
+        assertNotNull(directory);
+
+        boolean fileInDirectory = false;
+        int i = 0;
+        while (!fileInDirectory && i < directory.length) {
+            String s = directory[i];
+            if (s.equals(fad.getFileName() + ".txt")) {
+                fileInDirectory = true;
+            } else i++;
+        }
+        assertTrue(fileInDirectory);
+
+        String actual = "";
+        File file1 = new File("resources/beskrivelser/" + fad.getFileName() + ".txt");
+        try (Scanner scanner = new Scanner(file1)) {
+            while (scanner.hasNextLine()) {
+                actual += scanner.nextLine();
+            }
+        } catch (Exception ignored) {}
+        assertEquals(expected, actual);
+    }
 
     @Test
-    void udtrækBeskrivelse() {
+    @DisplayName("Udtræk beskrivelse exception på Logger")
+    void udtrækBeskrivelse1() {
+        Fad fad = new Fad("Spanien", "Sherry", 250, "Eg", 8, "Fadfirma");
+        Logger logger = null;
+
+        Throwable exception = assertThrows(IllegalArgumentException.class,() -> controller.udtrækBeskrivelse(logger, fad));
+        assertEquals("En type logger er ikke valgt", exception.getMessage());
+    }
+
+    //TODO: Spørg Benn ind til throws i test
+    @Test
+    @DisplayName("Udtræk beskrivelse exception på Loggable object")
+    void udtrækBeskrivelse2() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Fad fad = null;
+        Logger logger = controller.getLoggerStrategy("Fil");;
+
+        Throwable exception = assertThrows(IllegalArgumentException.class,() -> controller.udtrækBeskrivelse(logger, fad));
+        assertEquals("Et objekt er ikke valgt", exception.getMessage());
     }
 
     @Test
@@ -219,6 +263,4 @@ class ControllerTest {
         Throwable exception = assertThrows(IllegalArgumentException.class,() -> controller.opretUdgivelse(0.7, 1000,false, LocalDate.of(2024,12,31), 80,100,"Snævar", påfyldninger, mængder));
         assertEquals("Der er ikke tilføjet en mængde og en påfyldning", exception.getMessage());
     }
-
-
 }

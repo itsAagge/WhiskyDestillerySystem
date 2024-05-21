@@ -6,18 +6,18 @@ import java.util.ArrayList;
 
 public class Storage {
 
-    private ArrayList<Destillat> destillater = new ArrayList<>();
-    private ArrayList<Fad> fade = new ArrayList<>();
-    private ArrayList<Korn> kornList = new ArrayList<>();
-    private ArrayList<Maltbatch> maltbatches = new ArrayList<>();
-    private ArrayList<Udgivelse> udgivelser = new ArrayList<>();
-    private ArrayList<Lager> lagre = new ArrayList<>();
+    private final ArrayList<Destillat> destillater;
+    private final ArrayList<Fad> fade;
+    private final ArrayList<Korn> kornList;
+    private final ArrayList<Maltbatch> maltbatche;
+    private final ArrayList<Udgivelse> udgivelser;
+    private final ArrayList<Lager> lagre;
 
     public Storage() {
         destillater = new ArrayList<>();
         fade = new ArrayList<>();
         kornList = new ArrayList<>();
-        maltbatches = new ArrayList<>();
+        maltbatche = new ArrayList<>();
         udgivelser = new ArrayList<>();
         lagre = new ArrayList<>();
     }
@@ -37,7 +37,7 @@ public class Storage {
     }
 
     public ArrayList<Maltbatch> getMaltbatche() {
-        return new ArrayList<>(maltbatches);
+        return new ArrayList<>(maltbatche);
     }
 
     public ArrayList<Udgivelse> getUdgivelser() {
@@ -68,8 +68,8 @@ public class Storage {
     }
 
     public void  tilføjMaltBatch (Maltbatch maltbatch) {
-        if (!maltbatches.contains(maltbatch)) {
-            maltbatches.add(maltbatch);
+        if (!maltbatche.contains(maltbatch)) {
+            maltbatche.add(maltbatch);
         }
     }
 
@@ -105,8 +105,8 @@ public class Storage {
     }
 
     public void fjernMaltbatch(Maltbatch maltbatch) {
-        if (maltbatches.contains(maltbatch)) {
-            maltbatches.remove(maltbatch);
+        if (maltbatche.contains(maltbatch)) {
+            maltbatche.remove(maltbatch);
         }
     }
 

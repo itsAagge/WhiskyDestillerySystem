@@ -34,13 +34,6 @@ public class Destillat implements Logable {
         }
     }
 
-    //Fjerner en påfyldning fra destillatet
-    public void removePåfyldning(Påfyldning påfyldning) {
-        if (påfyldninger.contains(påfyldning)) {
-            påfyldninger.remove(påfyldning);
-        }
-    }
-
     //Getters
     public double getMængdeL() {
         return mængdeL;

@@ -55,7 +55,7 @@ public class FlytPåfyldningDialog extends Stage {
     private void gemAction() {
         Fad fad = lvwFade.getSelectionModel().getSelectedItem();
         if (fad != null) {
-            påfyldning.flytPåfyldning(fad);
+            påfyldning.flytFad(fad);
         }
         this.close();
 

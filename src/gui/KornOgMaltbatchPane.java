@@ -114,6 +114,7 @@ public class KornOgMaltbatchPane extends GridPane {
                     controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
                 } else {
                     controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), korn);
+                    controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse succesfuldt udtrukket");
                 }
             } else {
                 Maltbatch maltbatch = lvwMaltbatch.getSelectionModel().getSelectedItem();
@@ -121,6 +122,7 @@ public class KornOgMaltbatchPane extends GridPane {
                     controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
                 } else {
                     controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), maltbatch);
+                    controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse succesfuldt udtrukket");
                 }
             }
         }

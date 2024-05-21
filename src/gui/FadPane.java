@@ -130,6 +130,7 @@ public class FadPane extends GridPane {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
         } else {
             controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), fad);
+            controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse succesfuldt udtrukket");
         }
     }
 

@@ -87,10 +87,10 @@ public class Controller {
         return maltbatch;
     }
 
+    //TODO: Public/Private?
     public Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad, ArrayList<Destillat> destillater, ArrayList<Double> mængder) {
         Påfyldning påfyldning = new Påfyldning(påfyldningsDato, færdigDato, førsteFad);
         påfyldning.tilføjDestillatMedMængde(destillater, mængder);
-        førsteFad.addPåfyldning(påfyldning);
         return påfyldning;
     }
 
@@ -302,14 +302,13 @@ public class Controller {
         return ikkeUdgivedePåfyldninger;
     }
 
-    public FilLogger getFileLoggerStrategy() {
-        return new FilLogger();
-    }
-
     public void udtrækBeskrivelse(Logger logger, Logable object) {
-        logger.log(object);
+        if (logger == null) throw new IllegalArgumentException("En type logger er ikke valgt");
+        else if (object == null) throw new IllegalArgumentException("Et objekt er ikke valgt");
+        else logger.log(object);
     }
 
+    //TODO: Exception hvis 0 strategies fundet?
     public ArrayList<String> getOutputStrategies() {
         ArrayList<String> foundStrategies = new ArrayList<>();
         File file = new File("src/application/model/output/");
@@ -325,9 +324,13 @@ public class Controller {
         return foundStrategies;
     }
 
+    //TODO: Spørg Benn ift. tests
     public Logger getLoggerStrategy(String LoggerType) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-        String className = "application.model.output." + LoggerType + "Logger";
-        return (Logger) Class.forName(className).newInstance();
+        if (LoggerType == null || LoggerType.isEmpty()) throw new IllegalArgumentException("Denne type logger eksisterer ikke");
+        else {
+            String className = "application.model.output." + LoggerType + "Logger";
+            return (Logger) Class.forName(className).newInstance();
+        }
     }
 
     public void initContent() {

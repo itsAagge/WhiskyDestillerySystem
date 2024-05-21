@@ -87,6 +87,7 @@ public class PåfyldningPane extends GridPane {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
         } else {
             controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), påfyldning);
+            controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse succesfuldt udtrukket");
         }
     }
 

@@ -43,7 +43,7 @@ public class Fad implements Logable {
     public void addPåfyldning(Påfyldning påfyldning) {
         if (!påfyldninger.contains(påfyldning)) {
             påfyldninger.add(påfyldning);
-            påfyldning.addFad(this);
+            påfyldning.flytFad(this);
             this.setFyldt(true);
         }
     }

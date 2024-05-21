@@ -23,6 +23,7 @@ public class Påfyldning implements Logable {
         this.destillatMængder = new HashMap<>();
         this.fade = new ArrayList<>();
         this.fade.add(førsteFad);
+        førsteFad.addPåfyldning(this);
         this.udgivelser = new ArrayList<>();
     }
 
@@ -51,20 +52,13 @@ public class Påfyldning implements Logable {
         }
     }
 
-    public void flytPåfyldning(Fad fad) {
-        this.fade.getLast().setFyldt(false);
-        this.fade.add(fad);
-        fad.addPåfyldning(this);
-    }
-
-    //TODO: Muligvis fjernes
+    //TODO: Ret testcase
     //Tilføjer et fad til fade listen, hvilket gør det til det nye fad påfyldningen
     //ligger på og fylder det fad og gør det gamle tomt.
-    public void addFad(Fad fad) {
+    public void flytFad(Fad fad) {
         if (!fade.contains(fad)) {
             fade.getLast().setFyldt(false);
             fade.add(fad);
-            fad.setFyldt(true);
             fad.addPåfyldning(this);
         }
     }
