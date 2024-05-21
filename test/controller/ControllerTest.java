@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ControllerTest {
 
-    Controller controller = Controller.getTestController();
+    private Controller controller = Controller.getTestController();
 
 
 

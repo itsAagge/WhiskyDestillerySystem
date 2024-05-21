@@ -14,9 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PåfyldningTest {
 
-    Controller controller = Controller.getTestController();
-    Påfyldning påfyldning;
-    Fad fad;
+    private Controller controller = Controller.getTestController();
+    private Påfyldning påfyldning;
+    private Fad fad;
 
     @BeforeEach
     void setUp() {
