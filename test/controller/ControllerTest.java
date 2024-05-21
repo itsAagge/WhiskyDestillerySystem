@@ -15,19 +15,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class ControllerTest {
 
     private Controller controller = Controller.getTestController();
-
     //ArrayLister
     private ArrayList<Fad> fade = new ArrayList<>();
     private ArrayList<Destillat> destillater = new ArrayList<>();
     private ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
     private ArrayList<Double> destillatMængder = new ArrayList<>();
-
     //Standard påfyldningsDato
     private LocalDate påfyldningsDato = LocalDate.of(2024, 01, 01);
     //Fade
     private Fad fad1 = new Fad("Spanien", "Sherry", 100, "Eg", 3, "Proveedor");
     private Fad fad2 = new Fad("Frankig", "Bourbon", 50, "Eg", 5, "Fournisseur");
-
     //Oprettelse af maltbatch
     Maltbatch maltbatch = new Maltbatch(1000, LocalDate.of(2023, 12, 12), LocalDate.of(2023, 12, 20), "Gær", new Korn("Mark's mark", "Træls sort", LocalDate.of(2023, 07, 10), 10000));
 
@@ -39,23 +36,15 @@ class ControllerTest {
         fade.add(fad2);
 
         //Oprettelse af destillater
-        Destillat d1 = new Destillat("SpritBatch1", 200, 80.5, "Snævar", "Tørv", "Smager godt", LocalDate.of(2023, 12, 24), maltbatch);
-        Destillat d2 = new Destillat("SpiritBatch2", 300, 78.7, "Snævar", null, "Smager dårligt", LocalDate.of(2023, 12, 31), maltbatch);
-
-        //ArrayList til destillater og tilføjelse af d1 og d2
-        destillater.add(d1);
-        destillater.add(d2);
+        Destillat d1 = new Destillat("SpritBatch1", 200.0, 80.5, "Snævar", "Tørv", "Smager godt", LocalDate.of(2023, 12, 24), maltbatch);
+        Destillat d2 = new Destillat("SpiritBatch2", 300.0, 78.7, "Snævar", null, "Smager dårligt", LocalDate.of(2023, 12, 31), maltbatch);
 
         //Oprettelse af mængder arraylist og tilføjelse af standard mængder
         destillatMængder.add(100.0);
         destillatMængder.add(25.0);
-
-        Påfyldning påfyldning1 = controller.opretPåfyldning(LocalDate.of(2024,12,12), null, fad1, destillater, destillatMængder);
-        Påfyldning påfyldning2 = controller.opretPåfyldning(LocalDate.of(2024,12,30), null, fad2, destillater, destillatMængder);
-
-        påfyldninger.add(påfyldning1);
-        påfyldninger.add(påfyldning2);
-
+        //ArrayList til destillater og tilføjelse af d1 og d2
+        destillater.add(d1);
+        destillater.add(d2);
     }
 
     @Test
@@ -78,6 +67,8 @@ class ControllerTest {
         assertEquals(expected2, actual2);
 
     }
+
+
 
     @Test
     @DisplayName("TC2: Destillater og mængder har ikke samme længde")
@@ -133,22 +124,44 @@ class ControllerTest {
     }
 
     @Test
+    @DisplayName("TC7: destillat og mængde arrayet er tomt")
+    void opretPåfyldninger7() {
+        ArrayList<Destillat> destillater = new ArrayList<>();
+        ArrayList<Double> mængder = new ArrayList<>();
+        Throwable excepction = assertThrows(IllegalArgumentException.class,() -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, mængder));
+        assertEquals("Der er ikke tilføjet en mængde og et destillat", excepction.getMessage());
+    }
+
+
+
+    @Test
     void udtrækBeskrivelse() {
     }
 
     @Test
     @DisplayName("Opretter udgivelse af fad")
     void opretUdgivelse1() {
+        Påfyldning påfyldning1 = controller.opretPåfyldning(LocalDate.of(2024,12,12), null, fad1, destillater, destillatMængder);
+        påfyldninger.add(påfyldning1);
+
         ArrayList<Double> mængder = new ArrayList<>();
+        mængder.add(125.0);
         Udgivelse udgivelse = controller.opretUdgivelse(0, 25000,true, LocalDate.of(2024,12,30), 80,0,"Snævar", påfyldninger, mængder);
 
         assertTrue(controller.getUdgivelser().contains(udgivelse));
+
+        //TODO destillat og mængder må ikke være tomme
 
     }
 
     @Test
     @DisplayName("Opretter udgivelse af flasker")
     void opretUdgivelse2() {
+        Påfyldning påfyldning1 = controller.opretPåfyldning(LocalDate.of(2024,12,12), null, fad1, destillater, destillatMængder);
+        Påfyldning påfyldning2 = controller.opretPåfyldning(LocalDate.of(2024,12,30), null, fad2, destillater, destillatMængder);
+
+        påfyldninger.add(påfyldning1);
+        påfyldninger.add(påfyldning2);
 
         ArrayList<Double> påFyldningsMængder = new ArrayList<>();
         påFyldningsMængder.add(100.00);
@@ -167,6 +180,11 @@ class ControllerTest {
     @Test
     @DisplayName("Flere mængder end påfyldning")
     void opretUdgivelse3() {
+        Påfyldning påfyldning1 = controller.opretPåfyldning(LocalDate.of(2024,12,12), null, fad1, destillater, destillatMængder);
+        Påfyldning påfyldning2 = controller.opretPåfyldning(LocalDate.of(2024,12,30), null, fad2, destillater, destillatMængder);
+
+        påfyldninger.add(påfyldning1);
+        påfyldninger.add(påfyldning2);
 
         ArrayList<Double> påFyldningsMængder = new ArrayList<>();
         påFyldningsMængder.add(100.0);
@@ -180,11 +198,26 @@ class ControllerTest {
     @Test
     @DisplayName("Ikke nok påfyldning tilbage til udgivelse")
     void opretUdgivelse4() {
+        Påfyldning påfyldning1 = controller.opretPåfyldning(LocalDate.of(2024,12,12), null, fad1, destillater, destillatMængder);
+        Påfyldning påfyldning2 = controller.opretPåfyldning(LocalDate.of(2024,12,30), null, fad2, destillater, destillatMængder);
+
+        påfyldninger.add(påfyldning1);
+        påfyldninger.add(påfyldning2);
+
         ArrayList<Double> påFyldningsMængder = new ArrayList<>();
         påFyldningsMængder.add(1000.00);
         påFyldningsMængder.add(25.0);
         Throwable exception = assertThrows(IllegalArgumentException.class,() -> controller.opretUdgivelse(0.7, 1000,false, LocalDate.of(2024,12,31), 80,100,"Snævar", påfyldninger, påFyldningsMængder));
         assertEquals("Der er ikke nok påfyldning tilbage til dette", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Ikke nok påfyldning tilbage til udgivelse")
+    void opretUdgivelse5() {
+        ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
+        ArrayList<Double> mængder = new ArrayList<>();
+        Throwable exception = assertThrows(IllegalArgumentException.class,() -> controller.opretUdgivelse(0.7, 1000,false, LocalDate.of(2024,12,31), 80,100,"Snævar", påfyldninger, mængder));
+        assertEquals("Der er ikke tilføjet en mængde og en påfyldning", exception.getMessage());
     }
 
 

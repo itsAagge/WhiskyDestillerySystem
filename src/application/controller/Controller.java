@@ -121,6 +121,7 @@ public class Controller {
         if(mængdeIAlt > fadPladsTotalt) throw new IllegalArgumentException("Der er ikke nok plads i fadene til denne mængde destillater");
         else if(!derErNokDestillatTilbage) throw new IllegalArgumentException("Der er ikke nok destillat tilbage");
         else if (mængder.size() != destillater.size()) throw new IllegalArgumentException("Antal mængder og destillater er ikke det samme");
+        else if (mængder.isEmpty()) throw new IllegalArgumentException("Der er ikke tilføjet en mængde og et destillat");
         else if(!alleFadeErAktive) throw new IllegalArgumentException("Et eller flere valgte fade er deaktiveret, og kan derfor ikke bruges");
         else if(!alleFadeErTomme) throw new IllegalArgumentException("Et eller flere fade er allerede fyldte");
         else {
@@ -148,6 +149,7 @@ public class Controller {
         }
         if(!derErNokPåfyldningTilbage) throw new IllegalArgumentException("Der er ikke nok påfyldning tilbage til dette");
         else if (mængder.size() != påfyldninger.size()) throw new IllegalArgumentException("Antal mængder og påfyldninger er ikke det samme");
+        else if (mængder.isEmpty()) throw new IllegalArgumentException("Der er ikke tilføjet en mængde og en påfyldning");
         else {
             Udgivelse udgivelse = new Udgivelse(unitStørrelse, prisPerUnit, erFad, udgivelsesDato, alkoholProcent, vandMængdeL, medarbejder, påfyldninger, mængder);
             storage.tilføjUdgivelse(udgivelse);
