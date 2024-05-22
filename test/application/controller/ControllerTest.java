@@ -129,6 +129,18 @@ class ControllerTest {
 
     //TODO: Spørg Benn ind til throws i test
     @Test
+    @DisplayName("Logger Strategy")
+    void getLoggerStrategy() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Logger logger = controller.getLoggerStrategy("Fil");
+        String expected = "FilLogger";
+
+        String actual = logger.getClass().getSimpleName();
+
+        assertEquals(expected, actual);
+    }
+
+    //TODO: Spørg Benn ind til throws i test
+    @Test
     @DisplayName("Log Fad til fil")
     void udtrækBeskrivelse() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         Fad fad = new Fad("Spanien", "Sherry", 250, "Eg", 8, "Fadfirma");

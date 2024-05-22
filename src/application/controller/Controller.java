@@ -1,7 +1,6 @@
 package application.controller;
 
 import application.model.*;
-import application.model.output.FilLogger;
 import application.model.output.Logger;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
@@ -88,7 +87,7 @@ public class Controller {
     }
 
     //TODO: Public/Private?
-    public Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad, ArrayList<Destillat> destillater, ArrayList<Double> mængder) {
+    private Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad, ArrayList<Destillat> destillater, ArrayList<Double> mængder) {
         Påfyldning påfyldning = new Påfyldning(påfyldningsDato, færdigDato, førsteFad);
         påfyldning.tilføjDestillatMedMængde(destillater, mængder);
         return påfyldning;
@@ -124,6 +123,7 @@ public class Controller {
         else if (mængder.isEmpty()) throw new IllegalArgumentException("Der er ikke tilføjet en mængde og et destillat");
         else if(!alleFadeErAktive) throw new IllegalArgumentException("Et eller flere valgte fade er deaktiveret, og kan derfor ikke bruges");
         else if(!alleFadeErTomme) throw new IllegalArgumentException("Et eller flere fade er allerede fyldte");
+        else if(færdigDato != null && færdigDato.isBefore(påfyldningsDato.plusYears(3))) throw new IllegalArgumentException("Hvis færdigdato bruges, skal denne være mindst 3 år efter påfyldningsdatoen");
         else {
             for (Fad fad : fade) {
                 double størrelsesforhold = fad.getStørrelseL() / fadPladsTotalt; //Beregner fadets procentvise størrelse af alle fadene
@@ -250,7 +250,7 @@ public class Controller {
         storage.fjernDestilat(destillat);
     }
 
-    public void flytFad(List<Fad> fade, Hylde hylde) {
+    public void flytFadePåLageret(List<Fad> fade, Hylde hylde) {
         if (hylde != null && !hylde.erLedigPlads(fade.size())) throw new IllegalArgumentException("Der er ikke nok plads på denne hylde");
         else {
             for (Fad fad : fade) {
@@ -291,15 +291,14 @@ public class Controller {
         return påfyldninger;
     }
 
-    public ArrayList<Påfyldning> getAlleIkkeTommePåfyldninger() {
-        ArrayList<Påfyldning> allePåfyldninger = getPåfyldninger();
-        ArrayList<Påfyldning> ikkeUdgivedePåfyldninger = new ArrayList<>();
-        for (Påfyldning påfyldning : allePåfyldninger) {
-            if (påfyldning.mængdeTilbage() != 0) {
-                ikkeUdgivedePåfyldninger.add(påfyldning);
+    public List<Påfyldning> getMindst3ÅrsIkkeTommePåfyldninger(LocalDate fraDato) {
+        List<Påfyldning> fundnePåfyldninger = new ArrayList<>();
+        for (Påfyldning påfyldning : getPåfyldninger()) {
+            if(påfyldning.getPåfyldningsDato().isBefore(fraDato.minusYears(3)) && påfyldning.mængdeTilbage() != 0) {
+                fundnePåfyldninger.add(påfyldning);
             }
         }
-        return ikkeUdgivedePåfyldninger;
+        return fundnePåfyldninger;
     }
 
     public void udtrækBeskrivelse(Logger logger, Logable object) {

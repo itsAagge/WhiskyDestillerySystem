@@ -2,6 +2,7 @@ package gui;
 
 import application.controller.Controller;
 import application.model.Påfyldning;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
@@ -47,13 +48,15 @@ public class UdgivFadDialog extends Stage {
         pane.add(lblAllePåfyldning, 0, 0);
         pane.add(lvwPåfyldning, 0, 1, 1, 8);
         lvwPåfyldning.setPrefWidth(250);
-        lvwPåfyldning.getItems().setAll(controller.getAlleIkkeTommePåfyldninger());
+        lvwPåfyldning.getItems().setAll(controller.getMindst3ÅrsIkkeTommePåfyldninger(LocalDate.now()));
 
         Label lblUdgivelsesDato = new Label("Udgivelses dato");
         pane.add(lblUdgivelsesDato, 1, 0);
         pane.add(dpUdgivelsesDato, 1, 1);
         dpUdgivelsesDato.setEditable(false);
         dpUdgivelsesDato.setValue(LocalDate.now());
+        ChangeListener<LocalDate> changeListenerUdgivelsesdato = (observableValue, localDate, t1) -> this.changeDato();
+        dpUdgivelsesDato.valueProperty().addListener(changeListenerUdgivelsesdato);
 
         Label lblAlkoholprocent = new Label("Alkohol procent");
         pane.add(lblAlkoholprocent, 2, 0);
@@ -100,6 +103,14 @@ public class UdgivFadDialog extends Stage {
             }
         } catch (NumberFormatException e) {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Indtastnings fejl");
+        }
+    }
+
+    private void changeDato() {
+        LocalDate udgivelsesDato = dpUdgivelsesDato.getValue();
+
+        if (udgivelsesDato != null) {
+            lvwPåfyldning.getItems().setAll(controller.getMindst3ÅrsIkkeTommePåfyldninger(udgivelsesDato));
         }
     }
 }

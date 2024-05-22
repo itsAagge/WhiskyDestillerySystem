@@ -95,7 +95,7 @@ public class FlytFadPåLagerDialog extends Stage {
         } else if (!hylde.erLedigPlads(valgtFade.size())) {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der er ikke nok plads på hylden, vælg en anden");
         } else {
-            controller.flytFad(valgtFade, hylde);
+            controller.flytFadePåLageret(valgtFade, hylde);
             this.close();
         }
 

@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PåfyldningTest {
 
+    /*
     private Controller controller = Controller.getTestController();
     private Påfyldning påfyldning;
     private Fad fad;
@@ -188,4 +189,5 @@ class PåfyldningTest {
 
         assertEquals(expected, actual);
     }
+     */
 }

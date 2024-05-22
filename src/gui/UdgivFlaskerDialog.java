@@ -61,6 +61,8 @@ public class UdgivFlaskerDialog extends Stage {
         pane.add(dpUdgivelsesDato, 1,1);
         dpUdgivelsesDato.setEditable(false);
         dpUdgivelsesDato.setValue(LocalDate.now());
+        ChangeListener<LocalDate> changeListenerUdgivelsesdato = (observableValue, localDate, t1) -> this.changeDato();
+        dpUdgivelsesDato.valueProperty().addListener(changeListenerUdgivelsesdato);
 
         Label lblPrisPrFlaske = new Label("Pris pr flaske");
         pane.add(lblPrisPrFlaske, 0,2);
@@ -83,7 +85,7 @@ public class UdgivFlaskerDialog extends Stage {
         Label lblPåfyldninger = new Label("Alle påfyldninger");
         pane.add(lblPåfyldninger, 0,6);
         pane.add(cBPåfylninger, 0,7);
-        cBPåfylninger.getItems().setAll(controller.getAlleIkkeTommePåfyldninger());
+        cBPåfylninger.getItems().setAll(controller.getMindst3ÅrsIkkeTommePåfyldninger(LocalDate.now()));
 
         Label lblMængde = new Label("Mængde i liter");
         pane.add(lblMængde, 1,6);
@@ -179,6 +181,15 @@ public class UdgivFlaskerDialog extends Stage {
             }
         } catch (Exception e) {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "mængde er ikke registreret");
+        }
+    }
+
+    private void changeDato() {
+        LocalDate udgivelsesDato = dpUdgivelsesDato.getValue();
+
+        if (udgivelsesDato != null) {
+            cBPåfylninger.getItems().setAll(controller.getMindst3ÅrsIkkeTommePåfyldninger(udgivelsesDato));
+            cBPåfylninger.getVisibleRowCount();
         }
     }
 }

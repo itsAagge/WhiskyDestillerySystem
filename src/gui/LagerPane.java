@@ -5,11 +5,10 @@ import application.model.*;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 import java.util.List;
 
@@ -21,6 +20,7 @@ public class LagerPane extends GridPane {
     private ListView<Fad> lvwFad = new ListView<>();
     private Button btnTilføjReol = new Button("Tilføj Reol");
     private Button btnFlytFad = new Button("Placer fad");
+    private Button btnKlarWhiskey = new Button("Se færdiglagret whisky");
     private Controller controller;
 
 
@@ -61,28 +61,34 @@ public class LagerPane extends GridPane {
         this.add(btnOpret, 0, 2);
         btnOpret.setOnAction(actionEvent -> this.opretAction());
 
-        this.add(btnFlytFad, 3, 2);
-        this.setHalignment(btnFlytFad, HPos.RIGHT);
+        HBox hBoxButtons = new HBox();
+        hBoxButtons.setSpacing(20);
+        this.add(hBoxButtons, 2, 2, 2, 1);
+        hBoxButtons.alignmentProperty().set(Pos.CENTER_RIGHT);
+        hBoxButtons.getChildren().setAll(btnKlarWhiskey, btnFlytFad);
+        btnKlarWhiskey.setOnAction(event -> this.klarWhiskyAction());
         btnFlytFad.setOnAction(actionEvent -> this.flytFadAction());
 
         this.add(btnTilføjReol, 1, 2);
         btnTilføjReol.setOnAction(actionEvent -> this.tilføjReolAction());
+
         setKnapperAktive(false);
-
-
     }
 
     List<Fad> fade = lvwFad.getSelectionModel().getSelectedItems();
 
     private void flytFadAction() {
-        if (fade != null) {
-            FlytFadPåLagerDialog flytFadPåLagerDialog = new FlytFadPåLagerDialog(fade);
-            flytFadPåLagerDialog.showAndWait();
-            lvwHylde.getSelectionModel().clearSelection();
-            lvwFad.getItems().clear();
-        } else {
-            FlytFadPåLagerDialog flytFadPåLagerDialog = new FlytFadPåLagerDialog(null);
-            flytFadPåLagerDialog.showAndWait();
+        if (controller.getLagre().isEmpty() || controller.getLagre().getFirst().getReoler().isEmpty()) controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at oprette et lager eller tilføje reoler til lagret");
+        else {
+            if (fade != null) {
+                FlytFadPåLagerDialog flytFadPåLagerDialog = new FlytFadPåLagerDialog(fade);
+                flytFadPåLagerDialog.showAndWait();
+                lvwHylde.getSelectionModel().clearSelection();
+                lvwFad.getItems().clear();
+            } else {
+                FlytFadPåLagerDialog flytFadPåLagerDialog = new FlytFadPåLagerDialog(null);
+                flytFadPåLagerDialog.showAndWait();
+            }
         }
     }
 
@@ -132,11 +138,14 @@ public class LagerPane extends GridPane {
         LagerDialog lagerDialog = new LagerDialog();
         lagerDialog.showAndWait();
         lvwLager.getItems().setAll(controller.getLagre());
-
     }
 
     private void setKnapperAktive(boolean bool) {
         btnTilføjReol.setDisable(!bool);
     }
 
+    private void klarWhiskyAction() {
+        KlarWhiskeyDialog klarWhiskeyDialog = new KlarWhiskeyDialog();
+        klarWhiskeyDialog.showAndWait();
+    }
 }
