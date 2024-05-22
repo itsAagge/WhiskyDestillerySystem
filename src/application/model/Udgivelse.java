@@ -1,7 +1,6 @@
 package application.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,10 +16,12 @@ public class Udgivelse implements Logable {
     private double vandMængdeL;
     private String medarbejder;
     private HashMap<Påfyldning, Double> påfyldningsMængder;
+    private String vandetsOprindelse;
+    private double angelsShare;
 
 
     //Constructor
-    public Udgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder, List<Påfyldning> påfyldninger, List<Double> mængder) {
+    public Udgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder, String vandetsOprindelse, double angelsShare, List<Påfyldning> påfyldninger, List<Double> mængder) {
         antalUdgivelser++;
         this.udgivelsesNr = antalUdgivelser;
         this.erFad = erFad;
@@ -31,6 +32,8 @@ public class Udgivelse implements Logable {
         this.prisPerUnit = prisPerUnit;
         this.unitStørrelse = unitStørrelse;
         this.påfyldningsMængder = new HashMap<>();
+        this.vandetsOprindelse = vandetsOprindelse;
+        this.angelsShare = angelsShare;
         this.tilføjPåfyldningmedMængde(påfyldninger, mængder);
         if (!this.erFad) {
             this.antalFlasker = beregnAntalFlasker();
@@ -95,7 +98,7 @@ public class Udgivelse implements Logable {
 
     @Override
     public String getBeskrivelse() {
-        String s = "Udgivelse nr. " + this.udgivelsesNr + ", udgivet d. " + this.udgivelsesDato;
+        String s = "Udgivelse nr. " + this.udgivelsesNr + ", udgivet d. " + this.udgivelsesDato + ". Angels share på i denne udgivelse blev: " + angelsShare + "%.";
         if(erFad) {
             Fad fad = null;
             //TODO: Finde ud af, om der er en bedre metode til dette
@@ -111,7 +114,7 @@ public class Udgivelse implements Logable {
         if(this.vandMængdeL == 0) {
             s += "cask strength, og der er " + this.getTotalMængdePåfyldning() + " liter i udgivelsen.";
         } else {
-            s += "single malt, og der er brugt " + this.vandMængdeL + " liter vand til at blande de " + this.getTotalMængdePåfyldning() + " liter whisky op med.";
+            s += "single malt, og der er brugt " + this.vandMængdeL + " liter vand fra " + vandetsOprindelse + ", til at blande de " + this.getTotalMængdePåfyldning() + " liter whisky op med.";
         }
         s += "\nUdgivelsen består af følgende påfyldninger af whisky:\n\n";
         for (Påfyldning påfyldning : påfyldningsMængder.keySet()) {
@@ -135,7 +138,7 @@ public class Udgivelse implements Logable {
     //divideret med unit størrelsen
     private int beregnAntalFlasker() {
         double totalMængdePåfyldning = getTotalMængdePåfyldning();
-        return (int) ((totalMængdePåfyldning + vandMængdeL) / unitStørrelse);
+        return (int) (((totalMængdePåfyldning * (1 - angelsShare /100)) + vandMængdeL) / unitStørrelse);
     }
 
     //Returnerer et standardiseret filnavn for udgivelser

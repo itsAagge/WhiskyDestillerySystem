@@ -10,6 +10,7 @@ public class Maltbatch implements Logable {
     private LocalDate gæringSlut;
     private String gærType;
     private Korn korn;
+    private String vandetsOprindelse;
 
     //Constructor
     public Maltbatch(double mængdeL, LocalDate gæringStart, LocalDate gæringSlut, String gærType, Korn korn) {

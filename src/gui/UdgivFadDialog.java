@@ -21,6 +21,7 @@ public class UdgivFadDialog extends Stage {
     private TextField txfPrisForFadet = new TextField();
     private ComboBox<String> cbMedarbejdere = new ComboBox<>();
     private ListView<Påfyldning> lvwPåfyldning = new ListView<>();
+    private TextField txfAngelsShare = new TextField();
     private Controller controller;
 
     public UdgivFadDialog() {
@@ -63,9 +64,13 @@ public class UdgivFadDialog extends Stage {
         pane.add(lblPrisPerUnit, 1, 2);
         pane.add(txfPrisForFadet, 1, 3);
 
+        Label lblAngelsShare = new Label("Angels share i procent");
+        pane.add(lblAngelsShare,2,2);
+        pane.add(txfAngelsShare, 2,3);
+
         Label lblMedarbejder = new Label("Medarbejder");
-        pane.add(lblMedarbejder, 2, 2);
-        pane.add(cbMedarbejdere, 2, 3);
+        pane.add(lblMedarbejder, 1, 4);
+        pane.add(cbMedarbejdere, 1, 5);
         cbMedarbejdere.getItems().setAll(controller.getMedarbejdere());
         if (IndstillingPane.erMedarbejderValgt()) cbMedarbejdere.getSelectionModel().select(IndstillingPane.getValgtMedarbejder());
 
@@ -84,6 +89,7 @@ public class UdgivFadDialog extends Stage {
             double alkoholProcent = Double.parseDouble(txfAlkoholProcent.getText().trim());
             double prisPrUnit = Double.parseDouble(txfPrisForFadet.getText().trim());
             String medarbejder = cbMedarbejdere.getSelectionModel().getSelectedItem();
+            double angelsShare = Double.parseDouble(txfAngelsShare.getText().trim());
 
             if (påfyldninger.isEmpty()) {
                 controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen påfyldninger valgt");
@@ -93,9 +99,11 @@ public class UdgivFadDialog extends Stage {
                 controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Alkohol procent skal være over 0");
             } else if (prisPrUnit <= 0) {
                 controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Pris pr unit skal være over 0");
+            } else if (angelsShare < 0) {
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Angels share skal registreres");
             } else {
                 List<Double> mængder = new ArrayList<>(List.of(påfyldninger.getFirst().mængdeTilbage()));
-                controller.opretUdgivelse(unitStørrelse, prisPrUnit, true, udgivelsesDato, alkoholProcent, vandMængde, medarbejder, påfyldninger, mængder);
+                controller.opretUdgivelse(unitStørrelse, prisPrUnit, true, udgivelsesDato, alkoholProcent, vandMængde, medarbejder, null, angelsShare, påfyldninger, mængder);
                 this.close();
             }
         } catch (NumberFormatException e) {

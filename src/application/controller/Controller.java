@@ -87,7 +87,7 @@ public class Controller {
         return maltbatch;
     }
 
-    public Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad, ArrayList<Destillat> destillater, ArrayList<Double> mængder) {
+    private Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad, ArrayList<Destillat> destillater, ArrayList<Double> mængder) {
         Påfyldning påfyldning = new Påfyldning(påfyldningsDato, færdigDato, førsteFad);
         påfyldning.tilføjDestillatMedMængde(destillater, mængder);
         førsteFad.addPåfyldning(påfyldning);
@@ -139,7 +139,7 @@ public class Controller {
         return oprettedePåfyldninger;
     }
 
-    public Udgivelse opretUdgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder, List<Påfyldning> påfyldninger, List<Double> mængder) {
+    public Udgivelse opretUdgivelse(double unitStørrelse, double prisPerUnit, boolean erFad, LocalDate udgivelsesDato, double alkoholProcent, double vandMængdeL, String medarbejder, String vandetsOprindelse, double angelShare, List<Påfyldning> påfyldninger, List<Double> mængder) {
         //Beregner den totale mængde af påfyldninger og tjekker, om der er nok tilbage af påfyldningerne til at oprette denne udgivelse
         boolean derErNokPåfyldningTilbage = true;
         for (int i = 0; i < påfyldninger.size(); i++) {
@@ -151,7 +151,7 @@ public class Controller {
         else if (mængder.size() != påfyldninger.size()) throw new IllegalArgumentException("Antal mængder og påfyldninger er ikke det samme");
         else if (mængder.isEmpty()) throw new IllegalArgumentException("Der er ikke tilføjet en mængde og en påfyldning");
         else {
-            Udgivelse udgivelse = new Udgivelse(unitStørrelse, prisPerUnit, erFad, udgivelsesDato, alkoholProcent, vandMængdeL, medarbejder, påfyldninger, mængder);
+            Udgivelse udgivelse = new Udgivelse(unitStørrelse, prisPerUnit, erFad, udgivelsesDato, alkoholProcent, vandMængdeL, medarbejder, vandetsOprindelse, angelShare, påfyldninger, mængder);
             storage.tilføjUdgivelse(udgivelse);
             return udgivelse;
         }
@@ -206,10 +206,10 @@ public class Controller {
         return storage.getDestillater();
     }
 
-    public List<Destillat> getUgensDestillater() {
+    public List<Destillat> getUgensDestillater(LocalDate dato) {
         ArrayList<Destillat> ugensDestillater = new ArrayList<>();
         for (Destillat destillat : storage.getDestillater()) {
-            if (destillat.getDestilleringsdato().isAfter(LocalDate.now().minusWeeks(1))) {
+            if (destillat.getDestilleringsdato().isAfter(dato.minusWeeks(1)) && destillat.getDestilleringsdato().isBefore(dato)) {
                 ugensDestillater.add(destillat);
             }
         }

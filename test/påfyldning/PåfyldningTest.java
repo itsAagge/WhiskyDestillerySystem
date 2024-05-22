@@ -2,7 +2,6 @@ package påfyldning;
 
 import application.controller.Controller;
 import application.model.*;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +44,7 @@ class PåfyldningTest {
     void tilføjUdgivelse() {
         ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
         ArrayList<Double> mængder = new ArrayList<>();
-        Udgivelse udgivelse = new Udgivelse(100, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", påfyldninger, mængder);
+        Udgivelse udgivelse = new Udgivelse(100, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", "Sall whisky kilde", påfyldninger, mængder);
         påfyldning.tilføjUdgivelse(udgivelse);
 
         assertTrue(påfyldning.getUdgivelser().contains(udgivelse));
@@ -120,7 +119,7 @@ class PåfyldningTest {
         ArrayList<Double> mængder2 = new ArrayList<>();
         påfyldninger.add(påfyldning);
         mængder2.add(0.0);
-        Udgivelse udgivelse = new Udgivelse(0.7, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", påfyldninger, mængder);
+        Udgivelse udgivelse = new Udgivelse(0.7, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", "Sall whisky kilde", påfyldninger, mængder);
         påfyldning.tilføjUdgivelse(udgivelse);
         udgivelse.tilføjPåfyldningmedMængde(påfyldninger, mængder2);
 
@@ -153,7 +152,7 @@ class PåfyldningTest {
         ArrayList<Double> mængder2 = new ArrayList<>();
         påfyldninger.add(påfyldning);
         mængder2.add(50.0);
-        Udgivelse udgivelse = new Udgivelse(0.7, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", påfyldninger, mængder);
+        Udgivelse udgivelse = new Udgivelse(0.7, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", "Sall whisky kilde", påfyldninger, mængder);
         påfyldning.tilføjUdgivelse(udgivelse);
         udgivelse.tilføjPåfyldningmedMængde(påfyldninger, mængder2);
 
@@ -186,7 +185,7 @@ class PåfyldningTest {
         ArrayList<Double> mængder2 = new ArrayList<>();
         påfyldninger.add(påfyldning);
         mængder2.add(125.0);
-        Udgivelse udgivelse = new Udgivelse(0.7, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", påfyldninger, mængder);
+        Udgivelse udgivelse = new Udgivelse(0.7, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", "Sall whisky kilde", påfyldninger, mængder);
         påfyldning.tilføjUdgivelse(udgivelse);
         udgivelse.tilføjPåfyldningmedMængde(påfyldninger, mængder2);
 
