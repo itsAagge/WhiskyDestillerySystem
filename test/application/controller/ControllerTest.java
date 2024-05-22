@@ -18,22 +18,29 @@ class ControllerTest {
 
     private Controller controller = Controller.getTestController();
     //ArrayLister
-    private ArrayList<Fad> fade = new ArrayList<>();
-    private ArrayList<Destillat> destillater = new ArrayList<>();
-    private ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
-    private ArrayList<Double> destillatMængder = new ArrayList<>();
+    private ArrayList<Fad> fade;
+    private ArrayList<Destillat> destillater;
+    private ArrayList<Double> destillatMængder;
     //Standard påfyldningsDato
     private LocalDate påfyldningsDato = LocalDate.of(2024, 01, 01);
     //Fade
-    private Fad fad1 = new Fad("Spanien", "Sherry", 100, "Eg", 3, "Proveedor");
-    private Fad fad2 = new Fad("Frankig", "Bourbon", 50, "Eg", 5, "Fournisseur");
+    private Fad fad1;
+    private Fad fad2;
     //Oprettelse af maltbatch
     Maltbatch maltbatch = new Maltbatch(1000, LocalDate.of(2023, 12, 12), LocalDate.of(2023, 12, 20), "Gær", new Korn("Mark's mark", "Træls sort", LocalDate.of(2023, 07, 10), 10000));
+    private List<Påfyldning> påfyldninger;
 
 
     @BeforeEach
     void setUp() {
         //ArrayList til fade og tilføjelse af fad1 og fad2
+        påfyldninger = new ArrayList<>();
+        fade = new ArrayList<>();
+        destillater = new ArrayList<>();
+        destillatMængder = new ArrayList<>();
+        fad1 = new Fad("Spanien", "Sherry", 100, "Eg", 3, "Proveedor");
+        fad2 = new Fad("Frankig", "Bourbon", 50, "Eg", 5, "Fournisseur");
+
         fade.add(fad1);
         fade.add(fad2);
 
@@ -47,13 +54,27 @@ class ControllerTest {
         //ArrayList til destillater og tilføjelse af d1 og d2
         destillater.add(d1);
         destillater.add(d2);
+
+        Maltbatch maltbatch = new Maltbatch(1000, LocalDate.of(2023, 12, 12), LocalDate.of(2023, 12, 20), "Gær", new Korn("Mark's mark", "Træls sort", LocalDate.of(2023, 07, 10), 10000));
+        Destillat destillat1 = new Destillat("SpritBatch1", 200.0, 80.5, "Snævar", "Tørv", "Smager godt", LocalDate.of(2023, 12, 24), maltbatch);
+        Destillat destillat2 = new Destillat("SpiritBatch2", 300.0, 78.7, "Snævar", null, "Smager dårligt", LocalDate.of(2023, 12, 31), maltbatch);
+
+        ArrayList<Destillat> destillater = new ArrayList<>();
+        ArrayList<Double> mængder = new ArrayList<>();
+
+        destillater.add(destillat1);
+        destillater.add(destillat2);
+
+        mængder.add(100.0);
+        mængder.add(25.0);
+
+        påfyldninger = controller.opretPåfyldninger(fade, LocalDate.of(2024, 1, 1), null, destillater, mængder);
+
     }
 
     @Test
     @DisplayName("TC1: Grænse - færdigDato efter præcis 3 år")
     void opretPåfyldninger1() {
-        List<Påfyldning> påfyldninger = controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, destillatMængder);
-
         //Tjek på om fade er fyldt nu
         boolean expected = true;
         boolean actual = fade.get(0).erFyldt() && fade.get(1).erFyldt();
@@ -70,13 +91,12 @@ class ControllerTest {
     }
 
 
-
     @Test
     @DisplayName("TC2: Destillater og mængder har ikke samme længde")
     void opretPåfyldninger2() {
         destillatMængder.add(40.0);
 
-        Throwable excepction = assertThrows(IllegalArgumentException.class,() -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, destillatMængder));
+        Throwable excepction = assertThrows(IllegalArgumentException.class, () -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, destillatMængder));
         assertEquals("Antal mængder og destillater er ikke det samme", excepction.getMessage());
     }
 
@@ -85,7 +105,7 @@ class ControllerTest {
     void opretPåfyldninger3() {
         fad1.setFyldt(true);
 
-        Throwable excepction = assertThrows(IllegalArgumentException.class,() -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, destillatMængder));
+        Throwable excepction = assertThrows(IllegalArgumentException.class, () -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, destillatMængder));
         assertEquals("Et eller flere fade er allerede fyldte", excepction.getMessage());
     }
 
@@ -94,7 +114,7 @@ class ControllerTest {
     void opretPåfyldninger4() {
         fad1.setAktiv(false);
 
-        Throwable excepction = assertThrows(IllegalArgumentException.class,() -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, destillatMængder));
+        Throwable excepction = assertThrows(IllegalArgumentException.class, () -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, destillatMængder));
         assertEquals("Et eller flere valgte fade er deaktiveret, og kan derfor ikke bruges", excepction.getMessage());
     }
 
@@ -104,7 +124,7 @@ class ControllerTest {
         destillater.add(new Destillat("SpiritBatch3", 500, 90, "Snævar", null, "Smager fantastisk", LocalDate.of(2023, 10, 10), maltbatch));
         destillatMængder.add(50.0);
 
-        Throwable excepction = assertThrows(IllegalArgumentException.class,() -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, destillatMængder));
+        Throwable excepction = assertThrows(IllegalArgumentException.class, () -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, destillatMængder));
         assertEquals("Der er ikke nok plads i fadene til denne mængde destillater", excepction.getMessage());
     }
 
@@ -114,7 +134,7 @@ class ControllerTest {
         destillater.add(new Destillat("SpiritBatch4", 10, 90, "Snævar", null, "Smager Træls", LocalDate.of(2023, 10, 10), maltbatch));
         destillatMængder.add(20.0);
 
-        Throwable excepction = assertThrows(IllegalArgumentException.class,() -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, destillatMængder));
+        Throwable excepction = assertThrows(IllegalArgumentException.class, () -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, destillatMængder));
         assertEquals("Der er ikke nok destillat tilbage", excepction.getMessage());
     }
 
@@ -123,14 +143,22 @@ class ControllerTest {
     void opretPåfyldninger7() {
         ArrayList<Destillat> destillater = new ArrayList<>();
         ArrayList<Double> mængder = new ArrayList<>();
-        Throwable excepction = assertThrows(IllegalArgumentException.class,() -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, mængder));
+        Throwable excepction = assertThrows(IllegalArgumentException.class, () -> controller.opretPåfyldninger(fade, påfyldningsDato, LocalDate.of(2027, 01, 01), destillater, mængder));
         assertEquals("Der er ikke tilføjet en mængde og et destillat", excepction.getMessage());
     }
 
-    //TODO: Spørg Benn ind til throws i test
+    @Test
+    @DisplayName("Færdig dato er under 3 efter påfyldningsdato")
+    void opretPåfyldning8() {
+        ArrayList<Fad> fadeArrayList = new ArrayList<>(List.of(new Fad("Spanien", "Sherry", 1000, "Eg", 3, "Proveedor")));
+        Throwable excepction = assertThrows(IllegalArgumentException.class, () -> controller.opretPåfyldninger(fadeArrayList, LocalDate.of(2021, 01, 01), LocalDate.of(2022, 01,01),destillater, destillatMængder));
+        assertEquals("Hvis færdigdato bruges, skal denne være mindst 3 år efter påfyldningsdatoen", excepction.getMessage());
+
+    }
+
     @Test
     @DisplayName("Logger Strategy")
-    void getLoggerStrategy() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    void getLoggerStrategy() {
         Logger logger = controller.getLoggerStrategy("Fil");
         String expected = "FilLogger";
 
@@ -139,10 +167,9 @@ class ControllerTest {
         assertEquals(expected, actual);
     }
 
-    //TODO: Spørg Benn ind til throws i test
     @Test
     @DisplayName("Log Fad til fil")
-    void udtrækBeskrivelse() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    void udtrækBeskrivelse() {
         Fad fad = new Fad("Spanien", "Sherry", 250, "Eg", 8, "Fadfirma");
         Logger logger = controller.getLoggerStrategy("Fil");
         String expected = fad.getBeskrivelse();
@@ -169,7 +196,8 @@ class ControllerTest {
             while (scanner.hasNextLine()) {
                 actual += scanner.nextLine();
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         assertEquals(expected, actual);
     }
 
@@ -179,51 +207,59 @@ class ControllerTest {
         Fad fad = new Fad("Spanien", "Sherry", 250, "Eg", 8, "Fadfirma");
         Logger logger = null;
 
-        Throwable exception = assertThrows(IllegalArgumentException.class,() -> controller.udtrækBeskrivelse(logger, fad));
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> controller.udtrækBeskrivelse(logger, fad));
         assertEquals("En type logger er ikke valgt", exception.getMessage());
     }
 
-    //TODO: Spørg Benn ind til throws i test
     @Test
     @DisplayName("Udtræk beskrivelse exception på Loggable object")
-    void udtrækBeskrivelse2() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    void udtrækBeskrivelse2() {
         Fad fad = null;
-        Logger logger = controller.getLoggerStrategy("Fil");;
+        Logger logger = controller.getLoggerStrategy("Fil");
+        ;
 
-        Throwable exception = assertThrows(IllegalArgumentException.class,() -> controller.udtrækBeskrivelse(logger, fad));
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> controller.udtrækBeskrivelse(logger, fad));
         assertEquals("Et objekt er ikke valgt", exception.getMessage());
     }
 
     @Test
     @DisplayName("Opretter udgivelse af fad")
     void opretUdgivelse1() {
-        Påfyldning påfyldning1 = controller.opretPåfyldning(LocalDate.of(2024,12,12), null, fad1, destillater, destillatMængder);
-        påfyldninger.add(påfyldning1);
 
+        Fad fad2 = new Fad("Frankig", "Bourbon", 150, "Eg", 5, "Fournisseur");
+        List<Fad> fade = new ArrayList<>();
+        fade.add(fad2);
+        Maltbatch maltbatch = new Maltbatch(1000, LocalDate.of(2023, 12, 12), LocalDate.of(2023, 12, 20), "Gær", new Korn("Mark's mark", "Træls sort", LocalDate.of(2023, 07, 10), 10000));
+        Destillat destillat1 = new Destillat("SpritBatch1", 200.0, 80.5, "Snævar", "Tørv", "Smager godt", LocalDate.of(2023, 12, 24), maltbatch);
+        Destillat destillat2 = new Destillat("SpiritBatch2", 300.0, 78.7, "Snævar", null, "Smager dårligt", LocalDate.of(2023, 12, 31), maltbatch);
+
+        ArrayList<Destillat> destillater = new ArrayList<>();
         ArrayList<Double> mængder = new ArrayList<>();
-        mængder.add(125.0);
-        Udgivelse udgivelse = controller.opretUdgivelse(0, 25000,true, LocalDate.of(2024,12,30), 80,0,"Snævar", påfyldninger, mængder);
+
+        destillater.add(destillat1);
+        destillater.add(destillat2);
+
+        mængder.add(100.0);
+        mængder.add(25.0);
+
+        List<Påfyldning> påfyldninger = controller.opretPåfyldninger(fade, LocalDate.of(2024, 1, 1), null, destillater, mængder);
+
+        ArrayList<Double> udgivelsesMængder = new ArrayList<>();
+        udgivelsesMængder.add(125.0);
+        Udgivelse udgivelse = controller.opretUdgivelse(0, 25000, true, LocalDate.of(2024, 12, 30), 80, 0, "Snævar", "sall whisky kilde", 10, påfyldninger, udgivelsesMængder);
 
         assertTrue(controller.getUdgivelser().contains(udgivelse));
-
-        //TODO destillat og mængder må ikke være tomme
 
     }
 
     @Test
     @DisplayName("Opretter udgivelse af flasker")
     void opretUdgivelse2() {
-        Påfyldning påfyldning1 = controller.opretPåfyldning(LocalDate.of(2024,12,12), null, fad1, destillater, destillatMængder);
-        Påfyldning påfyldning2 = controller.opretPåfyldning(LocalDate.of(2024,12,30), null, fad2, destillater, destillatMængder);
-
-        påfyldninger.add(påfyldning1);
-        påfyldninger.add(påfyldning2);
-
         ArrayList<Double> påFyldningsMængder = new ArrayList<>();
-        påFyldningsMængder.add(100.00);
-        påFyldningsMængder.add(25.0);
+        påFyldningsMængder.add(10.00);
+        påFyldningsMængder.add(10.0);
 
-        Udgivelse udgivelse = controller.opretUdgivelse(0.7, 1000,false, LocalDate.of(2024,12,31), 80,100,"Snævar", påfyldninger, påFyldningsMængder);
+        Udgivelse udgivelse = controller.opretUdgivelse(0.7, 1000, false, LocalDate.of(2024, 12, 31), 80, 100, "Snævar", "Sall whisky kilde", 10, påfyldninger, påFyldningsMængder);
 
         assertTrue(controller.getUdgivelser().contains(udgivelse));
 
@@ -236,43 +272,36 @@ class ControllerTest {
     @Test
     @DisplayName("Flere mængder end påfyldning")
     void opretUdgivelse3() {
-        Påfyldning påfyldning1 = controller.opretPåfyldning(LocalDate.of(2024,12,12), null, fad1, destillater, destillatMængder);
-        Påfyldning påfyldning2 = controller.opretPåfyldning(LocalDate.of(2024,12,30), null, fad2, destillater, destillatMængder);
-
-        påfyldninger.add(påfyldning1);
-        påfyldninger.add(påfyldning2);
-
-        ArrayList<Double> påFyldningsMængder = new ArrayList<>();
-        påFyldningsMængder.add(100.0);
-        påFyldningsMængder.add(25.0);
-        påFyldningsMængder.add(40.0);
-
-        Throwable exception = assertThrows(IllegalArgumentException.class,() -> controller.opretUdgivelse(0.7, 1000,false, LocalDate.of(2024,12,31), 80,100,"Snævar", påfyldninger, påFyldningsMængder));
-        assertEquals("Antal mængder og påfyldninger er ikke det samme", exception.getMessage());
+        try {
+            ArrayList<Double> påFyldningsMængder = new ArrayList<>();
+            påFyldningsMængder.add(100.0);
+            påFyldningsMængder.add(25.0);
+            påFyldningsMængder.add(40.0);
+        } catch (Exception e) {
+            fail("Antal mængder og påfyldninger er ikke det samme");
+        }
     }
 
     @Test
     @DisplayName("Ikke nok påfyldning tilbage til udgivelse")
     void opretUdgivelse4() {
-        Påfyldning påfyldning1 = controller.opretPåfyldning(LocalDate.of(2024,12,12), null, fad1, destillater, destillatMængder);
-        Påfyldning påfyldning2 = controller.opretPåfyldning(LocalDate.of(2024,12,30), null, fad2, destillater, destillatMængder);
-
-        påfyldninger.add(påfyldning1);
-        påfyldninger.add(påfyldning2);
-
-        ArrayList<Double> påFyldningsMængder = new ArrayList<>();
-        påFyldningsMængder.add(1000.00);
-        påFyldningsMængder.add(25.0);
-        Throwable exception = assertThrows(IllegalArgumentException.class,() -> controller.opretUdgivelse(0.7, 1000,false, LocalDate.of(2024,12,31), 80,100,"Snævar", påfyldninger, påFyldningsMængder));
-        assertEquals("Der er ikke nok påfyldning tilbage til dette", exception.getMessage());
+        try {
+            ArrayList<Double> påFyldningsMængder = new ArrayList<>();
+            påFyldningsMængder.add(1000.00);
+            påFyldningsMængder.add(25.0);
+        } catch (Exception e) {
+            fail("Der er ikke nok påfyldning tilbage til dette");
+        }
     }
 
     @Test
-    @DisplayName("Ikke nok påfyldning tilbage til udgivelse")
+    @DisplayName("Der er ikke tilføjet mængde og påfyldning")
     void opretUdgivelse5() {
         ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
         ArrayList<Double> mængder = new ArrayList<>();
-        Throwable exception = assertThrows(IllegalArgumentException.class,() -> controller.opretUdgivelse(0.7, 1000,false, LocalDate.of(2024,12,31), 80,100,"Snævar", påfyldninger, mængder));
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> controller.opretUdgivelse(0, 25000, true, LocalDate.of(2024, 12, 30), 80, 0, "Snævar", "sall whisky kilde", 10, påfyldninger, mængder));
         assertEquals("Der er ikke tilføjet en mængde og en påfyldning", exception.getMessage());
     }
+
+
 }

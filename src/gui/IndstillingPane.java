@@ -25,15 +25,15 @@ public class IndstillingPane extends GridPane {
         this.setGridLinesVisible(false);
 
         Label lblOutputStrategi = new Label("Vælg output af beskrivelser");
-        this.add(lblOutputStrategi,0,0);
-        this.add(comboBoxOutputStrategi,0,1);
+        this.add(lblOutputStrategi, 0, 0);
+        this.add(comboBoxOutputStrategi, 0, 1);
         comboBoxOutputStrategi.getItems().setAll(controller.getOutputStrategies());
         ChangeListener<String> changeListenerOutputStrategi = (observableValue, s, t1) -> this.changeOutputStrategi();
         comboBoxOutputStrategi.getSelectionModel().selectedItemProperty().addListener(changeListenerOutputStrategi);
 
         Label lblMedarbejder = new Label("Vælg medarbejder");
-        this.add(lblMedarbejder,0,3);
-        this.add(comboBoxMedarbejdere,0,4);
+        this.add(lblMedarbejder, 0, 3);
+        this.add(comboBoxMedarbejdere, 0, 4);
         comboBoxMedarbejdere.getItems().setAll(controller.getMedarbejdere());
         ChangeListener<String> changeListenerMedarbejder = (observableValue, s, t1) -> this.changeMedarbejder();
         comboBoxMedarbejdere.getSelectionModel().selectedItemProperty().addListener(changeListenerMedarbejder);
@@ -41,11 +41,7 @@ public class IndstillingPane extends GridPane {
 
     private void changeOutputStrategi() {
         Logger logger = null;
-        try {
-            logger = controller.getLoggerStrategy(comboBoxOutputStrategi.getSelectionModel().getSelectedItem());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        logger = controller.getLoggerStrategy(comboBoxOutputStrategi.getSelectionModel().getSelectedItem());
         valgtOutputStrategi = logger;
     }
 

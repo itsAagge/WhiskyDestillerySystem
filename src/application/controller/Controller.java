@@ -323,13 +323,18 @@ public class Controller {
         return foundStrategies;
     }
 
-    //TODO: Spørg Benn ift. tests
-    public Logger getLoggerStrategy(String LoggerType) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public Logger getLoggerStrategy(String LoggerType) {
+        Logger logger = null;
         if (LoggerType == null || LoggerType.isEmpty()) throw new IllegalArgumentException("Denne type logger eksisterer ikke");
         else {
-            String className = "application.model.output." + LoggerType + "Logger";
-            return (Logger) Class.forName(className).newInstance();
+            try {
+                String className = "application.model.output." + LoggerType + "Logger";
+                logger = (Logger) Class.forName(className).newInstance();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
+        return logger;
     }
 
     public void initContent() {
