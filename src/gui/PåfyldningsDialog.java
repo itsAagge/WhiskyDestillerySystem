@@ -65,12 +65,13 @@ public class PåfyldningsDialog extends Stage {
         Label lblUgensDestillater = new Label("Ugens destillater");
         pane.add(lblUgensDestillater, 2, 0);
         pane.add(cBoxDestillater, 2, 1);
-        cBoxDestillater.getItems().setAll(controller.getUgensDestillater());
 
         Label lblpåfyldningsDato = new Label("Påfyldnings dato");
         pane.add(lblpåfyldningsDato, 1, 0);
         pane.add(dpPåfyldningsdato, 1, 1);
         dpPåfyldningsdato.setEditable(false);
+        ChangeListener<LocalDate> datoListenerFad = (observableValue, newValue, v) -> this.changeDato();
+        dpPåfyldningsdato.valueProperty().addListener(datoListenerFad);
 
         Label lblFærdigDato = new Label("Færdig dato");
         pane.add(lblFærdigDato, 1, 2);
@@ -103,6 +104,15 @@ public class PåfyldningsDialog extends Stage {
         pane.add(lblFadMængdeValgt, 0, 6);
         pane.add(lblDestillatMængdeValgt, 2, 6);
         pane.setHalignment(lblDestillatMængdeValgt, HPos.RIGHT);
+    }
+
+    private void changeDato() {
+        LocalDate dato = dpPåfyldningsdato.getValue();
+
+        if (dato != null) {
+            cBoxDestillater.getItems().setAll(controller.getUgensDestillater(dato));
+            cBoxDestillater.getVisibleRowCount();
+        }
     }
 
     ArrayList<Double> mængder = new ArrayList<>();

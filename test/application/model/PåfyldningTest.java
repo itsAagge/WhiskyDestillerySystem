@@ -1,6 +1,7 @@
-package application.model;
+package påfyldning;
 
 import application.controller.Controller;
+import application.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ class PåfyldningTest {
     @DisplayName("TC1")
     void flytPåfyldning() {
         Fad fad2 = new Fad("Frankrig", "Bourbon", 200, "Eg", 5, "leverandør2");
-        påfyldning.flytFad(fad2);
+        påfyldning.flytPåfyldning(fad2);
 
         Fad expected = fad2;
         Fad actual = påfyldning.getFade().getLast();
@@ -37,13 +38,14 @@ class PåfyldningTest {
         assertEquals(expected, actual);
         assertTrue(fad2.erFyldt());
         assertFalse(fad.erFyldt());
+
     }
 
     @Test
     void tilføjUdgivelse() {
         ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
         ArrayList<Double> mængder = new ArrayList<>();
-        Udgivelse udgivelse = new Udgivelse(100, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", påfyldninger, mængder);
+        Udgivelse udgivelse = new Udgivelse(100, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", "Sall whisky kilde", påfyldninger, mængder);
         påfyldning.tilføjUdgivelse(udgivelse);
 
         assertTrue(påfyldning.getUdgivelser().contains(udgivelse));
@@ -72,6 +74,7 @@ class PåfyldningTest {
         assertTrue(påfyldning.getDestillatMængder().containsKey(destillat2));
         assertTrue(påfyldning.getDestillatMængder().containsValue(100.0));
         assertTrue(påfyldning.getDestillatMængder().containsValue(25.0));
+
     }
 
     @DisplayName("tilføjDestillatMedMængde: mængden er nu -100")
@@ -92,6 +95,7 @@ class PåfyldningTest {
 
         Throwable excepction = assertThrows(IllegalArgumentException.class,() -> påfyldning.tilføjDestillatMedMængde(destillater, mængder));
         assertEquals("Mængder må ikke være under 0", excepction.getMessage());
+
     }
 
     @DisplayName("mængdeTilbage TC1: mængdetilbage = 125")
@@ -116,7 +120,7 @@ class PåfyldningTest {
         ArrayList<Double> mængder2 = new ArrayList<>();
         påfyldninger.add(påfyldning);
         mængder2.add(0.0);
-        Udgivelse udgivelse = new Udgivelse(0.7, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", påfyldninger, mængder);
+        Udgivelse udgivelse = new Udgivelse(0.7, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", "Sall whisky kilde", påfyldninger, mængder);
         påfyldning.tilføjUdgivelse(udgivelse);
         udgivelse.tilføjPåfyldningmedMængde(påfyldninger, mængder2);
 
@@ -124,6 +128,7 @@ class PåfyldningTest {
         double actual = 125;
 
         assertEquals(expected, actual);
+
     }
 
     @DisplayName("mængdeTilbage TC2: Der er udgivet 50L")
@@ -148,7 +153,7 @@ class PåfyldningTest {
         ArrayList<Double> mængder2 = new ArrayList<>();
         påfyldninger.add(påfyldning);
         mængder2.add(50.0);
-        Udgivelse udgivelse = new Udgivelse(0.7, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", påfyldninger, mængder);
+        Udgivelse udgivelse = new Udgivelse(0.7, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", "Sall whisky kilde", påfyldninger, mængder);
         påfyldning.tilføjUdgivelse(udgivelse);
         udgivelse.tilføjPåfyldningmedMængde(påfyldninger, mængder2);
 
@@ -156,6 +161,7 @@ class PåfyldningTest {
         double actual = 75;
 
         assertEquals(expected, actual);
+
     }
 
     @DisplayName("mængdeTilbage TC3: 0 mængde tilbage")
@@ -180,7 +186,7 @@ class PåfyldningTest {
         ArrayList<Double> mængder2 = new ArrayList<>();
         påfyldninger.add(påfyldning);
         mængder2.add(125.0);
-        Udgivelse udgivelse = new Udgivelse(0.7, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", påfyldninger, mængder);
+        Udgivelse udgivelse = new Udgivelse(0.7, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", "Sall whisky kilde", påfyldninger, mængder);
         påfyldning.tilføjUdgivelse(udgivelse);
         udgivelse.tilføjPåfyldningmedMængde(påfyldninger, mængder2);
 
@@ -188,6 +194,7 @@ class PåfyldningTest {
         double actual = 0.0;
 
         assertEquals(expected, actual);
+
     }
      */
 }

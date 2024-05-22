@@ -50,4 +50,5 @@ public class Korn implements Logable {
         String s = "Dette korn er høstet den: " + høstDato + " fra marken: " + markNavn + " og har sorten: " + sort + " og den samlede mængde i kg er: " + mængdeKg;
         return s;
     }
+
 }

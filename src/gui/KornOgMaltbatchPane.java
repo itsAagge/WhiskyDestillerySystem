@@ -115,6 +115,8 @@ public class KornOgMaltbatchPane extends GridPane {
                 } else {
                     controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), korn);
                     controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse succesfuldt udtrukket");
+                    lvwKorn.getSelectionModel().clearSelection();
+                    txaKornBeskrivelse.clear();
                 }
             } else {
                 Maltbatch maltbatch = lvwMaltbatch.getSelectionModel().getSelectedItem();
@@ -123,6 +125,8 @@ public class KornOgMaltbatchPane extends GridPane {
                 } else {
                     controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), maltbatch);
                     controller.opretAlert(Alert.AlertType.INFORMATION, "Succes", "Beskrivelse succesfuldt udtrukket");
+                    lvwMaltbatch.getSelectionModel().clearSelection();
+                    txaMaltbatchBeskrivelse.clear();
                 }
             }
         }

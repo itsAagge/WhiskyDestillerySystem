@@ -66,6 +66,7 @@ public class DestillatPane extends GridPane {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et destillat, der er hældt på fade");
         } else {
             controller.fjernDestillat(destillat);
+            lvwDestillater.getItems().setAll(controller.getAlleDestillater());
         }
     }
 
