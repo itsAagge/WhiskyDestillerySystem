@@ -22,12 +22,12 @@ class ControllerTest {
     private ArrayList<Destillat> destillater;
     private ArrayList<Double> destillatMængder;
     //Standard påfyldningsDato
-    private LocalDate påfyldningsDato = LocalDate.of(2024, 01, 01);
+    private LocalDate påfyldningsDato;
     //Fade
     private Fad fad1;
     private Fad fad2;
     //Oprettelse af maltbatch
-    Maltbatch maltbatch = new Maltbatch(1000, LocalDate.of(2023, 12, 12), LocalDate.of(2023, 12, 20), "Gær", new Korn("Mark's mark", "Træls sort", LocalDate.of(2023, 07, 10), 10000));
+    Maltbatch maltbatch;
     private List<Påfyldning> påfyldninger;
 
 
@@ -40,6 +40,8 @@ class ControllerTest {
         destillatMængder = new ArrayList<>();
         fad1 = new Fad("Spanien", "Sherry", 100, "Eg", 3, "Proveedor");
         fad2 = new Fad("Frankig", "Bourbon", 50, "Eg", 5, "Fournisseur");
+        maltbatch = new Maltbatch(1000, LocalDate.of(2023, 12, 12), LocalDate.of(2023, 12, 20), "Gær", new Korn("Mark's mark", "Træls sort", LocalDate.of(2023, 07, 10), 10000));
+        påfyldningsDato = LocalDate.of(2024, 01, 01);
 
         fade.add(fad1);
         fade.add(fad2);

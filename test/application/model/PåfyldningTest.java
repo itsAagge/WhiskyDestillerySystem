@@ -16,12 +16,13 @@ class PåfyldningTest {
 
     private Controller controller = Controller.getTestController();
     private List<Påfyldning> påfyldninger;
-    private List<Fad> fade = new ArrayList<>();
+    private List<Fad> fade;
     private  Fad fad;
 
     @BeforeEach
     void setUp() {
         fad = new Fad("Spanien", "Sherry", 200, "Eg", 3, "leverandør");
+        fade = new ArrayList<>();
         fade.add(fad);
         Maltbatch maltbatch = new Maltbatch(1000, LocalDate.of(2023, 12, 12), LocalDate.of(2023, 12, 20), "Gær", new Korn("Mark's mark", "Træls sort", LocalDate.of(2023, 07, 10), 10000));
         Destillat d1 = new Destillat("SpritBatch1", 200.0, 80.5, "Snævar", "Tørv", "Smager godt", LocalDate.of(2023, 12, 24), maltbatch);
