@@ -96,7 +96,7 @@ public class DestillatDialog extends Stage {
         pane.add(lblMaltbatche, 3, 0);
         pane.add(lvwMaltbatche, 3, 1, 2, 6);
         lvwMaltbatche.setPrefHeight(180);
-        lvwMaltbatche.getItems().setAll(controller.getAlleMaltbatche());
+        lvwMaltbatche.getItems().setAll(controller.getIkkeTommeMaltbatches());
         ChangeListener<Maltbatch> maltbatchChangeListener = (observableValue, oldValue, newValue) -> this.changeMaltbatch();
         lvwMaltbatche.getSelectionModel().selectedItemProperty().addListener(maltbatchChangeListener);
 

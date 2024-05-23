@@ -52,7 +52,7 @@ public class MaltbatchDialog extends Stage {
         pane.add(lvwKorn, 0, 1, 1, 4);
         lvwKorn.setPrefWidth(250);
         lvwKorn.setPrefHeight(300);
-        lvwKorn.getItems().setAll(controller.getKorn());
+        lvwKorn.getItems().setAll(controller.getIkkeTommeKorn());
 
         pane.add(lblMængdeTilbage, 0, 5);
         ChangeListener<Korn> kornChangeListener = (observableValue, oldValue, newValue) -> this.changeKorn();

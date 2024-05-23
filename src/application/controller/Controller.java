@@ -221,6 +221,16 @@ public class Controller {
         return storage.getMaltbatche();
     }
 
+    public List<Maltbatch> getIkkeTommeMaltbatches() {
+        List<Maltbatch> maltbatchList = new ArrayList<>();
+        for (Maltbatch maltbatch : storage.getMaltbatche()) {
+            if (mængdeTilbageMaltbatch(maltbatch) != 0) {
+                maltbatchList.add(maltbatch);
+            }
+        }
+        return maltbatchList;
+    }
+
     public List<Destillat> getAlleDestillater() {
         return storage.getDestillater();
     }
@@ -241,6 +251,16 @@ public class Controller {
 
     public List<Korn> getKorn() {
         return storage.getKornList();
+    }
+
+    public List<Korn> getIkkeTommeKorn() {
+        List<Korn> kornList = new ArrayList<>();
+        for (Korn korn : storage.getKornList()) {
+            if (mængdeTilbageKorn(korn) > 0) {
+                kornList.add(korn);
+            }
+        }
+        return kornList;
     }
 
     public List<Lager> getLagre() {
@@ -389,16 +409,20 @@ public class Controller {
         Fad fad4 = this.opretFad("Spanien", "Bourbon", 250, "Eg", 5, "El egetræsfadfirma");
         Fad fad5 = this.opretFad("Spanien", "Bourbon", 100, "Eg", 9.5, "El fakefadefirma");
 
-        Korn byg = this.opretKorn("Mark 1", "Byg", LocalDate.of(2019, 8, 20), 4000);
-        Korn byg2 = this.opretKorn("Mark 2", "Byg", LocalDate.of(2019, 8, 23), 4000);
+        Korn byg = this.opretKorn("Mark 1", "Byg", LocalDate.of(2019, 8, 20), 1200);
+        Korn byg2 = this.opretKorn("Mark 2", "Byg", LocalDate.of(2019, 8, 23), 800);
+        Korn byg3 = this.opretKorn("Mark 3", "Byg", LocalDate.of(2021, 9, 25), 1200);
+        Korn byg4 = this.opretKorn("Mark navn 4", "Byg", LocalDate.of(2022, 12, 26), 900);
 
-        Maltbatch maltbatch1 = this.opretMaltbatch(2000, LocalDate.of(2019, 12, 15), LocalDate.of(2019, 12, 17), "Gær", byg);
-        Maltbatch maltbatch2 = this.opretMaltbatch(2000, LocalDate.of(2019, 12, 15), LocalDate.of(2019, 12, 19), "Special gær", byg2);
+        Maltbatch maltbatch1 = this.opretMaltbatch(1000, LocalDate.of(2019, 12, 15), LocalDate.of(2019, 12, 17), "Gær", byg);
+        Maltbatch maltbatch2 = this.opretMaltbatch(800, LocalDate.of(2019, 12, 15), LocalDate.of(2019, 12, 19), "Special gær", byg2);
+        Maltbatch maltbatch3 = this.opretMaltbatch(700, LocalDate.of(2021, 12, 30), LocalDate.of(2021, 12, 31), "Gær", byg3);
+        Maltbatch maltbatch4 = this.opretMaltbatch(600, LocalDate.of(2022, 12, 28), LocalDate.of(2022, 12, 30), "Gær", byg4);
 
         Destillat destillat1 = this.opretDestillat("NM77P", 500, 70, "Snævar Njáll Albertsson", null, null, LocalDate.of(2020, 1, 17), maltbatch1);
-        Destillat destillat2 = this.opretDestillat("NM78P", 500, 70, "Ingus Brikmanis", null, "Kommentar2", LocalDate.of(2020, 1, 19), maltbatch1);
-        Destillat destillat3 = this.opretDestillat("NM79P", 500, 70, "Snævar Njáll Albertsson", "Tørv", null, LocalDate.of(2024, 5, 20), maltbatch2);
-        Destillat destillat4 = this.opretDestillat("NM80P", 500, 70, "Snævar Njáll Albertsson", null, null, LocalDate.of(2024, 5, 19), maltbatch2);
+        Destillat destillat2 = this.opretDestillat("NM78P", 500, 70, "Ingus Brikmanis", null, "Kommentar2", LocalDate.of(2020, 1, 19), maltbatch2);
+        Destillat destillat3 = this.opretDestillat("NM79P", 500, 70, "Snævar Njáll Albertsson", "Tørv", null, LocalDate.of(2024, 5, 20), maltbatch3);
+        Destillat destillat4 = this.opretDestillat("NM80P", 500, 70, "Snævar Njáll Albertsson", null, null, LocalDate.of(2024, 5, 19), maltbatch4);
         Destillat destillat5 = this.opretDestillat("NM81P", 500, 70, "Ingus Brikmanis", "Tørv", "Kommentar1", LocalDate.of(2024, 5, 18), maltbatch1);
 
         ArrayList<Destillat> destillatArray1 = new ArrayList<>();
@@ -407,20 +431,37 @@ public class Controller {
         ArrayList<Double> mængdeArray1 = new ArrayList<>();
         mængdeArray1.add(10.0);
         mængdeArray1.add(15.0);
+
         ArrayList<Destillat> destillatArray2 = new ArrayList<>();
         destillatArray2.add(destillat3);
         destillatArray2.add(destillat4);
         ArrayList<Double> mængdeArray2 = new ArrayList<>();
         mængdeArray2.add(100.0);
         mængdeArray2.add(150.0);
+
         ArrayList<Destillat> destillatArray3 = new ArrayList<>();
         destillatArray3.add(destillat5);
         ArrayList<Double> mængdeArray3 = new ArrayList<>();
         mængdeArray3.add(20.0);
-        this.opretPåfyldninger(new ArrayList<>(List.of(fad1)), LocalDate.of(2019, 10, 25), LocalDate.of(2022, 10, 27), destillatArray1, mængdeArray1);
-        this.opretPåfyldninger(new ArrayList<>(List.of(fad2)), LocalDate.of(2021, 7, 17), LocalDate.of(2024, 7, 17), destillatArray2, mængdeArray2);
-        this.opretPåfyldninger(new ArrayList<>(List.of(fad3)), LocalDate.of(2022, 7, 17), null, destillatArray3, mængdeArray3);
 
+        List<Påfyldning> påfyldninger1 = this.opretPåfyldninger(new ArrayList<>(List.of(fad1)), LocalDate.of(2019, 10, 25), LocalDate.of(2022, 10, 27), destillatArray1, mængdeArray1);
+        List<Påfyldning> påfyldninger2 = this.opretPåfyldninger(new ArrayList<>(List.of(fad2)), LocalDate.of(2021, 7, 17), LocalDate.of(2024, 7, 17), destillatArray2, mængdeArray2);
+        List<Påfyldning> påfyldninger3 = this.opretPåfyldninger(new ArrayList<>(List.of(fad3)), LocalDate.of(2022, 7, 17), null, destillatArray3, mængdeArray3);
+
+        Lager lager = opretLager("Hammelvej 2", "1000");
+        Lager lager2 = opretLager("Sall whisky lager", "1500");
+
+        lager.tilføjReol(10, 5, 3);
+        lager.tilføjReol(20, 2, 1);
+        lager2.tilføjReol(10, 5, 3);
+        lager2.tilføjReol(20, 2, 1);
+
+        ArrayList<Double> fadMængdeList = new ArrayList<>();
+        fadMængdeList.add(25.0);
+        ArrayList<Double> flaskeMængdeList = new ArrayList<>();
+        flaskeMængdeList.add(40.0);
+
+        Udgivelse udgivelse1 = opretUdgivelse(0, 25000, true, LocalDate.of(2024, 05, 23), 80, 0, "Snævar", null, 8, påfyldninger1, fadMængdeList);
+        Udgivelse udgivelse2 = opretUdgivelse(0.7, 1000, false, LocalDate.of(2024, 04, 22), 78, 100, "Snævar", "Sall whisky kilde", 10, påfyldninger2, flaskeMængdeList);
     }
-
 }
