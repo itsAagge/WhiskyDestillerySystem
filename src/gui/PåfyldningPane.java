@@ -12,8 +12,8 @@ import javafx.scene.layout.HBox;
 public class PåfyldningPane extends GridPane {
     private ListView<Påfyldning> lvwPåfyldninger = new ListView<>();
     private TextArea txaPåfyldningsBeskrivelse = new TextArea();
-    private Button btnOpretPåfyldning = new Button("Opret");
-    private Button btnFlytPåfyldning = new Button("Flyt");
+    private Button btnOpretPåfyldning = new Button("Påfyld fad");
+    private Button btnFlytPåfyldning = new Button("Flyt påfyldning");
     private Button btnPrintPåfyldning = new Button("Print beskrivelse");
     private Controller controller;
 
