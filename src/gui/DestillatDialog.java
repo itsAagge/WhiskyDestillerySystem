@@ -28,7 +28,7 @@ public class DestillatDialog extends Stage {
     private ListView<Maltbatch> lvwMaltbatche = new ListView<>();
     private Controller controller;
 
-    private Label lblMængdeTilbage = new Label(0.0 + "L");
+    private Label lblMængdeTilbage = new Label("Mængde tilbage: " + 0.0 + "L");
 
     public DestillatDialog(Destillat destillat) {
         controller = Controller.getController();
@@ -115,7 +115,7 @@ public class DestillatDialog extends Stage {
 
     private void changeMaltbatch() {
         Maltbatch maltbatch = lvwMaltbatche.getSelectionModel().getSelectedItem();
-        lblMængdeTilbage.setText(controller.mængdeTilbageMaltbatch(maltbatch)  + "L");
+        lblMængdeTilbage.setText("Mængde tilbage: " + controller.mængdeTilbageMaltbatch(maltbatch)  + "L");
     }
 
     private void gemAction() {
