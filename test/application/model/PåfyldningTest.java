@@ -74,7 +74,7 @@ class PåfyldningTest {
         Maltbatch maltbatch1 = controller.opretMaltbatch(200, LocalDate.of(2023, 12, 1), LocalDate.of(2023,12,12), "gær1", korn1);
         Maltbatch maltbatch2 = controller.opretMaltbatch(200, LocalDate.of(2023, 12, 12), LocalDate.of(2023,12,25), "gær1", korn2);
         Destillat destillat1 = controller.opretDestillat("1", 200, 80.5, "Snæver", "Tørv", "Smager godt", LocalDate.of(2023,12,24), maltbatch1);
-        Destillat destillat2 = controller.opretDestillat("2", 300, 78.7, "Snævar", null, "Smager dårligt", LocalDate.of(2023, 12, 30), maltbatch2);
+        Destillat destillat2 = controller.opretDestillat("2", 200, 78.7, "Snævar", null, "Smager dårligt", LocalDate.of(2023, 12, 30), maltbatch2);
         destillater.add(destillat1);
         destillater.add(destillat2);
         mængder.add(100.0);

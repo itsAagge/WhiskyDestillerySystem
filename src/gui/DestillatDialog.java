@@ -2,7 +2,9 @@ package gui;
 
 import application.controller.Controller;
 import application.model.Destillat;
+import application.model.Lager;
 import application.model.Maltbatch;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -25,6 +27,8 @@ public class DestillatDialog extends Stage {
     private ComboBox<String> comboBoxMedarbejdere = new ComboBox<>();
     private ListView<Maltbatch> lvwMaltbatche = new ListView<>();
     private Controller controller;
+
+    private Label lblMængdeTilbage = new Label(0.0 + "L");
 
     public DestillatDialog(Destillat destillat) {
         controller = Controller.getController();
@@ -90,19 +94,28 @@ public class DestillatDialog extends Stage {
 
         Label lblMaltbatche = new Label("Maltbatches");
         pane.add(lblMaltbatche,3,0);
-        pane.add(lvwMaltbatche,3,1,1,6);
+        pane.add(lvwMaltbatche,3,1,2,6);
         lvwMaltbatche.setPrefHeight(180);
         lvwMaltbatche.getItems().setAll(controller.getAlleMaltbatche());
+        ChangeListener<Maltbatch> maltbatchChangeListener = (observableValue, oldValue, newValue) -> this.changeMaltbatch();
+        lvwMaltbatche.getSelectionModel().selectedItemProperty().addListener(maltbatchChangeListener);
 
         if(this.destillat != null) {
             hentDestillatData();
         }
 
+        pane.add(lblMængdeTilbage, 3,7);
+
         Button btnGem = new Button("Gem");
-        pane.add(btnGem,3,7);
+        pane.add(btnGem,4,7);
         pane.setHalignment(btnGem, HPos.RIGHT);
 
         btnGem.setOnAction(event -> gemAction());
+    }
+
+    private void changeMaltbatch() {
+        Maltbatch maltbatch = lvwMaltbatche.getSelectionModel().getSelectedItem();
+        lblMængdeTilbage.setText(controller.mængdeTilbageMaltbatch(maltbatch)  + "L");
     }
 
     private void gemAction() {
@@ -114,6 +127,12 @@ public class DestillatDialog extends Stage {
         LocalDate destilleringsdato = datePicker.getValue();
         String medarbejder = null;
         Maltbatch maltbatch = null;
+        double mængdeIDestillat = 0;
+
+        if (destillat != null) {
+            mængdeIDestillat = destillat.getMængdeL();
+        }
+
 
         if(txfSpiritBatchNr.getText().isEmpty()) {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive et Spirit Batch Nr.");
@@ -127,7 +146,10 @@ public class DestillatDialog extends Stage {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en dato");
         } else if(lvwMaltbatche.getSelectionModel().isEmpty()) {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge et maltbatch");
-        } else {
+        } else if (controller.mængdeTilbageMaltbatch(lvwMaltbatche.getSelectionModel().getSelectedItem()) < Double.parseDouble(txfMængde.getText()) - mængdeIDestillat) {
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ikke nok tilbage af maltbatchet");
+        }
+        else {
             if(!txfRygemateriale.getText().isEmpty()) {
                 rygemateriale = txfRygemateriale.getText().trim();
             }

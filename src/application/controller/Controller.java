@@ -34,14 +34,19 @@ public class Controller {
     }
 
     public Destillat opretDestillat(String spiritBatchNr, double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato, Maltbatch maltbatch) {
-        Destillat destillat = new Destillat(spiritBatchNr, mængdeL, alkoholprocent, medarbejder, rygemateriale, kommentar, destilleringsdato, maltbatch);
-        storage.tilføjDestillat(destillat);
-        return destillat;
+        if (mængdeL > this.mængdeTilbageMaltbatch(maltbatch)) {
+            throw new IllegalArgumentException("Der er ikke nok maltbatch tilbage");
+        } else {
+            Destillat destillat = new Destillat(spiritBatchNr, mængdeL, alkoholprocent, medarbejder, rygemateriale, kommentar, destilleringsdato, maltbatch);
+            storage.tilføjDestillat(destillat);
+            return destillat;
+        }
     }
 
     //Todo: Finde ud af, om opret og opdater burde være 1 eller 2 metoder
     public Destillat opdaterDestillat(Destillat destillat, String spiritBatchNr, double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato, Maltbatch maltbatch) {
-        if(destillat == null || spiritBatchNr == null || mængdeL == 0.0 || alkoholprocent == 0.0 || medarbejder == null || destilleringsdato == null || maltbatch == null) throw new IllegalArgumentException("Information mangler eller er null. Kun String rygemateriale og String kommentar må være null.");
+        if (destillat == null || spiritBatchNr == null || mængdeL == 0.0 || alkoholprocent == 0.0 || medarbejder == null || destilleringsdato == null || maltbatch == null)
+            throw new IllegalArgumentException("Information mangler eller er null. Kun String rygemateriale og String kommentar må være null.");
         else {
             destillat.setSpiritBatchNr(spiritBatchNr);
             destillat.setMængdeL(mængdeL);
@@ -63,7 +68,8 @@ public class Controller {
 
     //Todo: Finde ud af, om opret og opdater burde være 1 eller 2 metoder
     public Fad opdaterFad(Fad fad, String fraLand, String tidligereIndhold, int størrelseL, String træType, double alderAfTidligereIndhold, String leverandør) {
-        if(fad == null || fraLand == null || størrelseL == 0 || træType == null || leverandør == null) throw new IllegalArgumentException("Information mangler eller er null. Kun String tidligereIndhold og double alderAfTidligereIndhold må være null/0.0");
+        if (fad == null || fraLand == null || størrelseL == 0 || træType == null || leverandør == null)
+            throw new IllegalArgumentException("Information mangler eller er null. Kun String tidligereIndhold og double alderAfTidligereIndhold må være null/0.0");
         else {
             fad.setFraLand(fraLand);
             fad.setLeverandør(leverandør);
@@ -82,9 +88,13 @@ public class Controller {
     }
 
     public Maltbatch opretMaltbatch(double mængdeL, LocalDate gæringStart, LocalDate gæringSlut, String gærType, Korn korn) {
-        Maltbatch maltbatch = new Maltbatch(mængdeL, gæringStart, gæringSlut, gærType, korn);
-        storage.tilføjMaltBatch(maltbatch);
-        return maltbatch;
+        if (mængdeL > mængdeTilbageKorn(korn)) {
+            throw new IllegalArgumentException("Der er ikke nok korn tilbage");
+        } else {
+            Maltbatch maltbatch = new Maltbatch(mængdeL, gæringStart, gæringSlut, gærType, korn);
+            storage.tilføjMaltBatch(maltbatch);
+            return maltbatch;
+        }
     }
 
     private Påfyldning opretPåfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad, ArrayList<Destillat> destillater, ArrayList<Double> mængder) {
@@ -111,19 +121,24 @@ public class Controller {
         boolean alleFadeErTomme = true;
         double fadPladsTotalt = 0.0;
         for (Fad fad : fade) {
-            if(!fad.erAktiv()) alleFadeErAktive = false;
-            if(fad.erFyldt()) alleFadeErTomme = false;
+            if (!fad.erAktiv()) alleFadeErAktive = false;
+            if (fad.erFyldt()) alleFadeErTomme = false;
             fadPladsTotalt += fad.getStørrelseL();
         }
 
         //Kaster fejlmeldinger, hvis noget er galt, og opretter påfyldningerne, hvis intet er galt
-        if(mængdeIAlt > fadPladsTotalt) throw new IllegalArgumentException("Der er ikke nok plads i fadene til denne mængde destillater");
-        else if(!derErNokDestillatTilbage) throw new IllegalArgumentException("Der er ikke nok destillat tilbage");
-        else if (mængder.size() != destillater.size()) throw new IllegalArgumentException("Antal mængder og destillater er ikke det samme");
-        else if (mængder.isEmpty()) throw new IllegalArgumentException("Der er ikke tilføjet en mængde og et destillat");
-        else if(!alleFadeErAktive) throw new IllegalArgumentException("Et eller flere valgte fade er deaktiveret, og kan derfor ikke bruges");
-        else if(!alleFadeErTomme) throw new IllegalArgumentException("Et eller flere fade er allerede fyldte");
-        else if(færdigDato != null && færdigDato.isBefore(påfyldningsDato.plusYears(3))) throw new IllegalArgumentException("Hvis færdigdato bruges, skal denne være mindst 3 år efter påfyldningsdatoen");
+        if (mængdeIAlt > fadPladsTotalt)
+            throw new IllegalArgumentException("Der er ikke nok plads i fadene til denne mængde destillater");
+        else if (!derErNokDestillatTilbage) throw new IllegalArgumentException("Der er ikke nok destillat tilbage");
+        else if (mængder.size() != destillater.size())
+            throw new IllegalArgumentException("Antal mængder og destillater er ikke det samme");
+        else if (mængder.isEmpty())
+            throw new IllegalArgumentException("Der er ikke tilføjet en mængde og et destillat");
+        else if (!alleFadeErAktive)
+            throw new IllegalArgumentException("Et eller flere valgte fade er deaktiveret, og kan derfor ikke bruges");
+        else if (!alleFadeErTomme) throw new IllegalArgumentException("Et eller flere fade er allerede fyldte");
+        else if (færdigDato != null && færdigDato.isBefore(påfyldningsDato.plusYears(3)))
+            throw new IllegalArgumentException("Hvis færdigdato bruges, skal denne være mindst 3 år efter påfyldningsdatoen");
         else {
             for (Fad fad : fade) {
                 double størrelsesforhold = fad.getStørrelseL() / fadPladsTotalt; //Beregner fadets procentvise størrelse af alle fadene
@@ -147,9 +162,12 @@ public class Controller {
                 derErNokPåfyldningTilbage = false;
             }
         }
-        if(!derErNokPåfyldningTilbage) throw new IllegalArgumentException("Der er ikke nok påfyldning tilbage til dette");
-        else if (mængder.size() != påfyldninger.size()) throw new IllegalArgumentException("Antal mængder og påfyldninger er ikke det samme");
-        else if (mængder.isEmpty()) throw new IllegalArgumentException("Der er ikke tilføjet en mængde og en påfyldning");
+        if (!derErNokPåfyldningTilbage)
+            throw new IllegalArgumentException("Der er ikke nok påfyldning tilbage til dette");
+        else if (mængder.size() != påfyldninger.size())
+            throw new IllegalArgumentException("Antal mængder og påfyldninger er ikke det samme");
+        else if (mængder.isEmpty())
+            throw new IllegalArgumentException("Der er ikke tilføjet en mængde og en påfyldning");
         else {
             Udgivelse udgivelse = new Udgivelse(unitStørrelse, prisPerUnit, erFad, udgivelsesDato, alkoholProcent, vandMængdeL, medarbejder, vandetsOprindelse, angelShare, påfyldninger, mængder);
             storage.tilføjUdgivelse(udgivelse);
@@ -180,8 +198,8 @@ public class Controller {
         return storage.getFade();
     }
 
-    public  List<Fad> getFadeUdenHylde() {
-       ArrayList<Fad> fadeUdenHylde = new ArrayList<>();
+    public List<Fad> getFadeUdenHylde() {
+        ArrayList<Fad> fadeUdenHylde = new ArrayList<>();
         for (Fad fad : storage.getFade()) {
             if (fad.getHylde() == null) {
                 fadeUdenHylde.add(fad);
@@ -200,7 +218,9 @@ public class Controller {
         return ledigeFade;
     }
 
-    public List<Maltbatch> getAlleMaltbatche() { return storage.getMaltbatche(); }
+    public List<Maltbatch> getAlleMaltbatche() {
+        return storage.getMaltbatche();
+    }
 
     public List<Destillat> getAlleDestillater() {
         return storage.getDestillater();
@@ -215,6 +235,7 @@ public class Controller {
         }
         return ugensDestillater;
     }
+
     public List<Udgivelse> getUdgivelser() {
         return storage.getUdgivelser();
     }
@@ -222,6 +243,7 @@ public class Controller {
     public List<Korn> getKorn() {
         return storage.getKornList();
     }
+
     public List<Lager> getLagre() {
         return storage.getLagre();
     }
@@ -251,7 +273,8 @@ public class Controller {
     }
 
     public void flytFadePåLageret(List<Fad> fade, Hylde hylde) {
-        if (hylde != null && !hylde.erLedigPlads(fade.size())) throw new IllegalArgumentException("Der er ikke nok plads på denne hylde");
+        if (hylde != null && !hylde.erLedigPlads(fade.size()))
+            throw new IllegalArgumentException("Der er ikke nok plads på denne hylde");
         else {
             for (Fad fad : fade) {
                 if (fad.getHylde() != null) {
@@ -284,7 +307,7 @@ public class Controller {
     public ArrayList<Påfyldning> getPåfyldninger() {
         ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
         for (Fad fad : this.getAlleFade()) {
-            if(fad.erFyldt()) {
+            if (fad.erFyldt()) {
                 påfyldninger.add(fad.getPåfyldninger().getLast());
             }
         }
@@ -294,7 +317,7 @@ public class Controller {
     public List<Påfyldning> getMindst3ÅrsIkkeTommePåfyldninger(LocalDate fraDato) {
         List<Påfyldning> fundnePåfyldninger = new ArrayList<>();
         for (Påfyldning påfyldning : getPåfyldninger()) {
-            if(påfyldning.getPåfyldningsDato().isBefore(fraDato.minusYears(3)) && påfyldning.mængdeTilbage() != 0) {
+            if (påfyldning.getPåfyldningsDato().isBefore(fraDato.minusYears(3)) && påfyldning.mængdeTilbage() != 0) {
                 fundnePåfyldninger.add(påfyldning);
             }
         }
@@ -318,14 +341,15 @@ public class Controller {
             }
         }
         for (int i = 0; i < foundStrategies.size(); i++) {
-            foundStrategies.set(i, foundStrategies.get(i).substring(0,foundStrategies.get(i).length()-11));
+            foundStrategies.set(i, foundStrategies.get(i).substring(0, foundStrategies.get(i).length() - 11));
         }
         return foundStrategies;
     }
 
     public Logger getLoggerStrategy(String LoggerType) {
         Logger logger = null;
-        if (LoggerType == null || LoggerType.isEmpty()) throw new IllegalArgumentException("Denne type logger eksisterer ikke");
+        if (LoggerType == null || LoggerType.isEmpty())
+            throw new IllegalArgumentException("Denne type logger eksisterer ikke");
         else {
             try {
                 String className = "application.model.output." + LoggerType + "Logger";
@@ -337,6 +361,28 @@ public class Controller {
         return logger;
     }
 
+    public double mængdeTilbageKorn(Korn korn) {
+        double mængdeTilbage = korn.getMængdeKg();
+        for (Maltbatch maltbatch : storage.getMaltbatche()) {
+            Korn brugteKorn = maltbatch.getKorn();
+            if (brugteKorn.equals(korn)) {
+                mængdeTilbage -= maltbatch.getMængdeL();
+            }
+        }
+        return mængdeTilbage;
+    }
+
+    public double mængdeTilbageMaltbatch(Maltbatch maltbatch) {
+        double mængdeTilbage = maltbatch.getMængdeL();
+        for (Destillat destillat : storage.getDestillater()) {
+            Maltbatch brugtMaltbatch = destillat.getMaltbatch();
+            if (brugtMaltbatch.equals(maltbatch)) {
+                mængdeTilbage -= destillat.getMængdeL();
+            }
+        }
+        return mængdeTilbage;
+    }
+
     public void initContent() {
         Fad fad1 = this.opretFad("Spanien", "Cherry", 30, "Eg", 9.5, "El egetræsfadfirma");
         Fad fad2 = this.opretFad("Spanien", "Cherry", 250, "Eg", 1.0, "El egetræsfadfirma");
@@ -344,11 +390,11 @@ public class Controller {
         Fad fad4 = this.opretFad("Spanien", "Bourbon", 250, "Eg", 5, "El egetræsfadfirma");
         Fad fad5 = this.opretFad("Spanien", "Bourbon", 100, "Eg", 9.5, "El fakefadefirma");
 
-        Korn byg = this.opretKorn("Mark 1", "Byg", LocalDate.of(2019, 8, 20), 200);
-        this.opretKorn("Mark 2", "Byg", LocalDate.of(2019, 8, 23), 200);
+        Korn byg = this.opretKorn("Mark 1", "Byg", LocalDate.of(2019, 8, 20), 4000);
+        Korn byg2 = this.opretKorn("Mark 2", "Byg", LocalDate.of(2019, 8, 23), 4000);
 
-        Maltbatch maltbatch1 = this.opretMaltbatch(100, LocalDate.of(2019, 12, 15), LocalDate.of(2019, 12, 17), "Gær", byg);
-        Maltbatch maltbatch2 = this.opretMaltbatch(100, LocalDate.of(2019, 12, 15), LocalDate.of(2019, 12, 19), "Special gær", byg);
+        Maltbatch maltbatch1 = this.opretMaltbatch(2000, LocalDate.of(2019, 12, 15), LocalDate.of(2019, 12, 17), "Gær", byg);
+        Maltbatch maltbatch2 = this.opretMaltbatch(2000, LocalDate.of(2019, 12, 15), LocalDate.of(2019, 12, 19), "Special gær", byg2);
 
         Destillat destillat1 = this.opretDestillat("NM77P", 500, 70, "Snævar Njáll Albertsson", null, null, LocalDate.of(2020, 1, 17), maltbatch1);
         Destillat destillat2 = this.opretDestillat("NM78P", 500, 70, "Ingus Brikmanis", null, "Kommentar2", LocalDate.of(2020, 1, 19), maltbatch1);
@@ -375,6 +421,8 @@ public class Controller {
         this.opretPåfyldninger(new ArrayList<>(List.of(fad1)), LocalDate.of(2019, 10, 25), LocalDate.of(2022, 10, 27), destillatArray1, mængdeArray1);
         this.opretPåfyldninger(new ArrayList<>(List.of(fad2)), LocalDate.of(2021, 7, 17), LocalDate.of(2024, 7, 17), destillatArray2, mængdeArray2);
         this.opretPåfyldninger(new ArrayList<>(List.of(fad3)), LocalDate.of(2022, 7, 17), null, destillatArray3, mængdeArray3);
+
+
     }
 
 }

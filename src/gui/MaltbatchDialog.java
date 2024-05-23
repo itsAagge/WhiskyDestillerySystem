@@ -2,6 +2,8 @@ package gui;
 
 import application.controller.Controller;
 import application.model.Korn;
+import application.model.Maltbatch;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -26,6 +28,7 @@ public class MaltbatchDialog extends Stage {
     private DatePicker dpGærringStart = new DatePicker();
     private DatePicker dpGærringSlut = new DatePicker();
     private TextField txfGærType = new TextField();
+    private Label lblMængdeTilbage = new Label("Korn tilbage: " + 0.0 + "Kg");
     private Controller controller;
 
 
@@ -50,35 +53,45 @@ public class MaltbatchDialog extends Stage {
         pane.setGridLinesVisible(false);
 
         Label lblAlleKorn = new Label("Alt Korn");
-        pane.add(lblAlleKorn, 0,0);
-        pane.add(lvwKorn, 0,1,1,4);
+        pane.add(lblAlleKorn, 0, 0);
+        pane.add(lvwKorn, 0, 1, 1, 4);
         lvwKorn.setPrefWidth(250);
         lvwKorn.setPrefHeight(300);
         lvwKorn.getItems().setAll(controller.getKorn());
 
+        pane.add(lblMængdeTilbage, 0, 5);
+        ChangeListener<Korn> kornChangeListener = (observableValue, oldValue, newValue) -> this.changeKorn();
+        lvwKorn.getSelectionModel().selectedItemProperty().addListener(kornChangeListener);
+
+
         Label lblMængdeL = new Label("Mængde i liter");
-        pane.add(lblMængdeL, 1,0);
-        pane.add(txfMængdeL, 1,1);
+        pane.add(lblMængdeL, 1, 0);
+        pane.add(txfMængdeL, 1, 1);
 
         Label lblGærringsStartDato = new Label("Gærrings startdato");
-        pane.add(lblGærringsStartDato, 1,2);
-        pane.add(dpGærringStart, 1,3);
+        pane.add(lblGærringsStartDato, 1, 2);
+        pane.add(dpGærringStart, 1, 3);
         dpGærringStart.setEditable(false);
 
         Label lblGærringsSlutDato = new Label("Gærring slutdato");
-        pane.add(lblGærringsSlutDato, 2,2);
-        pane.add(dpGærringSlut,2,3);
+        pane.add(lblGærringsSlutDato, 2, 2);
+        pane.add(dpGærringSlut, 2, 3);
         dpGærringSlut.setEditable(false);
 
         Label lblGærType = new Label("Gærtype");
-        pane.add(lblGærType, 2,0);
-        pane.add(txfGærType, 2,1);
+        pane.add(lblGærType, 2, 0);
+        pane.add(txfGærType, 2, 1);
 
         Button btnRegistrer = new Button("Registrer");
-        pane.add(btnRegistrer,2,4);
+        pane.add(btnRegistrer, 2, 4);
         pane.setValignment(btnRegistrer, VPos.BOTTOM);
         pane.setHalignment(btnRegistrer, HPos.RIGHT);
         btnRegistrer.setOnAction(actionEvent -> this.registrerAction());
+    }
+
+    private void changeKorn() {
+        Korn korn = lvwKorn.getSelectionModel().getSelectedItem();
+        lblMængdeTilbage.setText("Mængde tilbage: " + controller.mængdeTilbageKorn(korn) + "Kg");
     }
 
     private void registrerAction() {
@@ -93,6 +106,8 @@ public class MaltbatchDialog extends Stage {
                 controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Ingen slutdato angivet");
             } else if (txfGærType.getText().isEmpty()) {
                 controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Gærtype skal angives");
+            } else if (controller.mængdeTilbageKorn(lvwKorn.getSelectionModel().getSelectedItem()) < Double.parseDouble(txfMængdeL.getText().trim())) {
+                controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Der er ikke nok korn tilbage");
             } else {
                 Korn korn = lvwKorn.getSelectionModel().getSelectedItem();
                 double mængdeL = Double.parseDouble(txfMængdeL.getText().trim());
