@@ -25,7 +25,7 @@ public class IndstillingPane extends GridPane {
         Label lblOutputStrategi = new Label("Vælg output af beskrivelser");
         this.add(lblOutputStrategi, 0, 0);
         this.add(comboBoxOutputStrategi, 0, 1);
-        comboBoxOutputStrategi.getItems().setAll(controller.getOutputStrategies());
+        comboBoxOutputStrategi.getItems().setAll(controller.getAllOutputStrategies());
         ChangeListener<String> changeListenerOutputStrategi = (observableValue, s, t1) -> this.changeOutputStrategi();
         comboBoxOutputStrategi.getSelectionModel().selectedItemProperty().addListener(changeListenerOutputStrategi);
 

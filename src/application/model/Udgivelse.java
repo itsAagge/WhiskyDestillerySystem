@@ -68,7 +68,6 @@ public class Udgivelse implements Logable {
         String s = "Udgivelse " + this.udgivelsesNr;
         if (erFad) {
             Fad fad = null;
-            //TODO: Finde ud af, om der er en bedre metode til dette
             for (Påfyldning påfyldning : påfyldningsMængder.keySet()) { //Der er kun 1 påfyldning i HashMappet, når udgivelsen er et fad
                 fad = påfyldning.getFade().getLast();
             }
