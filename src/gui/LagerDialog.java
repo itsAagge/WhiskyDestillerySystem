@@ -1,8 +1,6 @@
 package gui;
 
 import application.controller.Controller;
-import application.model.Lager;
-import application.model.Reol;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -20,7 +18,6 @@ public class LagerDialog extends Stage {
     private TextField txfAdresse = new TextField();
     private TextField txfKvadrat = new TextField();
     private Controller controller;
-
 
     public LagerDialog() {
         controller = Controller.getController();
@@ -43,19 +40,17 @@ public class LagerDialog extends Stage {
         pane.setGridLinesVisible(false);
 
         Label lblAdresse = new Label("Lager adresse");
-        pane.add(lblAdresse, 0,0);
-        pane.add(txfAdresse, 0,1);
+        pane.add(lblAdresse, 0, 0);
+        pane.add(txfAdresse, 0, 1);
 
         Label lblKvadratMeter = new Label("Lagers kvadratmeter areal");
-        pane.add(lblKvadratMeter, 1,0);
-        pane.add(txfKvadrat, 1,1);
+        pane.add(lblKvadratMeter, 1, 0);
+        pane.add(txfKvadrat, 1, 1);
 
         Button btnOpret = new Button("Opret");
-        pane.add(btnOpret,1,5);
+        pane.add(btnOpret, 1, 5);
         pane.setHalignment(btnOpret, HPos.RIGHT);
         btnOpret.setOnAction(actionEvent -> this.opretAction());
-
-
     }
 
     private void opretAction() {
@@ -70,7 +65,5 @@ public class LagerDialog extends Stage {
             controller.opretLager(adresse, kvadratMeter);
             this.close();
         }
-
     }
-
 }

@@ -71,7 +71,6 @@ public class FlytFadPåLagerDialog extends Stage {
         ChangeListener<Reol> reolChangeListener = (observableValue, oldValue, newValue) -> this.changeReol();
         cBreol.getSelectionModel().selectedItemProperty().addListener(reolChangeListener);
 
-
         Label lblHylde = new Label("Vælg hylde nr.");
         pane.add(lblHylde, 1, 4);
         pane.add(cBhylde, 1, 5);
@@ -103,7 +102,6 @@ public class FlytFadPåLagerDialog extends Stage {
 
     private void changeReol() {
         Reol reol = cBreol.getSelectionModel().getSelectedItem();
-
         if (reol != null) {
             cBhylde.getItems().setAll(controller.getHyldeNumre(reol));
         }
@@ -111,11 +109,9 @@ public class FlytFadPåLagerDialog extends Stage {
 
     private void changeLager() {
         Lager lager = cBLager.getSelectionModel().getSelectedItem();
-
         if (lager != null) {
             cBreol.getItems().setAll(controller.getReolNumre(lager));
         }
-
     }
 
 

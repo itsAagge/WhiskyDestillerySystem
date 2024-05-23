@@ -41,16 +41,8 @@ public class Udgivelse implements Logable {
     }
 
     //Getters
-    public int getUdgivelsesNr() {
-        return udgivelsesNr;
-    }
-
     public boolean erFad() {
         return erFad;
-    }
-
-    public LocalDate getUdgivelsesDato() {
-        return udgivelsesDato;
     }
 
     public HashMap<Påfyldning, Double> getPåfyldningsMængder() {
@@ -62,8 +54,7 @@ public class Udgivelse implements Logable {
         for (int i = 0; i < påfyldninger.size(); i++) {
             if (mængder.get(i) < 0) {
                 throw new IllegalArgumentException("Mængder må ikke være under 0");
-            }
-            else {
+            } else {
                 this.påfyldningsMængder.put(påfyldninger.get(i), mængder.get(i));
                 påfyldninger.get(i).tilføjUdgivelse(this);
             }
@@ -75,7 +66,7 @@ public class Udgivelse implements Logable {
     public String toString() {
         int size = 0;
         String s = "Udgivelse " + this.udgivelsesNr;
-        if(erFad) {
+        if (erFad) {
             Fad fad = null;
             //TODO: Finde ud af, om der er en bedre metode til dette
             for (Påfyldning påfyldning : påfyldningsMængder.keySet()) { //Der er kun 1 påfyldning i HashMappet, når udgivelsen er et fad
@@ -87,7 +78,7 @@ public class Udgivelse implements Logable {
             for (Påfyldning påfyldning : påfyldningsMængder.keySet()) {
                 s += påfyldning.getPåfyldningsNr();
                 size++;
-                if(size < this.påfyldningsMængder.size()) {
+                if (size < this.påfyldningsMængder.size()) {
                     s += ", ";
                 }
             }
@@ -99,7 +90,7 @@ public class Udgivelse implements Logable {
     @Override
     public String getBeskrivelse() {
         String s = "Udgivelse nr. " + this.udgivelsesNr + ", udgivet d. " + this.udgivelsesDato + ". Angels share på i denne udgivelse blev: " + angelsShare + "%.";
-        if(erFad) {
+        if (erFad) {
             Fad fad = null;
             //TODO: Finde ud af, om der er en bedre metode til dette
             for (Påfyldning påfyldning : påfyldningsMængder.keySet()) { //Der er kun 1 påfyldning i HashMappet, når udgivelsen er et fad
@@ -111,7 +102,7 @@ public class Udgivelse implements Logable {
         }
         s += "\nAlkoholprocenten i denne udgivelse er " + this.alkoholProcent;
         s += " Udgivelsen er ";
-        if(this.vandMængdeL == 0) {
+        if (this.vandMængdeL == 0) {
             s += "cask strength, og der er " + this.getTotalMængdePåfyldning() + " liter i udgivelsen.";
         } else {
             s += "single malt, og der er brugt " + this.vandMængdeL + " liter vand fra " + vandetsOprindelse + ", til at blande de " + this.getTotalMængdePåfyldning() + " liter whisky op med.";
@@ -133,12 +124,11 @@ public class Udgivelse implements Logable {
         return mængdeTotal;
     }
 
-
     //Beregner antallet af flasker ud fra den totale mængde af påfyldning og mængden af vand,
     //divideret med unit størrelsen
     private int beregnAntalFlasker() {
         double totalMængdePåfyldning = getTotalMængdePåfyldning();
-        return (int) (((totalMængdePåfyldning * (1 - angelsShare /100)) + vandMængdeL) / unitStørrelse);
+        return (int) (((totalMængdePåfyldning * (1 - angelsShare / 100)) + vandMængdeL) / unitStørrelse);
     }
 
     //Returnerer et standardiseret filnavn for udgivelser

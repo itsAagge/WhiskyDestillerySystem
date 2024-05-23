@@ -9,7 +9,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.time.LocalDate;
 
 public class KornDialog extends Stage {
@@ -61,8 +60,6 @@ public class KornDialog extends Stage {
         pane.add(btnRegistrer, 1,4);
         pane.setHalignment(btnRegistrer, HPos.RIGHT);
         btnRegistrer.setOnAction(actionEvent -> this.registrerKorn());
-
-
 
     }
 

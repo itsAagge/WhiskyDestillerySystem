@@ -13,7 +13,6 @@ public class Påfyldning implements Logable {
     private ArrayList<Fad> fade;
     private ArrayList<Udgivelse> udgivelser;
 
-
     //Constructor
     public Påfyldning(LocalDate påfyldningsDato, LocalDate færdigDato, Fad førsteFad) {
         antalPåfyldninger++;
@@ -99,10 +98,10 @@ public class Påfyldning implements Logable {
     @Override
     public String getBeskrivelse() {
         String s;
-            s = "Sall Whisky påfyldning nr. " + this.påfyldningsNr;
-        if(this.destillatMængder.size() > 1) {
+        s = "Sall Whisky påfyldning nr. " + this.påfyldningsNr;
+        if (this.destillatMængder.size() > 1) {
             s += "\nDenne påfyldning består af " + this.destillatMængder.size() + " destillater." +
-                "\nDisse er:";
+                    "\nDisse er:";
         } else {
             s += "\nDenne påfyldning består af 1 destillat:";
         }
@@ -110,7 +109,7 @@ public class Påfyldning implements Logable {
             s += "\n- Destillat " + destillat.getSpiritBatchNr();
             s += "\n" + destillat.getBeskrivelse();
         }
-        if(this.fade.size() > 1) {
+        if (this.fade.size() > 1) {
             s += "\nPåfyldningen har ligget på " + this.fade.size() + " fade.";
         } else {
             s += "\nPåfyldningen har ligget på 1 fad:";

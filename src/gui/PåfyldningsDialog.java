@@ -3,7 +3,6 @@ package gui;
 import application.controller.Controller;
 import application.model.Destillat;
 import application.model.Fad;
-import application.model.Påfyldning;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;

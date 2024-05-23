@@ -17,7 +17,7 @@ class PåfyldningTest {
     private Controller controller = Controller.getTestController();
     private List<Påfyldning> påfyldninger;
     private List<Fad> fade;
-    private  Fad fad;
+    private Fad fad;
 
     @BeforeEach
     void setUp() {
@@ -69,11 +69,11 @@ class PåfyldningTest {
     void tilføjDestillatMedMængde1() {
         ArrayList<Destillat> destillater = new ArrayList<>();
         ArrayList<Double> mængder = new ArrayList<>();
-        Korn korn1 = controller.opretKorn("Mark 1", "Byg",LocalDate.of(2023,11,30), 200);
-        Korn korn2 = controller.opretKorn("Mark 2", "Byg",LocalDate.of(2023,12,10), 200);
-        Maltbatch maltbatch1 = controller.opretMaltbatch(200, LocalDate.of(2023, 12, 1), LocalDate.of(2023,12,12), "gær1", korn1);
-        Maltbatch maltbatch2 = controller.opretMaltbatch(200, LocalDate.of(2023, 12, 12), LocalDate.of(2023,12,25), "gær1", korn2);
-        Destillat destillat1 = controller.opretDestillat("1", 200, 80.5, "Snæver", "Tørv", "Smager godt", LocalDate.of(2023,12,24), maltbatch1);
+        Korn korn1 = controller.opretKorn("Mark 1", "Byg", LocalDate.of(2023, 11, 30), 200);
+        Korn korn2 = controller.opretKorn("Mark 2", "Byg", LocalDate.of(2023, 12, 10), 200);
+        Maltbatch maltbatch1 = controller.opretMaltbatch(200, LocalDate.of(2023, 12, 1), LocalDate.of(2023, 12, 12), "gær1", korn1);
+        Maltbatch maltbatch2 = controller.opretMaltbatch(200, LocalDate.of(2023, 12, 12), LocalDate.of(2023, 12, 25), "gær1", korn2);
+        Destillat destillat1 = controller.opretDestillat("1", 200, 80.5, "Snæver", "Tørv", "Smager godt", LocalDate.of(2023, 12, 24), maltbatch1);
         Destillat destillat2 = controller.opretDestillat("2", 200, 78.7, "Snævar", null, "Smager dårligt", LocalDate.of(2023, 12, 30), maltbatch2);
         destillater.add(destillat1);
         destillater.add(destillat2);
@@ -132,7 +132,7 @@ class PåfyldningTest {
         ArrayList<Double> mængder = new ArrayList<>();
         påfyldninger.add(this.påfyldninger.getFirst());
         mængder.add(125.0);
-        Udgivelse udgivelse = controller.opretUdgivelse(0.7, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", "Sall whisky kilde", 10,påfyldninger, mængder);
+        Udgivelse udgivelse = controller.opretUdgivelse(0.7, 1000, false, LocalDate.of(2026, 12, 24), 80, 100, "Snæver", "Sall whisky kilde", 10, påfyldninger, mængder);
         this.påfyldninger.getFirst().tilføjUdgivelse(udgivelse);
 
         double expected = this.påfyldninger.getFirst().mængdeTilbage();

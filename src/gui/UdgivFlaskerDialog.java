@@ -1,7 +1,6 @@
 package gui;
 
 import application.controller.Controller;
-import application.model.Fad;
 import application.model.Påfyldning;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.HPos;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 
 
 public class UdgivFlaskerDialog extends Stage {
-
     private ComboBox<Påfyldning> cBPåfylninger = new ComboBox<>();
     private TextField txfFlaskeStørrelse = new TextField();
     private DatePicker dpUdgivelsesDato = new DatePicker();
@@ -55,69 +53,70 @@ public class UdgivFlaskerDialog extends Stage {
         pane.setGridLinesVisible(false);
 
         Label lblFlaskeStørrelse = new Label("Flaske størrelse");
-        pane.add(lblFlaskeStørrelse, 0,0);
-        pane.add(txfFlaskeStørrelse, 0,1);
+        pane.add(lblFlaskeStørrelse, 0, 0);
+        pane.add(txfFlaskeStørrelse, 0, 1);
 
         Label lblUdgivelsesDato = new Label("Udgivelses dato");
-        pane.add(lblUdgivelsesDato, 1,0);
-        pane.add(dpUdgivelsesDato, 1,1);
+        pane.add(lblUdgivelsesDato, 1, 0);
+        pane.add(dpUdgivelsesDato, 1, 1);
         dpUdgivelsesDato.setEditable(false);
         dpUdgivelsesDato.setValue(LocalDate.now());
         ChangeListener<LocalDate> changeListenerUdgivelsesdato = (observableValue, localDate, t1) -> this.changeDato();
         dpUdgivelsesDato.valueProperty().addListener(changeListenerUdgivelsesdato);
 
         Label lblPrisPrFlaske = new Label("Pris pr flaske");
-        pane.add(lblPrisPrFlaske, 0,2);
-        pane.add(txfPrisPerFlaske, 0,3);
+        pane.add(lblPrisPrFlaske, 0, 2);
+        pane.add(txfPrisPerFlaske, 0, 3);
 
         Label lblAlkoholProcent = new Label("Alkohol procent");
-        pane.add(lblAlkoholProcent,1,2);
-        pane.add(txfAlkoholProcent,1,3);
+        pane.add(lblAlkoholProcent, 1, 2);
+        pane.add(txfAlkoholProcent, 1, 3);
 
         Label lblVandMængde = new Label("Liter vand tilføjet");
-        pane.add(lblVandMængde, 0,4);
-        pane.add(txfVandMængde, 0,5);
+        pane.add(lblVandMængde, 0, 4);
+        pane.add(txfVandMængde, 0, 5);
 
         Label lblMedarbejder = new Label("Medarbejder");
-        pane.add(lblMedarbejder, 1,4);
-        pane.add(cBMedarbejder, 1,5);
+        pane.add(lblMedarbejder, 1, 4);
+        pane.add(cBMedarbejder, 1, 5);
         cBMedarbejder.getItems().setAll(controller.getMedarbejdere());
-        if (IndstillingPane.erMedarbejderValgt()) cBMedarbejder.getSelectionModel().select(IndstillingPane.getValgtMedarbejder());
+        if (IndstillingPane.erMedarbejderValgt())
+            cBMedarbejder.getSelectionModel().select(IndstillingPane.getValgtMedarbejder());
 
         Label lblVandetsOprindelse = new Label("Vandets oprindelse");
-        pane.add(lblVandetsOprindelse,0,6);
-        pane.add(txfVandetsOprindelse,0,7);
+        pane.add(lblVandetsOprindelse, 0, 6);
+        pane.add(txfVandetsOprindelse, 0, 7);
 
         Label lblPåfyldninger = new Label("Alle påfyldninger");
-        pane.add(lblPåfyldninger, 0,8);
-        pane.add(cBPåfylninger, 0,9);
+        pane.add(lblPåfyldninger, 0, 8);
+        pane.add(cBPåfylninger, 0, 9);
         cBPåfylninger.getItems().setAll(controller.getMindst3ÅrsIkkeTommePåfyldninger(LocalDate.now()));
 
         Label lblAngelsShare = new Label("Angels Share i procent");
-        pane.add(lblAngelsShare, 1,6);
-        pane.add(txfAngelsShare, 1,7);
+        pane.add(lblAngelsShare, 1, 6);
+        pane.add(txfAngelsShare, 1, 7);
 
         Label lblMængde = new Label("Mængde i liter");
-        pane.add(lblMængde, 1,8);
-        pane.add(txfMængdeL, 1,9);
+        pane.add(lblMængde, 1, 8);
+        pane.add(txfMængdeL, 1, 9);
 
         Label lblTilføjetPåfyldninger = new Label("Tilføjet påfyldninger");
-        pane.add(lblTilføjetPåfyldninger, 0,11);
-        pane.add(lvwGemtePåfyldningerMedMængde, 0,12,2,1);
+        pane.add(lblTilføjetPåfyldninger, 0, 11);
+        pane.add(lvwGemtePåfyldningerMedMængde, 0, 12, 2, 1);
         lvwGemtePåfyldningerMedMængde.setPrefWidth(250);
         lvwGemtePåfyldningerMedMængde.setPrefHeight(200);
 
         Button btnTilføjPåfyldning = new Button("Tilføj Påfyldning");
-        pane.add(btnTilføjPåfyldning, 1,11);
+        pane.add(btnTilføjPåfyldning, 1, 11);
         btnTilføjPåfyldning.setOnAction(actionEvent -> this.tilføjAction());
         pane.setHalignment(btnTilføjPåfyldning, HPos.RIGHT);
 
         Button btnOpret = new Button("Opret");
-        pane.add(btnOpret, 0,13);
+        pane.add(btnOpret, 0, 13);
         btnOpret.setOnAction(actionEvent -> this.opretAction());
         pane.setHalignment(btnOpret, HPos.LEFT);
 
-        pane.add(lblLiterTilbage, 0,10);
+        pane.add(lblLiterTilbage, 0, 10);
 
         ChangeListener<Påfyldning> changeListenerFad = (observableValue, fad, t1) -> this.changePåfyldning();
         cBPåfylninger.getSelectionModel().selectedItemProperty().addListener(changeListenerFad);

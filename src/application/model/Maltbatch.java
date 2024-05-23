@@ -10,7 +10,6 @@ public class Maltbatch implements Logable {
     private LocalDate gæringSlut;
     private String gærType;
     private Korn korn;
-    private String vandetsOprindelse;
 
     //Constructor
     public Maltbatch(double mængdeL, LocalDate gæringStart, LocalDate gæringSlut, String gærType, Korn korn) {
@@ -22,7 +21,6 @@ public class Maltbatch implements Logable {
         this.gærType = gærType;
         this.korn = korn;
     }
-
 
     //Getters
     public double getMængdeL() {
@@ -44,7 +42,6 @@ public class Maltbatch implements Logable {
     public Korn getKorn() {
         return korn;
     }
-
 
     //To string og beskriveles metoder
     @Override

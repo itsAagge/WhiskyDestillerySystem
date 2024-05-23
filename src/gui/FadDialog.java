@@ -4,7 +4,6 @@ import application.controller.Controller;
 import application.model.Fad;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -50,35 +49,35 @@ public class FadDialog extends Stage {
         pane.setGridLinesVisible(false);
 
         Label lblLand = new Label("Fra land:");
-        pane.add(lblLand,0,0);
-        pane.add(txfLand,1,0);
+        pane.add(lblLand, 0, 0);
+        pane.add(txfLand, 1, 0);
 
         Label lblFirma = new Label("Leverandør:");
-        pane.add(lblFirma,0,1);
-        pane.add(txfFirma,1,1);
+        pane.add(lblFirma, 0, 1);
+        pane.add(txfFirma, 1, 1);
 
         Label lblTidligereIndhold = new Label("Tidligere indhold:");
-        pane.add(lblTidligereIndhold,0,2);
-        pane.add(txfTidligereIndhold,1,2);
+        pane.add(lblTidligereIndhold, 0, 2);
+        pane.add(txfTidligereIndhold, 1, 2);
 
         Label lblTidligereIndholdAlder = new Label("Tidligere indhold alder:");
-        pane.add(lblTidligereIndholdAlder,0,3);
-        pane.add(txfTidligereIndholdAlder,1,3);
+        pane.add(lblTidligereIndholdAlder, 0, 3);
+        pane.add(txfTidligereIndholdAlder, 1, 3);
 
         Label lblStørrelse = new Label("Størrelse i liter:");
-        pane.add(lblStørrelse,0,4);
-        pane.add(txfStørrelse,1,4);
+        pane.add(lblStørrelse, 0, 4);
+        pane.add(txfStørrelse, 1, 4);
 
         Label lblTræType = new Label("Trætype:");
-        pane.add(lblTræType,0,5);
-        pane.add(txfTræType,1,5);
+        pane.add(lblTræType, 0, 5);
+        pane.add(txfTræType, 1, 5);
 
-        if(this.fad != null) {
+        if (this.fad != null) {
             hentFadData();
         }
 
         Button btnGem = new Button("Gem");
-        pane.add(btnGem,1,6);
+        pane.add(btnGem, 1, 6);
         pane.setHalignment(btnGem, HPos.RIGHT);
 
         btnGem.setOnAction(evnet -> gemAction());
@@ -92,11 +91,11 @@ public class FadDialog extends Stage {
         int størrelseL = 0;
         String træType = null;
 
-        if(txfLand.getText().isEmpty()) {
+        if (txfLand.getText().isEmpty()) {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive et land");
-        } else if(txfFirma.getText().isEmpty()) {
+        } else if (txfFirma.getText().isEmpty()) {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive et leverandør");
-        } else if(txfStørrelse.getText().isEmpty() || txfStørrelse.getText().equals("0")) {
+        } else if (txfStørrelse.getText().isEmpty() || txfStørrelse.getText().equals("0")) {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive antal liter, der er plads til i fadet");
         } else if (txfTræType.getText().isEmpty()) {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at angive en type af træ");
@@ -125,7 +124,7 @@ public class FadDialog extends Stage {
         txfTræType.setText(this.fad.getTræType());
         String tidligereIndhold = this.fad.getTidligereIndhold();
         double tidligereIndholdAlder = this.fad.getAlderAfTidligereIndhold();
-        if(tidligereIndhold != null) {
+        if (tidligereIndhold != null) {
             txfTidligereIndhold.setText(tidligereIndhold);
             txfTidligereIndholdAlder.setText(tidligereIndholdAlder + "");
         }

@@ -1,7 +1,6 @@
 package application.controller;
 
 import application.model.*;
-import application.model.output.FilLogger;
 import application.model.output.Logger;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
@@ -421,7 +420,6 @@ public class Controller {
         this.opretPåfyldninger(new ArrayList<>(List.of(fad1)), LocalDate.of(2019, 10, 25), LocalDate.of(2022, 10, 27), destillatArray1, mængdeArray1);
         this.opretPåfyldninger(new ArrayList<>(List.of(fad2)), LocalDate.of(2021, 7, 17), LocalDate.of(2024, 7, 17), destillatArray2, mængdeArray2);
         this.opretPåfyldninger(new ArrayList<>(List.of(fad3)), LocalDate.of(2022, 7, 17), null, destillatArray3, mængdeArray3);
-
 
     }
 

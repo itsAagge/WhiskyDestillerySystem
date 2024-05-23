@@ -153,7 +153,7 @@ class ControllerTest {
     @DisplayName("Færdig dato er under 3 efter påfyldningsdato")
     void opretPåfyldning8() {
         ArrayList<Fad> fadeArrayList = new ArrayList<>(List.of(new Fad("Spanien", "Sherry", 1000, "Eg", 3, "Proveedor")));
-        Throwable excepction = assertThrows(IllegalArgumentException.class, () -> controller.opretPåfyldninger(fadeArrayList, LocalDate.of(2021, 01, 01), LocalDate.of(2022, 01,01),destillater, destillatMængder));
+        Throwable excepction = assertThrows(IllegalArgumentException.class, () -> controller.opretPåfyldninger(fadeArrayList, LocalDate.of(2021, 01, 01), LocalDate.of(2022, 01, 01), destillater, destillatMængder));
         assertEquals("Hvis færdigdato bruges, skal denne være mindst 3 år efter påfyldningsdatoen", excepction.getMessage());
 
     }

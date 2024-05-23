@@ -51,7 +51,6 @@ public class KlarWhiskeyDialog extends Stage {
         pane.setHalignment(btnClose, HPos.RIGHT);
         btnClose.setOnAction(event -> this.closeAction());
     }
-
     private void closeAction() {
         this.close();
     }

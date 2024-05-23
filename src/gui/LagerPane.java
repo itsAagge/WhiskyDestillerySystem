@@ -3,7 +3,6 @@ package gui;
 import application.controller.Controller;
 import application.model.*;
 import javafx.beans.value.ChangeListener;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -13,7 +12,6 @@ import javafx.scene.layout.HBox;
 import java.util.List;
 
 public class LagerPane extends GridPane {
-
     private ListView<Lager> lvwLager = new ListView<>();
     private ListView<Reol> lvwReol = new ListView<>();
     private ListView<Hylde> lvwHylde = new ListView<>();
@@ -78,7 +76,8 @@ public class LagerPane extends GridPane {
     List<Fad> fade = lvwFad.getSelectionModel().getSelectedItems();
 
     private void flytFadAction() {
-        if (controller.getLagre().isEmpty() || controller.getLagre().getFirst().getReoler().isEmpty()) controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at oprette et lager eller tilføje reoler til lagret");
+        if (controller.getLagre().isEmpty() || controller.getLagre().getFirst().getReoler().isEmpty())
+            controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at oprette et lager eller tilføje reoler til lagret");
         else {
             if (fade != null) {
                 FlytFadPåLagerDialog flytFadPåLagerDialog = new FlytFadPåLagerDialog(fade);
@@ -106,7 +105,6 @@ public class LagerPane extends GridPane {
             reolDialog.showAndWait();
             lvwReol.getItems().setAll(lager.getReoler());
         }
-
     }
 
     private void changeHylde() {
@@ -131,7 +129,6 @@ public class LagerPane extends GridPane {
             lvwReol.getItems().setAll(lager.getReoler());
             btnTilføjReol.setDisable(false);
         }
-
     }
 
     private void opretAction() {

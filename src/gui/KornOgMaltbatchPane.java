@@ -29,33 +29,33 @@ public class KornOgMaltbatchPane extends GridPane {
         this.setGridLinesVisible(false);
 
         Label lblAlleKorn = new Label("Registreret korn");
-        this.add(lblAlleKorn, 0,0);
-        this.add(lvwKorn, 0,1,1,3);
+        this.add(lblAlleKorn, 0, 0);
+        this.add(lvwKorn, 0, 1, 1, 3);
         lvwKorn.getItems().setAll(controller.getKorn());
         lvwKorn.setPrefWidth(400);
         ChangeListener<Korn> kornChangeListener = (observableValue, oldValue, newValue) -> this.changeKorn();
         lvwKorn.getSelectionModel().selectedItemProperty().addListener(kornChangeListener);
 
         Label lblKornBeskrivelse = new Label("Korn beskrivelse");
-        this.add(lblKornBeskrivelse, 1,0);
-        this.add(txaKornBeskrivelse, 1,1);
+        this.add(lblKornBeskrivelse, 1, 0);
+        this.add(txaKornBeskrivelse, 1, 1);
         txaKornBeskrivelse.setWrapText(true);
 
         Label lblMaltbatchBeskrivelse = new Label("Maltbatch beskrivelse");
-        this.add(lblMaltbatchBeskrivelse, 1,2);
-        this.add(txaMaltbatchBeskrivelse, 1,3);
+        this.add(lblMaltbatchBeskrivelse, 1, 2);
+        this.add(txaMaltbatchBeskrivelse, 1, 3);
         txaMaltbatchBeskrivelse.setWrapText(true);
 
         Label lblAlleMaltbatch = new Label("Alle Maltbatches");
-        this.add(lblAlleMaltbatch, 2,0);
-        this.add(lvwMaltbatch, 2,1,1,3);
+        this.add(lblAlleMaltbatch, 2, 0);
+        this.add(lvwMaltbatch, 2, 1, 1, 3);
         lvwMaltbatch.getItems().setAll(controller.getAlleMaltbatche());
         lvwMaltbatch.setPrefWidth(400);
         ChangeListener<Maltbatch> maltbatchChangeListener = (observableValue, oldValue, newValue) -> this.changeMaltbatch();
         lvwMaltbatch.getSelectionModel().selectedItemProperty().addListener(maltbatchChangeListener);
 
         Button btnRegistrerKorn = new Button("Registrer korn");
-        this.add(btnRegistrerKorn, 0,4);
+        this.add(btnRegistrerKorn, 0, 4);
         btnRegistrerKorn.setOnAction(actionEvent -> this.registrerKornAction());
 
         HBox hBoxBeskrivelse = new HBox();
@@ -64,11 +64,11 @@ public class KornOgMaltbatchPane extends GridPane {
         btnPrintBeskrivelse.setOnAction(event -> this.printBeskrivelseAction());
         comboBoxVælgBeskrivelse.getItems().setAll(List.of("Korn", "Maltbatch"));
         comboBoxVælgBeskrivelse.setPrefWidth(100);
-        this.add(hBoxBeskrivelse,1,4);
+        this.add(hBoxBeskrivelse, 1, 4);
         setPrintBeskrivelseAktiv(false);
 
         Button btnRegistrerMaltchbatch = new Button("Registrer maltbatch");
-        this.add(btnRegistrerMaltchbatch, 2,4);
+        this.add(btnRegistrerMaltchbatch, 2, 4);
         btnRegistrerMaltchbatch.setOnAction(actionEvent -> this.registrerMaltbatchAction());
     }
 
@@ -110,7 +110,7 @@ public class KornOgMaltbatchPane extends GridPane {
         } else {
             if (comboBoxVælgBeskrivelse.getSelectionModel().getSelectedItem().equals("Korn")) {
                 Korn korn = lvwKorn.getSelectionModel().getSelectedItem();
-                if(!IndstillingPane.erOutputStrategiValgt()) {
+                if (!IndstillingPane.erOutputStrategiValgt()) {
                     controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
                 } else {
                     controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), korn);
@@ -120,7 +120,7 @@ public class KornOgMaltbatchPane extends GridPane {
                 }
             } else {
                 Maltbatch maltbatch = lvwMaltbatch.getSelectionModel().getSelectedItem();
-                if(!IndstillingPane.erOutputStrategiValgt()) {
+                if (!IndstillingPane.erOutputStrategiValgt()) {
                     controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
                 } else {
                     controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), maltbatch);

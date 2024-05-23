@@ -5,7 +5,6 @@ import application.model.*;
 import java.util.ArrayList;
 
 public class Storage {
-
     private final ArrayList<Destillat> destillater;
     private final ArrayList<Fad> fade;
     private final ArrayList<Korn> kornList;
@@ -21,7 +20,6 @@ public class Storage {
         udgivelser = new ArrayList<>();
         lagre = new ArrayList<>();
     }
-
 
     //Getters til listerne
     public ArrayList<Destillat> getDestillater() {
@@ -55,32 +53,32 @@ public class Storage {
         }
     }
 
-    public void  tilføjFad (Fad fad) {
+    public void tilføjFad(Fad fad) {
         if (!fade.contains(fad)) {
             fade.add(fad);
         }
     }
 
-    public void  tilføjKorn (Korn korn) {
+    public void tilføjKorn(Korn korn) {
         if (!kornList.contains(korn)) {
             kornList.add(korn);
         }
     }
 
-    public void  tilføjMaltBatch (Maltbatch maltbatch) {
+    public void tilføjMaltBatch(Maltbatch maltbatch) {
         if (!maltbatche.contains(maltbatch)) {
             maltbatche.add(maltbatch);
         }
     }
 
-    public void tilføjUdgivelse (Udgivelse udgivelse) {
-        if(!udgivelser.contains(udgivelse)) {
+    public void tilføjUdgivelse(Udgivelse udgivelse) {
+        if (!udgivelser.contains(udgivelse)) {
             udgivelser.add(udgivelse);
         }
     }
 
     public void tilføjLager(Lager lager) {
-        if(!lagre.contains(lager)) {
+        if (!lagre.contains(lager)) {
             lagre.add(lager);
         }
     }
@@ -111,7 +109,7 @@ public class Storage {
     }
 
     public void fjernLager(Lager lager) {
-        if(lagre.contains(lager)) {
+        if (lagre.contains(lager)) {
             lagre.add(lager);
         }
     }

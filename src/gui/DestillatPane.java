@@ -29,22 +29,22 @@ public class DestillatPane extends GridPane {
         this.setGridLinesVisible(false);
 
         Label lblAlleDestillater = new Label("Alle destillater");
-        this.add(lblAlleDestillater,0,0);
-        this.add(lvwDestillater,0,1);
+        this.add(lblAlleDestillater, 0, 0);
+        this.add(lvwDestillater, 0, 1);
         lvwDestillater.getItems().setAll(controller.getAlleDestillater());
         ChangeListener<Destillat> destillatChangeListener = (observableValue, oldValue, newValue) -> this.changeDestillat();
         lvwDestillater.getSelectionModel().selectedItemProperty().addListener(destillatChangeListener);
         lvwDestillater.setPrefWidth(200);
 
         Label lblDestillatBeskrivelse = new Label("Destillates historie");
-        this.add(lblDestillatBeskrivelse, 1,0);
-        this.add(txaDestillatBeskrivelse, 1,1, 2,1);
+        this.add(lblDestillatBeskrivelse, 1, 0);
+        this.add(txaDestillatBeskrivelse, 1, 1, 2, 1);
         txaDestillatBeskrivelse.setPrefWidth(250);
         txaDestillatBeskrivelse.setWrapText(true);
         txaDestillatBeskrivelse.setEditable(false);
 
         Label lblPåfyldningAfDestillat = new Label("Påfyldninger af destillat");
-        this.add(lblPåfyldningAfDestillat, 3,0);
+        this.add(lblPåfyldningAfDestillat, 3, 0);
         this.add(lvwPåfyldningAfDestillat, 3, 1);
         lvwPåfyldningAfDestillat.setPrefWidth(250);
 
@@ -62,7 +62,7 @@ public class DestillatPane extends GridPane {
     private void sletDestillatAction() {
         Destillat destillat = lvwDestillater.getSelectionModel().getSelectedItem();
 
-        if(!destillat.getPåfyldninger().isEmpty()) {
+        if (!destillat.getPåfyldninger().isEmpty()) {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et destillat, der er hældt på fade");
         } else {
             controller.fjernDestillat(destillat);
@@ -86,7 +86,7 @@ public class DestillatPane extends GridPane {
 
     private void printDestillatAction() {
         Destillat destillat = lvwDestillater.getSelectionModel().getSelectedItem();
-        if(!IndstillingPane.erOutputStrategiValgt()) {
+        if (!IndstillingPane.erOutputStrategiValgt()) {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
         } else {
             controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), destillat);
@@ -99,7 +99,7 @@ public class DestillatPane extends GridPane {
 
         if (destillat != null) {
             txaDestillatBeskrivelse.setText(destillat.getBeskrivelseTilListView());
-            if(!destillat.getPåfyldninger().isEmpty()) {
+            if (!destillat.getPåfyldninger().isEmpty()) {
                 lvwPåfyldningAfDestillat.getItems().setAll(destillat.getPåfyldninger());
             }
         }

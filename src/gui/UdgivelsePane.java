@@ -22,18 +22,18 @@ public class UdgivelsePane extends GridPane {
         this.setGridLinesVisible(false);
 
         Label lblUdgivelser = new Label("Udgivelser");
-        this.add(lblUdgivelser,0,0);
-        this.add(lvwUdgivelser,0,1);
+        this.add(lblUdgivelser, 0, 0);
+        this.add(lvwUdgivelser, 0, 1);
         lvwUdgivelser.getItems().setAll(controller.getUdgivelser());
         ChangeListener<Udgivelse> changeListenerUdgivelser = (observableValue, udgivelse, t1) -> this.changeUdgivelse();
         lvwUdgivelser.getSelectionModel().selectedItemProperty().addListener(changeListenerUdgivelser);
         lvwUdgivelser.setPrefWidth(250);
 
         Label lblUdgivelsesBeskrivelse = new Label("Udgivelses beskrivelse");
-        this.add(lblUdgivelsesBeskrivelse, 1,0);
+        this.add(lblUdgivelsesBeskrivelse, 1, 0);
         txaBeskrivelse.setEditable(false);
         txaBeskrivelse.setWrapText(true);
-        this.add(txaBeskrivelse, 1,1);
+        this.add(txaBeskrivelse, 1, 1);
 
         HBox hBoxButtons = new HBox();
         hBoxButtons.setSpacing(20);
@@ -43,7 +43,7 @@ public class UdgivelsePane extends GridPane {
         Button btnUdgivFlasker = new Button("Udgiv Flasker");
         btnUdgivFlasker.setOnAction(actionEvent -> this.UdskrivFlaskerAction());
         hBoxButtons.getChildren().setAll(btnUdgivFad, btnUdgivFlasker, btnPrintUdgivelse);
-        this.add(hBoxButtons,0,2,2,1);
+        this.add(hBoxButtons, 0, 2, 2, 1);
         setKnapperAktive(false);
     }
 
@@ -65,7 +65,7 @@ public class UdgivelsePane extends GridPane {
 
     private void printAction() {
         Udgivelse udgivelse = lvwUdgivelser.getSelectionModel().getSelectedItem();
-        if(!IndstillingPane.erOutputStrategiValgt()) {
+        if (!IndstillingPane.erOutputStrategiValgt()) {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
         } else {
             controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), udgivelse);

@@ -9,7 +9,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 
-
 public class PåfyldningPane extends GridPane {
     private ListView<Påfyldning> lvwPåfyldninger = new ListView<>();
     private TextArea txaPåfyldningsBeskrivelse = new TextArea();
@@ -35,7 +34,7 @@ public class PåfyldningPane extends GridPane {
         //Label og textarea til påfyldninges beskrivelse
         Label lblPåfyldningBeskrivelse = new Label("Beskrivelse af valgte påfyldning");
         this.add(lblPåfyldningBeskrivelse, 1, 0);
-        this.add(txaPåfyldningsBeskrivelse, 1,1);
+        this.add(txaPåfyldningsBeskrivelse, 1, 1);
         txaPåfyldningsBeskrivelse.setEditable(false);
         txaPåfyldningsBeskrivelse.setWrapText(true);
         ChangeListener<Påfyldning> påfyldningChangeListener = (observableValue, oldValue, newValue) -> this.changePåfyldning();
@@ -50,7 +49,6 @@ public class PåfyldningPane extends GridPane {
         btnFlytPåfyldning.setOnAction(event -> this.flytPåfyldningAction());
         btnPrintPåfyldning.setOnAction(event -> this.printPåfyldningAction());
         setKnapperAktive(false);
-
     }
 
     private void changePåfyldning() {
@@ -59,8 +57,7 @@ public class PåfyldningPane extends GridPane {
             txaPåfyldningsBeskrivelse.setText(påfyldning.getBeskrivelse());
             if (!påfyldning.getUdgivelser().isEmpty()) {
                 setKnapperAktive(false);
-            }
-            else {
+            } else {
                 setKnapperAktive(true);
             }
         }
@@ -83,7 +80,7 @@ public class PåfyldningPane extends GridPane {
 
     private void printPåfyldningAction() {
         Påfyldning påfyldning = lvwPåfyldninger.getSelectionModel().getSelectedItem();
-        if(!IndstillingPane.erOutputStrategiValgt()) {
+        if (!IndstillingPane.erOutputStrategiValgt()) {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
         } else {
             controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), påfyldning);
@@ -95,5 +92,4 @@ public class PåfyldningPane extends GridPane {
         btnFlytPåfyldning.setDisable(!bool);
         btnPrintPåfyldning.setDisable(!bool);
     }
-
 }

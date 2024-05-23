@@ -105,7 +105,6 @@ public class Destillat implements Logable {
         this.maltbatch = maltbatch;
     }
 
-
     //To string og beskrivelses metoder
     @Override
     public String toString() {
@@ -122,7 +121,7 @@ public class Destillat implements Logable {
         String s = "Dette destillat er blevet destilleret den. " + this.destilleringsdato + " og den indeholder " + this.mængdeL + " liter, med en alkohol procent på " + this.alkoholprocent
                 + ". Denne destillering stammer fra en mark ved navn " + this.maltbatch.getKorn().getMarkNavn() + ". Denne korn sort er " + this.maltbatch.getKorn().getSort()
                 + " og som er høstet den. " + this.maltbatch.getKorn().getHøstDato() + ". Denne korn er blevet taget til et malteri, hvor det er blevet maltet ved hjælp af gærtypen " + maltbatch.getGærType() + ", og gæret fra: " + maltbatch.getGæringStart() + " til " + maltbatch.getGæringSlut() + ".";
-        if(rygemateriale != null) {
+        if (rygemateriale != null) {
             s += " Whiskeyen er blevet røget på " + rygemateriale + ".";
         }
         return s;

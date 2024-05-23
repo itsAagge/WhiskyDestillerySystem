@@ -2,7 +2,6 @@ package gui;
 
 import application.controller.Controller;
 import application.model.Korn;
-import application.model.Maltbatch;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -17,12 +16,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.awt.*;
 import java.time.LocalDate;
-import java.util.List;
 
 public class MaltbatchDialog extends Stage {
-
     ListView<Korn> lvwKorn = new ListView<>();
     private TextField txfMængdeL = new TextField();
     private DatePicker dpGærringStart = new DatePicker();
@@ -30,7 +26,6 @@ public class MaltbatchDialog extends Stage {
     private TextField txfGærType = new TextField();
     private Label lblMængdeTilbage = new Label("Korn tilbage: " + 0.0 + "Kg");
     private Controller controller;
-
 
     public MaltbatchDialog() {
         controller = Controller.getController();

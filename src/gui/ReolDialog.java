@@ -2,7 +2,6 @@ package gui;
 
 import application.controller.Controller;
 import application.model.Lager;
-import application.model.Reol;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -36,7 +35,6 @@ public class ReolDialog extends Stage {
         Scene scene = new Scene(pane);
         this.initContent(pane);
         this.setScene(scene);
-
     }
 
     private void initContent(GridPane pane) {
@@ -62,7 +60,6 @@ public class ReolDialog extends Stage {
         pane.add(btnTilføj, 1, 3);
         btnTilføj.setOnAction(actionEvent -> this.tilføjAction());
         pane.setHalignment(btnTilføj, HPos.RIGHT);
-
     }
 
     private void tilføjAction() {
@@ -84,7 +81,5 @@ public class ReolDialog extends Stage {
         } catch (NumberFormatException e) {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Indtastningsfejl");
         }
-
     }
-
 }

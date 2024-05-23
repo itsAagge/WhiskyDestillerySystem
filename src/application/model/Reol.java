@@ -16,23 +16,9 @@ public class Reol {
             this.hylder.add(new Hylde(i, maxPladsPåHylderne, this));
         }
     }
-
     public List<Hylde> getHylder() {
         return new ArrayList<>(hylder);
     }
-
-    public Lager getLager() {
-        return lager;
-    }
-
-    public int getNr() {
-        return nr;
-    }
-
-    public void setNr(int nr) {
-        this.nr = nr;
-    }
-
     @Override
     public String toString() {
         return "Reol nr: " + nr;

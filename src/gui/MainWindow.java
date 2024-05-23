@@ -9,8 +9,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class MainWindow extends Application {
-
     Controller controller;
+
     @Override
     public void init() {
         controller = Controller.getController();

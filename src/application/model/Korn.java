@@ -33,7 +33,6 @@ public class Korn implements Logable {
         return mængdeKg;
     }
 
-
     //To string og beskrivelses metoder
     @Override
     public String toString() {

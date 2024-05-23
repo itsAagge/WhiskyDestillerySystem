@@ -154,7 +154,7 @@ public class Fad implements Logable {
 
     public String getBeskrivelseTilListView() { //Til listviewet i systemet
         String s = this.getBeskrivelse();
-        if(!erAktiv) {
+        if (!erAktiv) {
             s += "\n\nFadet er inaktivt.";
         } else {
             s += "\n\nFadet er aktivt.";

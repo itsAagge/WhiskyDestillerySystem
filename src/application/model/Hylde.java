@@ -18,26 +18,15 @@ public class Hylde {
     public ArrayList<Fad> getFade() {
         return fade;
     }
-    public Reol getReol() {
-        return reol;
-    }
-
-    public int getNr() {
-        return nr;
-    }
-
-    public int getMaxPlads() {
-        return maxPlads;
-    }
 
     public void addFad(Fad fad) {
-        if(!this.fade.contains(fad)) {
+        if (!this.fade.contains(fad)) {
             this.fade.add(fad);
         }
     }
 
     public void removeFad(Fad fad) {
-        if(this.fade.contains(fad)) {
+        if (this.fade.contains(fad)) {
             this.fade.remove(fad);
         }
     }

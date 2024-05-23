@@ -13,10 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-
-
 public class FlytPåfyldningDialog extends Stage {
-
     private Påfyldning påfyldning;
     private ListView<Fad> lvwFade = new ListView<>();
     private Controller controller;
@@ -42,13 +39,13 @@ public class FlytPåfyldningDialog extends Stage {
         pane.setGridLinesVisible(false);
 
         Label lblLedigeFade = new Label("Ledige fad");
-        pane.add(lblLedigeFade,0,0);
-        pane.add(lvwFade,0,1);
+        pane.add(lblLedigeFade, 0, 0);
+        pane.add(lvwFade, 0, 1);
         lvwFade.setPrefWidth(250);
         lvwFade.getItems().setAll(controller.getLedigeFad());
 
         Button btnGem = new Button("Gem");
-        pane.add(btnGem,0,2);
+        pane.add(btnGem, 0, 2);
         btnGem.setOnAction(actionEvent -> this.gemAction());
     }
 
@@ -60,6 +57,4 @@ public class FlytPåfyldningDialog extends Stage {
         this.close();
 
     }
-
-
 }

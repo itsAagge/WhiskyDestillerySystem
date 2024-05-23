@@ -68,14 +68,15 @@ public class UdgivFadDialog extends Stage {
         pane.add(txfPrisForFadet, 1, 3);
 
         Label lblAngelsShare = new Label("Angels share i procent");
-        pane.add(lblAngelsShare,2,2);
-        pane.add(txfAngelsShare, 2,3);
+        pane.add(lblAngelsShare, 2, 2);
+        pane.add(txfAngelsShare, 2, 3);
 
         Label lblMedarbejder = new Label("Medarbejder");
         pane.add(lblMedarbejder, 1, 4);
         pane.add(cbMedarbejdere, 1, 5);
         cbMedarbejdere.getItems().setAll(controller.getMedarbejdere());
-        if (IndstillingPane.erMedarbejderValgt()) cbMedarbejdere.getSelectionModel().select(IndstillingPane.getValgtMedarbejder());
+        if (IndstillingPane.erMedarbejderValgt())
+            cbMedarbejdere.getSelectionModel().select(IndstillingPane.getValgtMedarbejder());
 
         Button btnOpret = new Button("Opret");
         pane.add(btnOpret, 1, 8);

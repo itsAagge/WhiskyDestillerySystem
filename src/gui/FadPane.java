@@ -30,10 +30,10 @@ public class FadPane extends GridPane {
 
         Label lblAlleFade = new Label("Alle fade");
         this.add(lblAlleFade, 0, 0);
-        this.add(lvwFade, 0,1,3,3);
+        this.add(lvwFade, 0, 1, 3, 3);
         lvwFade.getItems().setAll(controller.getAlleFade());
         ChangeListener<Fad> fadChangeListener = (observableValue, oldValue, newValue) -> {
-            if(newValue == null) {
+            if (newValue == null) {
                 txtAreaBeskrivelse.clear();
                 txtAreaNuværendePåfyldning.clear();
                 lvwTidligerePåfyldninger.getItems().clear();
@@ -64,7 +64,7 @@ public class FadPane extends GridPane {
 
         Label lblNuværendePåfyldning = new Label("Nuværende påfyldning");
         this.add(lblNuværendePåfyldning, 3, 2);
-        this.add(txtAreaNuværendePåfyldning, 3, 3, 2 ,1);
+        this.add(txtAreaNuværendePåfyldning, 3, 3, 2, 1);
         this.txtAreaNuværendePåfyldning.setEditable(false);
         txtAreaNuværendePåfyldning.setPrefWidth(250);
         txtAreaNuværendePåfyldning.setWrapText(true);
@@ -113,9 +113,9 @@ public class FadPane extends GridPane {
 
     private void sletFadAction() {
         Fad fad = lvwFade.getSelectionModel().getSelectedItem();
-        if(fad.erFyldt()) {
+        if (fad.erFyldt()) {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et fad med indhold.");
-        } else if(!fad.getPåfyldninger().isEmpty()) {
+        } else if (!fad.getPåfyldninger().isEmpty()) {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du kan ikke slette et fad, der har været indhold i tidligere. Disse fade skal deaktiveres");
         } else {
             controller.fjernFad(fad);
@@ -126,7 +126,7 @@ public class FadPane extends GridPane {
 
     private void printFadAction() {
         Fad fad = lvwFade.getSelectionModel().getSelectedItem();
-        if(!IndstillingPane.erOutputStrategiValgt()) {
+        if (!IndstillingPane.erOutputStrategiValgt()) {
             controller.opretAlert(Alert.AlertType.ERROR, "Fejl", "Du mangler at vælge en output type i indstillingerne");
         } else {
             controller.udtrækBeskrivelse(IndstillingPane.getValgtOutputStrategi(), fad);
