@@ -55,7 +55,6 @@ public class Påfyldning implements Logable {
         }
     }
 
-    //TODO: Ret testcase
     //Tilføjer et fad til fade listen, hvilket gør det til det nye fad påfyldningen
     //ligger på og fylder det fad og gør det gamle tomt.
     public void flytFad(Fad fad) {

@@ -16,9 +16,11 @@ public class Reol {
             this.hylder.add(new Hylde(i, maxPladsPåHylderne, this));
         }
     }
+
     public List<Hylde> getHylder() {
         return new ArrayList<>(hylder);
     }
+
     @Override
     public String toString() {
         return "Reol nr: " + nr;

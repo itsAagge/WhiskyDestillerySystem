@@ -42,7 +42,6 @@ public class Controller {
         }
     }
 
-    //Todo: Finde ud af, om opret og opdater burde være 1 eller 2 metoder
     public Destillat opdaterDestillat(Destillat destillat, String spiritBatchNr, double mængdeL, double alkoholprocent, String medarbejder, String rygemateriale, String kommentar, LocalDate destilleringsdato, Maltbatch maltbatch) {
         if (destillat == null || spiritBatchNr == null || mængdeL == 0.0 || alkoholprocent == 0.0 || medarbejder == null || destilleringsdato == null || maltbatch == null)
             throw new IllegalArgumentException("Information mangler eller er null. Kun String rygemateriale og String kommentar må være null.");
@@ -65,7 +64,6 @@ public class Controller {
         return fad;
     }
 
-    //Todo: Finde ud af, om opret og opdater burde være 1 eller 2 metoder
     public Fad opdaterFad(Fad fad, String fraLand, String tidligereIndhold, int størrelseL, String træType, double alderAfTidligereIndhold, String leverandør) {
         if (fad == null || fraLand == null || størrelseL == 0 || træType == null || leverandør == null)
             throw new IllegalArgumentException("Information mangler eller er null. Kun String tidligereIndhold og double alderAfTidligereIndhold må være null/0.0");
@@ -349,8 +347,7 @@ public class Controller {
         else logger.log(object);
     }
 
-    //TODO: Exception hvis 0 strategies fundet?
-    public ArrayList<String> getOutputStrategies() {
+    public ArrayList<String> getAllOutputStrategies() {
         ArrayList<String> foundStrategies = new ArrayList<>();
         File file = new File("src/application/model/output/");
         String[] directory = file.list();
@@ -368,7 +365,7 @@ public class Controller {
     public Logger getLoggerStrategy(String LoggerType) {
         Logger logger = null;
         if (LoggerType == null || LoggerType.isEmpty())
-            throw new IllegalArgumentException("Denne type logger eksisterer ikke");
+            throw new IllegalArgumentException("Der er ingen type valgt");
         else {
             try {
                 String className = "application.model.output." + LoggerType + "Logger";
