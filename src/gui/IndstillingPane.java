@@ -8,8 +8,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
-import java.util.List;
-
 public class IndstillingPane extends GridPane {
     private ComboBox<String> comboBoxOutputStrategi = new ComboBox<>();
     private ComboBox<String> comboBoxMedarbejdere = new ComboBox<>();
